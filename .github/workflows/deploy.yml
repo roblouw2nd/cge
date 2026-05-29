@@ -1,8 +1,8 @@
 name: Deploy to Afrihost
 
+# Deploy is handled by cPanel Git Version Control on Afrihost.
+# This workflow is kept for reference and only runs when manually triggered.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -39,15 +39,15 @@ jobs:
           SFTP_HOST: ${{ secrets.FTP_SERVER }}
           SFTP_USER: ${{ secrets.FTP_USERNAME }}
           SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          SFTP_PORT: ${{ secrets.FTP_PORT || '22' }}
           SFTP_DIR:  ${{ secrets.FTP_TARGET_DIR || 'public_html' }}
         run: |
-          cat > /tmp/lftp.script <<EOF
-          set sftp:auto-confirm yes
-          set net:max-retries 3
-          set net:timeout 30
-          set net:reconnect-interval-base 5
-          open -u "$SFTP_USER","$SFTP_PASS" sftp://$SFTP_HOST
-          mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/
-          bye
-          EOF
-          lftp -f /tmp/lftp.script
+          lftp -c "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            set net:timeout 30;
+            set net:reconnect-interval-base 5;
+            open -u '$SFTP_USER','$SFTP_PASS' -p $SFTP_PORT sftp://$SFTP_HOST;
+            mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/;
+            bye
+          "

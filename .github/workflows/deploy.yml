@@ -35,7 +35,9 @@ jobs:
             **/DEPLOY.md
             **/.DS_Store
             **/*.log
-          # Use passive mode (most shared hosts require it). Pass `ftps` if Afrihost requires TLS.
-          protocol: ftp
+          # Afrihost requires FTPS (explicit TLS on port 21). 'loose' security ignores cert mismatch on shared hosting.
+          protocol: ftps
           port: 21
+          security: loose
           log-level: standard
+          timeout: 60000

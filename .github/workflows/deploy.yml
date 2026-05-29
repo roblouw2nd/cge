@@ -10,34 +10,41 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ftp-deploy:
-    name: Sync to public_html via FTP
+  sftp-deploy:
+    name: Sync to public_html via SFTP
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Default Afrihost web root. Override via FTP_TARGET_DIR secret if your account uses something else.
-          server-dir: ${{ secrets.FTP_TARGET_DIR || 'public_html/' }}
-          # Files NOT to upload
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/README.md
-            **/DEPLOY.md
-            **/.DS_Store
-            **/*.log
-          # Afrihost requires FTPS (explicit TLS on port 21). 'loose' security ignores cert mismatch on shared hosting.
-          protocol: ftps
-          port: 21
-          security: loose
-          log-level: standard
-          timeout: 60000
+      - name: Stage files (strip dev artefacts)
+        run: |
+          mkdir -p _dist
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='README.md' \
+            --exclude='SETUP.sh' \
+            --exclude='_dist' \
+            --exclude='.DS_Store' \
+            --exclude='*.log' \
+            ./ _dist/
+          echo "Staged $(find _dist -type f | wc -l) files."
+
+      - name: Install lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y lftp
+
+      - name: Upload via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.FTP_SERVER }}
+          SFTP_USER: ${{ secrets.FTP_USERNAME }}
+          SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          SFTP_DIR:  ${{ secrets.FTP_TARGET_DIR || 'public_html' }}
+        run: |
+          # Mirror _dist/ -> $SFTP_DIR on remote. --reverse pushes local→remote, --delete prunes orphans, --parallel speeds it up.
+          lftp -u "$SFTP_USER","$SFTP_PASS" sftp://"$SFTP_HOST" \
+            -e "set sftp:auto-confirm yes; \
+                set net:max-retries 3; \
+                set net:timeout 30; \
+                mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/; \
+                bye"

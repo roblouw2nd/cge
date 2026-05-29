@@ -41,10 +41,13 @@ jobs:
           SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
           SFTP_DIR:  ${{ secrets.FTP_TARGET_DIR || 'public_html' }}
         run: |
-          # Mirror _dist/ -> $SFTP_DIR on remote. --reverse pushes local→remote, --delete prunes orphans, --parallel speeds it up.
-          lftp -u "$SFTP_USER","$SFTP_PASS" sftp://"$SFTP_HOST" \
-            -e "set sftp:auto-confirm yes; \
-                set net:max-retries 3; \
-                set net:timeout 30; \
-                mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/; \
-                bye"
+          cat > /tmp/lftp.script <<EOF
+          set sftp:auto-confirm yes
+          set net:max-retries 3
+          set net:timeout 30
+          set net:reconnect-interval-base 5
+          open -u "$SFTP_USER","$SFTP_PASS" sftp://$SFTP_HOST
+          mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/
+          bye
+          EOF
+          lftp -f /tmp/lftp.script

@@ -1,6 +1,12 @@
 # ============================================================
-# CGE — Afrihost Apache config
+# CGE — Afrihost (LiteSpeed) config
 # ============================================================
+
+# Default file to serve when a directory is requested
+DirectoryIndex index.html index.php
+
+# Disable directory listings (defense-in-depth)
+Options -Indexes
 
 # Force HTTPS (uncomment after SSL is issued / verified working)
 # RewriteEngine On

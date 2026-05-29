@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+error_log
+
+# Build artefacts (none yet, but ready)
+dist/
+build/
+node_modules/
+
+# Local env / creds (never commit)
+.env
+.env.local
+*.pem
+*.key
+ftp.config
+
+# PHP
+*.bak
+sessions/

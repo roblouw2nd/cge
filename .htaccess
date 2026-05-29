@@ -1,0 +1,71 @@
+# ============================================================
+# CGE — Afrihost Apache config
+# ============================================================
+
+# Force HTTPS (uncomment after SSL is issued / verified working)
+# RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ---- Pretty URLs ----------------------------------------------------
+RewriteEngine On
+
+# Drop trailing .html in browser if requested with it
+# (e.g. /about.html → /about — visitors still hit the right file)
+RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# Internally serve /about → /about.html, /contact → /contact.html, etc.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^ %{REQUEST_URI}.html [L]
+
+# Custom 404
+ErrorDocument 404 /404.html
+
+# ---- MIME / charset -------------------------------------------------
+AddDefaultCharset UTF-8
+AddType image/svg+xml .svg
+AddType text/jsx .jsx
+
+# ---- Cache headers --------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                "access plus 0 seconds"
+  ExpiresByType text/css                 "access plus 1 month"
+  ExpiresByType application/javascript   "access plus 1 month"
+  ExpiresByType text/javascript          "access plus 1 month"
+  ExpiresByType image/svg+xml            "access plus 6 months"
+  ExpiresByType image/png                "access plus 6 months"
+  ExpiresByType image/jpeg               "access plus 6 months"
+  ExpiresByType image/webp               "access plus 6 months"
+  ExpiresByType font/woff2               "access plus 1 year"
+</IfModule>
+
+# ---- Compression ----------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml text/xml application/xml
+</IfModule>
+
+# ---- Security headers -----------------------------------------------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---- Hide system files ----------------------------------------------
+<FilesMatch "^\.(?!well-known)|\.(env|git|md|log|sh|sql|yml|yaml)$">
+  Require all denied
+</FilesMatch>
+
+<Files "README.md">
+  Require all denied
+</Files>
+
+# Hide composer/node scaffolding if present
+<FilesMatch "(package(-lock)?\.json|composer\.(json|lock))">
+  Require all denied
+</FilesMatch>

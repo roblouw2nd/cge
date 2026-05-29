@@ -1,0 +1,41 @@
+name: Deploy to Afrihost
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-afrihost
+  cancel-in-progress: true
+
+jobs:
+  ftp-deploy:
+    name: Sync to public_html via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Default Afrihost web root. Override via FTP_TARGET_DIR secret if your account uses something else.
+          server-dir: ${{ secrets.FTP_TARGET_DIR || 'public_html/' }}
+          # Files NOT to upload
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/README.md
+            **/DEPLOY.md
+            **/.DS_Store
+            **/*.log
+          # Use passive mode (most shared hosts require it). Pass `ftps` if Afrihost requires TLS.
+          protocol: ftp
+          port: 21
+          log-level: standard

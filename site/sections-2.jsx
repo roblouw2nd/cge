@@ -107,30 +107,29 @@ function CaseSpotlight() {
         fontFamily: T.display, fontWeight: 900, fontSize: 84, letterSpacing: '-.04em', lineHeight: .92,
         textTransform: 'uppercase', margin: '24px 0 50px',
       }}>
-        Selected case study.
+        Selected work.
       </h2>
 
       <div style={{ background: T.cream, padding: 60, display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 60, alignItems: 'start' }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '.32em', textTransform: 'uppercase', color: T.accent, marginBottom: 14 }}>
-            Case №04 · Northstar Labs · 2025
+            Luxury transport · Europe
           </div>
           <h3 style={{
             fontFamily: T.display, fontWeight: 900, fontSize: 56, letterSpacing: '-.04em', lineHeight: .95,
             textTransform: 'uppercase', margin: 0,
           }}>
-            From{' '}<span style={{ color: T.accent }}>$2M</span> ARR<br/>
-            to{' '}
+            Tripled the{' '}
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <Bracket size={50} color={T.accent} weight={4} spaceRatio={.3} side="l" />
-              <span style={{ color: T.accent }}>$18M</span>
+              <span style={{ color: T.accent }}>fleet</span>
               <Bracket size={50} color={T.accent} weight={4} spaceRatio={.3} side="r" />
-            </span>
-            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 8 }}> in 11 months.<Arrow size={40} color={T.accent} stroke={4} /></span>
+            </span><br/>
+            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 8 }}>for a transport operator.<Arrow size={40} color={T.accent} stroke={4} /></span>
           </h3>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 40 }}>
-            {[['9.0×','ARR multiple'],['$420','New MRR / hour'],['38%','Trial→paid uplift'],['72 NPS','Post-engagement']].map(([k,v]) => (
+            {[['3×','Fleet size, over the engagement'],['Google','PPC rebuilt on real demand'],['1st-party','Conversion tracking, fixed'],['EU','Multi-market operation']].map(([k,v]) => (
               <div key={k} style={{ borderTop: `2px solid ${T.accent}`, paddingTop: 10 }}>
                 <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 30, letterSpacing: '-.03em' }}>{k}</div>
                 <div style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .65, marginTop: 4 }}>{v}</div>
@@ -145,7 +144,7 @@ function CaseSpotlight() {
               The problem
             </div>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, margin: 0 }}>
-              Northstar had product-market fit but a leaky bucket — 64% of trials never paid, CAC was climbing, and the founder was running growth on top of CEO work. Dashboards no one trusted.
+              A European luxury-transport operator wanted more bookings and a bigger fleet — but paid spend wasn't tied to real demand, and the conversion tracking couldn't be trusted. No one knew which campaigns actually produced rides.
             </p>
           </div>
           <div>
@@ -153,7 +152,7 @@ function CaseSpotlight() {
               What we shipped
             </div>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, margin: 0 }}>
-              Rebuilt the trial onboarding, instrumented one source-of-truth in BigQuery, killed five paid channels, doubled-down on three. Hired the first growth engineer. Walked out with a system the team's been running ever since.
+              Rebuilt the Google Ads account around qualified, high-intent demand, fixed conversion tracking end-to-end for clean attribution, and tightened the booking funnel. The fleet tripled to meet the demand the system was generating.
             </p>
           </div>
           <div style={{ marginTop: 10 }}>
@@ -177,9 +176,9 @@ function CaseSpotlight() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
           {[
-            { n: '03', name: 'Helix Capital', cat: 'PPC + Tracking', stat: '−42%', label: 'Cost per qualified lead' },
-            { n: '02', name: 'Atlas Robotics', cat: 'Web + Automation', stat: '3.1×', label: 'Demo-booking rate' },
-            { n: '01', name: 'Lume HQ', cat: 'CRO + Lifecycle', stat: '+$2.4M', label: 'Net new ARR · 6 mo' },
+            { n: '03', name: 'Local retail brand', cat: 'PPC + Web', stat: 'National', label: 'Local brand taken nationwide' },
+            { n: '02', name: 'Ecommerce build', cat: 'Web + Tracking', stat: 'Live', label: 'Online store + clean analytics' },
+            { n: '01', name: 'Fractional CMO · ME', cat: 'Strategy + Systems', stat: 'Portfolio', label: 'Growth across multiple brands' },
           ].map(c => (
             <div key={c.n} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 26 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>

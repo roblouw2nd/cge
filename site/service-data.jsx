@@ -46,12 +46,12 @@ const SERVICE_DETAILS = {
     ],
     process: [
       { n: '01', name: 'Audit (Month 1)', body: 'Account-level teardown across every channel. Find the waste, the wins, and the gaps. Restructure the account hierarchy for scale.' },
-      { n: '02', name: 'Instrument (Month 1—2)', body: 'Server-side conversions on every channel. Identity resolution. The plumbing that recovers 30–40% of signal lost to iOS / cookie depreciation.' },
+      { n: '02', name: 'Instrument (Month 1—2)', body: 'Server-side conversions on every channel. Identity resolution. The plumbing that recovers much of the signal lost to iOS and cookie deprecation.' },
       { n: '03', name: 'Scale (Month 2—12)', body: 'Weekly creative shipping, ongoing budget reallocation, and constant testing. Two-week rolling sprints with clear hypotheses.' },
       { n: '04', name: 'Compound', body: 'Quarterly incrementality reviews. Annual planning. The programme gets smarter every month — that\'s the point of doing it for a year.' },
     ],
     tools: ['Google Ads', 'Meta Ads', 'LinkedIn Ads', 'TikTok Ads', 'Apple SA', 'GTM Server', 'Segment', 'BigQuery', 'Looker'],
-    stat: { k: '−42%', label: 'Avg. cost-per-qualified-lead · year 1' },
+    stat: { k: 'Google-first', label: 'Specialist focus: Google Ads + tracking' },
     faq: [
       { q: 'What\'s the minimum monthly spend?', a: 'I\'m most useful from $30k/mo upward — below that, the operator overhead doesn\'t make sense. If you\'re smaller, I can point you to better-suited specialists.' },
       { q: 'Do you work with our existing agency?', a: 'Sometimes. Often the cleanest version is replacing them. But if you have a creative shop or platform-specialist you love, I orchestrate around them.' },
@@ -79,7 +79,7 @@ const SERVICE_DETAILS = {
       { n: '04', name: 'Train', body: 'Your analytics team learns the taxonomy. Your engineers learn to add events without breaking it. Dashboards rebuilt against the new foundation.' },
     ],
     tools: ['GTM Server', 'Amplitude', 'Mixpanel', 'GA4', 'Segment', 'RudderStack', 'BigQuery', 'Snowflake', 'DuckDB'],
-    stat: { k: '+38%', label: 'Conversion signal recovered · iOS / CMP-affected' },
+    stat: { k: 'First-party', label: 'Tracking you own, server-side by default' },
     faq: [
       { q: 'Do we need a warehouse?', a: 'Eventually, yes. Even if you\'re not using one today, I\'ll set up the pipeline so it lands somewhere queryable. BigQuery is free for the first terabyte — there\'s no reason not to.' },
       { q: 'What about privacy / GDPR?', a: 'The CMP layer is part of the implementation, not an afterthought. Consent-mode handled correctly so you stay compliant without losing the signal.' },
@@ -107,7 +107,7 @@ const SERVICE_DETAILS = {
       { n: '04', name: 'Handover', body: 'Your team — or a friendly engineer — owns it. I document everything. Optional ongoing maintenance arrangement.' },
     ],
     tools: ['Retool', 'Internal', 'React', 'Node', 'Stripe', 'n8n', 'Zapier', 'Slack API', 'Linear API'],
-    stat: { k: '12 hrs/wk', label: 'Avg. team-hours reclaimed per tool' },
+    stat: { k: 'Built to own', label: 'Documented, handed over, yours to run' },
     faq: [
       { q: 'Retool vs. bespoke — which?', a: 'Default to Retool. Move to bespoke when the tool is customer-facing, performance-critical, or going to outlive Retool\'s pricing curve.' },
       { q: 'Will we be locked into Retool?', a: 'No more than you\'re locked into any SaaS. Most Retool apps can be rewritten in a week of React work if you need to leave.' },
@@ -135,7 +135,7 @@ const SERVICE_DETAILS = {
       { n: '04', name: 'Compound', body: 'The biggest gains come from the winners getting shipped to production and the losing variants killed quickly. We measure the cumulative lift, not individual tests.' },
     ],
     tools: ['LaunchDarkly', 'Optimizely', 'GrowthBook', 'PostHog', 'Statsig', 'VWO', 'FullStory', 'Hotjar'],
-    stat: { k: '+38%', label: 'Avg. trial-to-paid uplift · 12-week sprints' },
+    stat: { k: 'Shipped weekly', label: 'Experiments run in two-week cycles' },
     faq: [
       { q: 'How much traffic do we need?', a: 'For binary conversion tests, you want ~1,000 conversions/week minimum. For lower-volume pages we use Bayesian methods + qualitative research instead.' },
       { q: 'What if our tests don\'t win?', a: 'Half of mine don\'t. That\'s why we ship in cycles. The winners pay for the losers, and the losers teach you about your users. Bad sign is when nothing moves — that means you need bigger swings.' },
@@ -191,7 +191,7 @@ const SERVICE_DETAILS = {
       { n: '04', name: 'Iterate', body: 'Monthly performance reviews. Kill what doesn\'t work, double down on what does. Goal isn\'t opens — it\'s product behaviour.' },
     ],
     tools: ['Customer.io', 'Braze', 'Iterable', 'Loops', 'Resend', 'Twilio', 'OneSignal', 'Mutable', 'Hightouch'],
-    stat: { k: '3.1×', label: 'Avg. lift in trial-to-paid · onboarding sequences' },
+    stat: { k: 'Event-driven', label: 'Messaging triggered by real behaviour' },
     faq: [
       { q: 'Will users hate the volume?', a: 'They won\'t if you write less. My default is to start with half the messages people expect — only add when there\'s a clear job to do. Email frequency is a UX problem, not a marketing one.' },
       { q: 'Do you write the copy?', a: 'I draft, you edit, we iterate. Voice is yours; structure and triggers are mine.' },

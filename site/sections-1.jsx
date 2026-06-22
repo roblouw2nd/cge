@@ -47,7 +47,7 @@ function Hero() {
               I embed with founders for the time it takes — a 4-week audit, a 6-month engine build, a 12-month PPC programme. Whatever the engagement, the deliverable is a working system your team owns, not a deck.
             </p>
             <p style={{ fontFamily: T.body, fontSize: 16, lineHeight: 1.6, color: T.softInk, margin: 0, opacity: .85 }}>
-              Web, PPC, analytics, automation, and the experiments that move the number. One operator, end-to-end, until the system is yours.
+              Paid acquisition, conversion tracking, web, and the data integrity that ties them together — engineered, not guessed. One operator, end-to-end, until the system is yours.
             </p>
           </div>
           <div style={{ marginTop: 38, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
@@ -59,10 +59,10 @@ function Hero() {
         {/* Right sidebar — stat strip */}
         <div style={{ display: 'flex', flexDirection: 'column', borderLeft: `1px solid ${T.rule}`, paddingLeft: 30 }}>
           {[
-            ['$420M', 'Revenue compounded for clients'],
-            ['12', 'Portfolio companies shipped'],
-            ['7 yrs', 'Avg. operator experience'],
-            ['Mixed', 'Engagement durations · 4 wks — 12 mo'],
+            ['8 yrs', 'In performance marketing & growth'],
+            ['3×', 'Fleet growth — EU luxury transport'],
+            ['Local→Nat', 'Brands scaled across markets'],
+            ['GMT+2', 'Flexible to US & Asia hours'],
           ].map(([k, v], i) => (
             <div key={k} style={{ padding: '20px 0', borderBottom: i < 3 ? `1px solid ${T.rule}` : 'none' }}>
               <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 38, letterSpacing: '-.03em', color: i === 0 ? T.accent : T.ink, lineHeight: 1 }}>
@@ -81,7 +81,7 @@ function Hero() {
 
 // ─── MARQUEE / CLIENTS ──────────────────────────────────────────────
 function Marquee() {
-  const names = ['Northstar Labs', 'Helix Capital', 'Atlas Robotics', 'Lume HQ', 'Cordon · BNPL', 'Spool', 'Forge Markets', 'Quanta Health', 'Reverb FM', 'Halftone'];
+  const names = ['Fractional growth engineering', 'Google Ads', 'Conversion tracking', 'Data integrity', 'Online stores', 'Business systems', 'Local → national', 'Luxury transport', 'Fractional CMO', 'Performance marketing'];
   return (
     <section style={{ background: T.ink, color: T.paper, padding: '28px 0', overflow: 'hidden', borderTop: `2px solid ${T.accent}` }}>
       <div style={{
@@ -114,7 +114,7 @@ function Manifesto() {
             fontFamily: T.display, fontWeight: 900, fontSize: 64, letterSpacing: '-.04em', lineHeight: .92,
             textTransform: 'uppercase', margin: '30px 0 0',
           }}>
-            A working studio<br/>
+            A founder-led studio<br/>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12 }}>
               for <Bracket size={56} color={T.accent} weight={5} spaceRatio={.3} side="l" />
               <span style={{ color: T.accent }}>growth</span>

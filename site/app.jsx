@@ -13,7 +13,6 @@ function Site() {
       <Stack />
       <Thinking />
       <About />
-      <Testimonials />
       <Pricing />
       <FAQ />
       <BigCTA />

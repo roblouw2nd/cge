@@ -1,97 +1,72 @@
-name: Deploy to Afrihost
+name: Deploy via FTP
 
-# Auto-deploys on push to main by triggering cPanel's server-side Git deployment
-# via the cPanel API (port 2083). cPanel pulls this repo and runs .cpanel.yml,
-# which mirrors the files into public_html.
+# Auto-deploys on push to main by connecting to the server over FTP (explicit
+# FTPS on port 21) and syncing the repo into public_html.
 #
-# Why this approach: Afrihost firewalls inbound SSH/SFTP (port 22) at the port
-# level, so the previous lftp-over-SFTP deploy could never connect. The cPanel
-# API port (2083) is reachable, and cPanel does the git pull + file copy itself,
-# so nothing needs to connect inbound to the server over SSH/FTP.
+# Replaces the previous cPanel-API deploy. FTP on port 21 is confirmed reachable
+# (FileZilla connects with explicit FTP over TLS); the FTP account's root is the
+# cPanel home directory, so files are uploaded into public_html/.
 #
-# Requires one secret: CPANEL_TOKEN (a cPanel API token created under
-# Security -> Manage API Tokens). Host, username and repo path are not secret
-# and are set below.
+# Requires three repository secrets:
+#   FTP_SERVER   - e.g. ftp.chiefgrowthengineer.com
+#   FTP_USERNAME - e.g. rob@chiefgrowthengineer.com
+#   FTP_PASSWORD
+#
+# The action keeps a sync-state file on the server so subsequent deploys only
+# transfer changed files, and it never deletes server files it didn't upload
+# (cgi-bin, .well-known, etc. are safe).
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 concurrency:
-  group: deploy-afrihost
+  group: deploy-ftp
   cancel-in-progress: true
-
-env:
-  CPANEL_HOST: https://quark.aserv.co.za:2083
-  CPANEL_USER: chiefgr3l7q6
-  REPO_ROOT: /home/chiefgr3l7q6/repositories/cge
-  BRANCH: main
 
 jobs:
   deploy:
-    name: Deploy via cPanel Git
+    name: Deploy to public_html
     runs-on: ubuntu-latest
     steps:
-      - name: Verify deploy secret is present
+      - name: Verify deploy secrets are present
         env:
-          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          if [ -z "$CPANEL_TOKEN" ]; then
-            echo "::error::Missing required secret: CPANEL_TOKEN"
-            echo "Create a cPanel API token (Security -> Manage API Tokens) and add it at Settings -> Secrets and variables -> Actions."
+          missing=""
+          [ -z "$FTP_SERVER" ] && missing="$missing FTP_SERVER"
+          [ -z "$FTP_USERNAME" ] && missing="$missing FTP_USERNAME"
+          [ -z "$FTP_PASSWORD" ] && missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required secret(s):$missing"
             exit 1
           fi
-          echo "CPANEL_TOKEN present."
+          echo "All FTP secrets present."
 
-      - name: Pull latest commit into cPanel repo
-        env:
-          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
-        run: |
-          set -euo pipefail
-          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
-          resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControl/update" \
-            --data-urlencode "repository_root=${REPO_ROOT}" \
-            --data-urlencode "branch=${BRANCH}" \
-            -H "$AUTH")
-          echo "$resp"
-          errs=$(printf '%s' "$resp" | jq -r '.errors')
-          if [ "$errs" != "null" ]; then echo "::error::Repo update failed: $errs"; exit 1; fi
-          echo "Repo updated from remote."
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Trigger deployment
-        id: deploy
-        env:
-          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
-        run: |
-          set -euo pipefail
-          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
-          resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControlDeployment/create" \
-            --data-urlencode "repository_root=${REPO_ROOT}" \
-            -H "$AUTH")
-          echo "$resp"
-          errs=$(printf '%s' "$resp" | jq -r '.errors')
-          if [ "$errs" != "null" ]; then echo "::error::Deploy trigger failed: $errs"; exit 1; fi
-          task_id=$(printf '%s' "$resp" | jq -r '.data.task_id // .task_id // empty')
-          if [ -z "$task_id" ]; then echo "::error::No task_id returned"; exit 1; fi
-          echo "task_id=$task_id" >> "$GITHUB_OUTPUT"
-          echo "Deployment task queued: $task_id"
-
-      - name: Wait for deployment to finish
-        env:
-          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
-          TASK_ID: ${{ steps.deploy.outputs.task_id }}
-        run: |
-          set -euo pipefail
-          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
-          for i in $(seq 1 120); do
-            resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControlDeployment/retrieve" -H "$AUTH")
-            task=$(printf '%s' "$resp" | jq -c --arg id "$TASK_ID" '.data[]? | select((.task_id|tostring)==$id)')
-            if [ -n "$task" ]; then
-              succeeded=$(printf '%s' "$task" | jq -r '.timestamps.succeeded // empty')
-              failed=$(printf '%s' "$task" | jq -r '.timestamps.failed // empty')
-              if [ -n "$succeeded" ]; then echo "Deployment succeeded."; exit 0; fi
-              if [ -n "$failed" ]; then echo "::error::Deployment failed."; printf '%s\n' "$resp"; exit 1; fi
-            fi
-            sleep 5
-          done
-          echo "::error::Timed out waiting for deployment to complete."; exit 1
+      - name: Sync files to server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./
+          server-dir: public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .gitignore
+            .cpanel.yml
+            README.md
+            SETUP.sh
+            docs/**
+            node_modules/**
+            **/.DS_Store
+            **/*.log

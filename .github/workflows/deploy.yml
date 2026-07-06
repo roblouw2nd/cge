@@ -1,7 +1,17 @@
 name: Deploy to Afrihost
 
-# Auto-deploys to Afrihost public_html via SFTP on every push to main.
-# Also runnable manually from the Actions tab.
+# Auto-deploys on push to main by triggering cPanel's server-side Git deployment
+# via the cPanel API (port 2083). cPanel pulls this repo and runs .cpanel.yml,
+# which mirrors the files into public_html.
+#
+# Why this approach: Afrihost firewalls inbound SSH/SFTP (port 22) at the port
+# level, so the previous lftp-over-SFTP deploy could never connect. The cPanel
+# API port (2083) is reachable, and cPanel does the git pull + file copy itself,
+# so nothing needs to connect inbound to the server over SSH/FTP.
+#
+# Requires one secret: CPANEL_TOKEN (a cPanel API token created under
+# Security -> Manage API Tokens). Host, username and repo path are not secret
+# and are set below.
 on:
   push:
     branches: [main]
@@ -11,69 +21,77 @@ concurrency:
   group: deploy-afrihost
   cancel-in-progress: true
 
+env:
+  CPANEL_HOST: https://quark.aserv.co.za:2083
+  CPANEL_USER: chiefgr3l7q6
+  REPO_ROOT: /home/chiefgr3l7q6/repositories/cge
+  BRANCH: main
+
 jobs:
-  sftp-deploy:
-    name: Sync to public_html via SFTP
+  deploy:
+    name: Deploy via cPanel Git
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Verify deploy secrets are present
+      - name: Verify deploy secret is present
         env:
-          FTP_SERVER:      ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME:    ${{ secrets.FTP_USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
         run: |
-          missing=0
-          for v in FTP_SERVER FTP_USERNAME SSH_PRIVATE_KEY; do
-            if [ -z "${!v}" ]; then echo "::error::Missing required secret: $v"; missing=1; fi
+          if [ -z "$CPANEL_TOKEN" ]; then
+            echo "::error::Missing required secret: CPANEL_TOKEN"
+            echo "Create a cPanel API token (Security -> Manage API Tokens) and add it at Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "CPANEL_TOKEN present."
+
+      - name: Pull latest commit into cPanel repo
+        env:
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
+          resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControl/update" \
+            --data-urlencode "repository_root=${REPO_ROOT}" \
+            --data-urlencode "branch=${BRANCH}" \
+            -H "$AUTH")
+          echo "$resp"
+          errs=$(printf '%s' "$resp" | jq -r '.errors')
+          if [ "$errs" != "null" ]; then echo "::error::Repo update failed: $errs"; exit 1; fi
+          echo "Repo updated from remote."
+
+      - name: Trigger deployment
+        id: deploy
+        env:
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
+          resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControlDeployment/create" \
+            --data-urlencode "repository_root=${REPO_ROOT}" \
+            -H "$AUTH")
+          echo "$resp"
+          errs=$(printf '%s' "$resp" | jq -r '.errors')
+          if [ "$errs" != "null" ]; then echo "::error::Deploy trigger failed: $errs"; exit 1; fi
+          task_id=$(printf '%s' "$resp" | jq -r '.data.task_id // .task_id // empty')
+          if [ -z "$task_id" ]; then echo "::error::No task_id returned"; exit 1; fi
+          echo "task_id=$task_id" >> "$GITHUB_OUTPUT"
+          echo "Deployment task queued: $task_id"
+
+      - name: Wait for deployment to finish
+        env:
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+          TASK_ID: ${{ steps.deploy.outputs.task_id }}
+        run: |
+          set -euo pipefail
+          AUTH="Authorization: cpanel ${CPANEL_USER}:${CPANEL_TOKEN}"
+          for i in $(seq 1 120); do
+            resp=$(curl -sS --fail-with-body -G "${CPANEL_HOST}/execute/VersionControlDeployment/retrieve" -H "$AUTH")
+            task=$(printf '%s' "$resp" | jq -c --arg id "$TASK_ID" '.data[]? | select((.task_id|tostring)==$id)')
+            if [ -n "$task" ]; then
+              succeeded=$(printf '%s' "$task" | jq -r '.timestamps.succeeded // empty')
+              failed=$(printf '%s' "$task" | jq -r '.timestamps.failed // empty')
+              if [ -n "$succeeded" ]; then echo "Deployment succeeded."; exit 0; fi
+              if [ -n "$failed" ]; then echo "::error::Deployment failed."; printf '%s\n' "$resp"; exit 1; fi
+            fi
+            sleep 5
           done
-          [ "$missing" -eq 0 ] || { echo "Set secrets at Settings → Secrets and variables → Actions."; exit 1; }
-          echo "All required secrets present."
-
-      - name: Stage files (strip dev artefacts)
-        run: |
-          mkdir -p _dist
-          rsync -a \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='.gitignore' \
-            --exclude='.cpanel.yml' \
-            --exclude='README.md' \
-            --exclude='SETUP.sh' \
-            --exclude='docs' \
-            --exclude='_dist' \
-            --exclude='node_modules' \
-            --exclude='.DS_Store' \
-            --exclude='*.log' \
-            ./ _dist/
-          echo "Staged $(find _dist -type f | wc -l) files."
-
-      - name: Install lftp
-        run: sudo apt-get update -qq && sudo apt-get install -y lftp
-
-      - name: Write SSH deploy key
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-      - name: Upload via SFTP (key auth)
-        env:
-          SFTP_HOST: ${{ secrets.FTP_SERVER }}
-          SFTP_USER: ${{ secrets.FTP_USERNAME }}
-          SFTP_PORT: ${{ secrets.FTP_PORT || '22' }}
-          SFTP_DIR:  ${{ secrets.FTP_TARGET_DIR || 'public_html' }}
-        run: |
-          lftp -c "
-            set sftp:connect-program 'ssh -a -x -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null';
-            set net:max-retries 3;
-            set net:timeout 30;
-            set net:reconnect-interval-base 5;
-            open -u '$SFTP_USER',xxx -p $SFTP_PORT sftp://$SFTP_HOST;
-            mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/;
-            bye
-          "
+          echo "::error::Timed out waiting for deployment to complete."; exit 1

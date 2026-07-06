@@ -1,0 +1,8 @@
+---
+# cPanel Git deployment. Runs server-side when cPanel deploys HEAD of this repo
+# (triggered by .github/workflows/deploy.yml over the cPanel API on port 2083).
+# Mirrors the repo into public_html, stripping dev artefacts. Single-line rsync
+# task by design — cPanel runs each task as one shell command.
+deployment:
+  tasks:
+    - /usr/bin/rsync -a --delete --exclude='.git' --exclude='.github' --exclude='.gitignore' --exclude='.cpanel.yml' --exclude='README.md' --exclude='SETUP.sh' --exclude='docs' --exclude='node_modules' --exclude='.DS_Store' --exclude='*.log' --exclude='error_log' --exclude='cgi-bin' --exclude='.well-known' ./ /home/chiefgr3l7q6/public_html/

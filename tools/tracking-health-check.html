@@ -40,10 +40,32 @@
   gtag('config', 'G-R9WM1Q42DN');
 </script>
 <style>
-  .sign{border-top:1px solid var(--rule);padding:18px 0;display:flex;gap:16px;align-items:flex-start;cursor:pointer}
-  .sign input{width:20px;height:20px;accent-color:var(--accent);margin-top:2px;flex-shrink:0}
-  .sign div strong{font-family:var(--font-display);font-weight:900;font-size:16px;letter-spacing:-.01em;text-transform:uppercase;display:block}
-  .sign div span{font-family:var(--font-body);font-size:14px;line-height:1.5;color:var(--soft-ink)}
+  .thc-grid{display:grid;grid-template-columns:300px 1fr;gap:36px;align-items:start}
+  .thc-sticky{position:sticky;top:96px}
+  .gauge-card{background:#fff;border:1px solid var(--rule);padding:24px}
+  .gauge-num-row{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:6px}
+  .gauge-num{font-family:var(--font-display);font-weight:900;font-size:52px;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+  .gauge-denom{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--soft-ink);opacity:.6}
+  .gauge-micro{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);text-align:center;margin-top:14px;min-height:16px}
+  .share-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;background:none;border:1.5px solid var(--ink);color:var(--ink);cursor:pointer;padding:10px 14px;width:100%;margin-top:18px;transition:border-color .12s,color .12s}
+  .share-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .share-msg{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center;margin-top:10px;display:none;word-break:break-all}
+  .sign-card{background:#fff;border:1px solid var(--rule);border-left:4px solid transparent;padding:16px 18px;margin-top:10px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;user-select:none;transition:border-color .12s,background .12s}
+  .sign-card:hover{border-color:var(--accent);border-left-color:var(--accent)}
+  .sign-card.on{border-left-color:var(--accent);background:var(--warm)}
+  .sign-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .sign-tick{width:18px;height:18px;border:1.5px solid var(--ink);flex-shrink:0;margin-top:2px;transition:background .12s,border-color .12s}
+  .sign-card.on .sign-tick{background:var(--accent);border-color:var(--accent)}
+  .sign-card strong{font-family:var(--font-display);font-weight:900;font-size:16px;letter-spacing:-.01em;text-transform:uppercase;display:block}
+  .sign-card span{font-family:var(--font-body);font-size:14px;line-height:1.5;color:var(--soft-ink)}
+  @media (max-width:860px){
+    .thc-grid{grid-template-columns:1fr}
+    .thc-sticky{position:static}
+    .gauge-card{max-width:360px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sign-card,.sign-tick,.share-btn{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -75,11 +97,37 @@
 </section>
 
 <section class="section bg-cream" style="padding-top:50px;padding-bottom:80px">
-  <div class="container" style="max-width:860px">
-    <div id="signs"></div>
+  <div class="container" style="max-width:960px">
+    <div class="thc-grid">
 
-    <div style="margin-top:40px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-      <button id="scoreBtn" class="cta" style="border:none;cursor:pointer">Get the verdict <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
+      <aside class="thc-sticky">
+        <div class="gauge-card">
+          <div class="mono-eyebrow" style="text-align:center;display:block">Tracking Trust Score</div>
+          <svg viewBox="0 0 240 136" style="width:100%;display:block;margin-top:14px" aria-hidden="true">
+            <path d="M 26 120 A 94 94 0 0 1 214 120" fill="none" stroke="var(--rule)" stroke-width="12"/>
+            <path id="gArc" d="M 26 120 A 94 94 0 0 1 214 120" fill="none" stroke="var(--ink)" stroke-width="12" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0"/>
+            <line id="gNeedle" x1="120" y1="120" x2="54" y2="120" stroke="var(--ink)" stroke-width="3" transform="rotate(180 120 120)"/>
+            <rect x="114" y="114" width="12" height="12" fill="var(--ink)"/>
+            <text x="26" y="134" text-anchor="middle" style="font-family:var(--font-mono);font-size:9px" fill="var(--soft-ink)" opacity=".6">0</text>
+            <text x="214" y="134" text-anchor="middle" style="font-family:var(--font-mono);font-size:9px" fill="var(--soft-ink)" opacity=".6">100</text>
+          </svg>
+          <div class="gauge-num-row">
+            <span id="gNum" class="gauge-num">100</span>
+            <span class="gauge-denom">/ 100</span>
+          </div>
+          <div id="micro" class="gauge-micro">0 ticked — untested</div>
+          <button id="shareBtn" class="share-btn" type="button">Copy result link</button>
+          <div id="shareMsg" class="share-msg">Link copied</div>
+        </div>
+      </aside>
+
+      <div>
+        <div id="signs"></div>
+        <div style="margin-top:28px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <button id="scoreBtn" class="cta" style="border:none;cursor:pointer">Get the verdict <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
+        </div>
+      </div>
+
     </div>
 
     <div id="result" style="display:none;margin-top:40px;background:#fff;border-top:4px solid var(--accent);padding:40px">
@@ -130,17 +178,124 @@
     ['iOS traffic looks weirdly cheap or dead', 'Since the privacy changes, your iPhone-heavy campaigns report almost nothing — and you\'re optimising on what\'s left.'],
     ['You can\'t answer "which campaign made money last month?"', 'Not roughly, not directionally — you genuinely can\'t say.'],
   ];
+  const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ticked = new Array(12).fill(false);
+  const cards = [];
+
+  /* ---- Sign toggle cards ---- */
   const root = document.getElementById('signs');
   SIGNS.forEach((s, i) => {
-    const label = document.createElement('label');
-    label.className = 'sign';
-    label.innerHTML = '<input type="checkbox" data-i="' + i + '"><div><strong>' + s[0] + '</strong><span>' + s[1] + '</span></div>';
-    root.appendChild(label);
+    const d = document.createElement('div');
+    d.className = 'sign-card';
+    d.setAttribute('role', 'checkbox');
+    d.setAttribute('aria-checked', 'false');
+    d.tabIndex = 0;
+    const tick = document.createElement('div');
+    tick.className = 'sign-tick';
+    const txt = document.createElement('div');
+    const st = document.createElement('strong');
+    st.textContent = s[0];
+    const sp = document.createElement('span');
+    sp.textContent = s[1];
+    txt.appendChild(st); txt.appendChild(sp);
+    d.appendChild(tick); d.appendChild(txt);
+    d.addEventListener('click', () => toggle(i));
+    d.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(i); }
+    });
+    root.appendChild(d);
+    cards.push(d);
   });
 
+  /* ---- Gauge ---- */
+  const gArc = document.getElementById('gArc');
+  const gNeedle = document.getElementById('gNeedle');
+  const gNum = document.getElementById('gNum');
+  let shown = 100, raf = null;
+  const scoreFor = (n) => Math.round(100 - n * 100 / 12);
+  function applyScore(v){
+    gArc.setAttribute('stroke-dashoffset', String(100 - v));
+    gArc.setAttribute('stroke', v < 75 ? 'var(--accent)' : 'var(--ink)');
+    gNeedle.setAttribute('transform', 'rotate(' + (v * 1.8).toFixed(2) + ' 120 120)');
+    gNum.textContent = String(Math.round(v));
+  }
+  function setScore(target){
+    if (REDUCED) { if (raf) { cancelAnimationFrame(raf); raf = null; } shown = target; applyScore(target); return; }
+    if (raf) cancelAnimationFrame(raf);
+    const from = shown, t0 = performance.now(), dur = 450;
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      shown = from + (target - from) * e;
+      applyScore(shown);
+      if (p < 1) raf = requestAnimationFrame(step);
+      else { shown = target; applyScore(target); raf = null; }
+    };
+    raf = requestAnimationFrame(step);
+  }
+  function microText(n){
+    let t;
+    if (n === 0) t = '0 ticked — clean, or unexamined';
+    else if (n <= 2) t = n + ' ticked — verify';
+    else if (n <= 5) t = n + ' ticked — numbers lying';
+    else t = n + ' ticked — flying blind';
+    document.getElementById('micro').textContent = t;
+  }
+
+  function count(){ return ticked.filter(Boolean).length; }
+  function bits(){ return ticked.map(t => t ? '1' : '0').join(''); }
+  function toggle(i){
+    ticked[i] = !ticked[i];
+    cards[i].classList.toggle('on', ticked[i]);
+    cards[i].setAttribute('aria-checked', String(ticked[i]));
+    const n = count();
+    setScore(scoreFor(n));
+    microText(n);
+    history.replaceState(null, '', n ? '#s=' + bits() : location.pathname + location.search);
+  }
+
+  /* ---- Restore from hash ---- */
+  const m = /^#s=([01]{12})$/.exec(location.hash);
+  if (m) {
+    m[1].split('').forEach((b, i) => {
+      if (b === '1') {
+        ticked[i] = true;
+        cards[i].classList.add('on');
+        cards[i].setAttribute('aria-checked', 'true');
+      }
+    });
+    const n = count();
+    shown = scoreFor(n);
+    applyScore(shown);
+    microText(n);
+  } else {
+    applyScore(100);
+    microText(0);
+  }
+
+  /* ---- Share link ---- */
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const url = location.origin + location.pathname + (count() ? '#s=' + bits() : '');
+    const msg = document.getElementById('shareMsg');
+    let ok = false;
+    try { await navigator.clipboard.writeText(url); ok = true; }
+    catch (err) {
+      const inp = document.createElement('input');
+      inp.value = url;
+      inp.style.cssText = 'position:absolute;left:-9999px';
+      document.body.appendChild(inp);
+      inp.select();
+      try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+      inp.remove();
+    }
+    msg.textContent = ok ? 'Link copied' : url;
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 2500);
+  });
+
+  /* ---- Full verdict ---- */
   document.getElementById('scoreBtn').addEventListener('click', () => {
-    const checked = [...document.querySelectorAll('#signs input:checked')];
-    const n = checked.length;
+    const n = count();
     let verdict, body;
     if (n === 0) { verdict = 'Either excellent — or unexamined.'; body = 'Zero ticks usually means one of two things: your tracking is genuinely solid, or nobody has looked closely enough to notice. If you\'ve never reconciled platform numbers against revenue, do that first.'; }
     else if (n <= 2) { verdict = 'Trust, but verify.'; body = 'A couple of warning signs — probably fixable in days, not months. Fix them before they compound: every optimisation decision made on bad data multiplies the cost.'; }
@@ -150,14 +305,18 @@
     document.getElementById('scoreBig').textContent = n + '/12';
     document.getElementById('verdict').textContent = verdict;
     document.getElementById('verdictBody').textContent = body;
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    const resultEl = document.getElementById('result');
+    resultEl.style.display = 'block';
     if (typeof gtag === 'function') gtag('event', 'tool_complete', { tool: 'tracking_health_check', signs: n });
 
     window.__thcSummary = 'Tracking Health Check: ' + n + '/12 signs ticked (' + verdict + ')\nTicked: ' +
-      (checked.map(c => SIGNS[+c.dataset.i][0]).join('; ') || 'none');
+      (SIGNS.filter((s, i) => ticked[i]).map(s => s[0]).join('; ') || 'none');
+    window.__toolSummary = window.__thcSummary;
+
+    if (typeof resultEl.scrollIntoView === 'function') resultEl.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
   });
 
+  /* ---- Lead capture ---- */
   document.getElementById('leadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const f = e.target;

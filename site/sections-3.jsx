@@ -327,7 +327,7 @@ function BigCTA() {
               fontFamily: T.display, fontWeight: 900, fontSize: 16, letterSpacing: '.04em', textTransform: 'uppercase',
               textDecoration: 'none',
             }}>
-              +27 66 212 7955
+              Call me now
               <Arrow size={16} color={T.paper} stroke={3} />
             </a>
           </div>
@@ -368,7 +368,7 @@ function Footer() {
           {[
             { h: 'Practice', items: ['Web Development', 'PPC & Paid', 'Tracking & Analytics', 'CRO', 'Marketing Automation'] },
             { h: 'Studio', items: ['About Rob', 'The method', 'Field notes', 'Free tools', 'Engagement models', 'FAQ'] },
-            { h: 'Contact', items: ['rob@chiefgrowthengineer.com', '+27 66 212 7955', 'Cape Town · GMT+2', 'LinkedIn · Rob Louw'] },
+            { h: 'Contact', items: ['rob@chiefgrowthengineer.com', 'Call now — via /contact', 'Cape Town · GMT+2', 'LinkedIn · Rob Louw'] },
           ].map(col => (
             <div key={col.h}>
               <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.32em', textTransform: 'uppercase', color: T.accent, marginBottom: 18 }}>

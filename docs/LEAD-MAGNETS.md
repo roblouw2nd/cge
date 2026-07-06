@@ -1,6 +1,8 @@
 # CGE Lead Magnets — Specification & Build Guide
 
-Reference document for the four free tools at `chiefgrowthengineer.com/tools/`. Written so any developer or AI model can rebuild, modify or extend them without prior context. Last updated: 2026-07-06.
+Reference document for the four free tools at `chiefgrowthengineer.com/tools/`. Written so any developer or AI model can rebuild, modify or extend them without prior context. Last updated: 2026-07-06 (v2 — interactive rebuild).
+
+**v2 additions (all four tools; content, scoring, verdict copy and lead-capture contract unchanged):** the audit is now a one-question-at-a-time wizard (keyboard 1/2/3, back button, progress bar) ending in an animated count-up + SVG radar chart of the four pillars; the tracking check has a live semicircular "Tracking Trust Score" gauge (starts at 100, drops per ticked sign) with toggle-card signs; the waste finder has a log-scale spend slider, leak toggle cards, an always-live result and a real-time "burned while this page has been open" ticker; the ROI calculator has US/UK/UAE/ZA market presets, slider+number input pairs, and an animated SVG bar chart. All four support shareable result links via URL hash (restored on load), respect `prefers-reduced-motion`, expose `window.__toolSummary` after scoring for tests, and debounce high-frequency `tool_complete` events (ROI/waste). Former roadmap items #3 (debounce), #4 (shareable results) and #7 (localised defaults) are done.
 
 ---
 

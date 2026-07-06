@@ -40,13 +40,37 @@
   gtag('config', 'G-R9WM1Q42DN');
 </script>
 <style>
-  .audit-q{border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
-  .audit-q p{font-family:var(--font-body);font-size:16px;line-height:1.5;margin:0}
-  .audit-opts{display:flex;gap:6px}
-  .audit-opts button{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;border:1.5px solid var(--rule);background:#fff;cursor:pointer}
-  .audit-opts button.sel{background:var(--accent);border-color:var(--accent);color:#fff}
-  .pillar-h{font-family:var(--font-display);font-weight:900;font-size:22px;letter-spacing:-.02em;text-transform:uppercase;margin:44px 0 6px}
-  @media (max-width:640px){.audit-q{grid-template-columns:1fr}}
+  /* Wizard */
+  .wiz{background:#fff;border:1px solid var(--rule);padding:36px 40px;min-height:380px;display:flex;flex-direction:column}
+  .wiz-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .wiz-count{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--soft-ink);opacity:.65}
+  .wiz-bar{height:3px;background:var(--rule);margin-top:14px}
+  .wiz-bar div{height:100%;background:var(--accent);width:0;transition:width .25s ease}
+  .wiz-stage{transition:opacity .14s ease,transform .14s ease;flex:1;display:flex;flex-direction:column;justify-content:center}
+  .wiz-stage.out{opacity:0;transform:translateY(6px)}
+  .wiz-q{font-family:var(--font-display);font-weight:900;font-size:clamp(19px,2.6vw,27px);letter-spacing:-.02em;line-height:1.15;text-transform:uppercase;margin-top:28px}
+  .wiz-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px}
+  .wiz-opts button{font-family:var(--font-display);font-weight:900;font-size:16px;letter-spacing:.04em;text-transform:uppercase;padding:20px 10px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:background .12s,color .12s,border-color .12s}
+  .wiz-opts button .k{font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.2em;opacity:.5}
+  .wiz-opts button:hover{border-color:var(--accent)}
+  .wiz-opts button.sel{background:var(--accent);border-color:var(--accent);color:#fff}
+  .wiz-opts button.sel .k{opacity:.8}
+  .wiz-nav{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .wiz-back{font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;background:none;border:none;color:var(--ink);cursor:pointer;padding:8px 0}
+  .wiz-back:disabled{opacity:.3;cursor:default}
+  .wiz-hint{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.5}
+  /* Results */
+  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:28px}
+  .pillar-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:760px){
+    .wiz{padding:26px 20px;min-height:0}
+    .wiz-opts{grid-template-columns:1fr}
+    .res-grid{grid-template-columns:1fr}
+    .wiz-hint{display:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wiz-bar div,.wiz-stage{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -71,7 +95,8 @@
   <div class="container">
     <div class="section-label">§ Tool 01 — Growth Engine Audit</div>
     <h1 class="display" style="margin-top:24px">Score your<br><span style="color:var(--accent)">growth engine.</span></h1>
-    <p class="lede" style="margin-top:28px;max-width:680px">
+    <div class="mono-eyebrow" style="margin-top:18px;color:var(--soft-ink);opacity:.7">3 minutes · 12 questions · no signup</div>
+    <p class="lede" style="margin-top:20px;max-width:680px">
       Twelve questions, four pillars, three minutes. Answer honestly — the score is computed on this page, nothing is sent anywhere unless you ask for the follow-up. This is the first-pass audit I run at the start of every engagement.
     </p>
   </div>
@@ -79,21 +104,45 @@
 
 <section class="section bg-cream" style="padding-top:50px;padding-bottom:80px">
   <div class="container" style="max-width:860px">
-    <div id="audit"></div>
 
-    <div style="margin-top:44px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-      <button id="scoreBtn" class="cta" style="border:none;cursor:pointer">Get my score <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
-      <span id="progress" class="mono-eyebrow" style="opacity:.6">0 / 12 answered</span>
+    <div id="wizard" class="wiz">
+      <div class="wiz-top">
+        <div id="wizPillar" class="mono-eyebrow"></div>
+        <div id="wizCount" class="wiz-count">Question 1 / 12</div>
+      </div>
+      <div class="wiz-bar"><div id="wizFill"></div></div>
+      <div id="wizStage" class="wiz-stage">
+        <div id="wizQ" class="wiz-q"></div>
+        <div id="wizOpts" class="wiz-opts">
+          <button type="button"><span class="k">Press 1</span>No</button>
+          <button type="button"><span class="k">Press 2</span>Partly</button>
+          <button type="button"><span class="k">Press 3</span>Yes</button>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button id="wizBack" class="wiz-back" type="button" disabled>&larr; Back</button>
+        <span class="wiz-hint">Keys: 1 / 2 / 3 to answer · &larr; to go back</span>
+      </div>
     </div>
 
-    <div id="result" style="display:none;margin-top:40px;background:#fff;border-top:4px solid var(--accent);padding:40px">
+    <div id="result" style="display:none;background:#fff;border-top:4px solid var(--accent);padding:40px">
       <div class="mono-eyebrow" style="margin-bottom:10px">Your result</div>
       <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
         <div id="scoreBig" style="font-family:var(--font-display);font-weight:900;font-size:72px;letter-spacing:-.04em;color:var(--accent);line-height:1"></div>
         <div id="verdict" style="font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.02em;text-transform:uppercase"></div>
       </div>
       <p id="verdictBody" style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--soft-ink);margin-top:14px"></p>
-      <div id="pillars" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px"></div>
+
+      <div class="res-grid">
+        <div id="radarWrap"></div>
+        <div id="pillars" class="pillar-grid"></div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:30px">
+        <button id="copyLink" class="cta cta-ghost" type="button" style="cursor:pointer">Copy my result link</button>
+        <a id="retake" href="#" class="mono-eyebrow" style="color:var(--soft-ink);text-decoration:underline;text-underline-offset:3px">Retake the audit</a>
+        <span id="copyMsg" class="mono-eyebrow" style="display:none">Link copied</span>
+      </div>
 
       <div style="border-top:1px solid var(--rule);margin-top:30px;padding-top:26px">
         <div class="mono-eyebrow" style="margin-bottom:8px">Want the fix-list?</div>
@@ -143,74 +192,191 @@
       'If your marketing person or agency vanished tomorrow, would the documentation let someone take over?',
     ]},
   ];
-  const OPTS = [['No',0],['Partly',1],['Yes',2]];
+  const QUESTIONS = [];
+  PILLARS.forEach(p => p.qs.forEach(q => QUESTIONS.push({ pillar: p.name, q })));
   const answers = new Array(12).fill(null);
-  const root = document.getElementById('audit');
+  const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let qi = 0;
-  PILLARS.forEach(p => {
-    const h = document.createElement('div');
-    h.className = 'pillar-h';
-    h.innerHTML = '<span style="color:var(--accent)">[</span> ' + p.name + ' <span style="color:var(--accent)">]</span>';
-    root.appendChild(h);
-    p.qs.forEach(q => {
-      const idx = qi++;
-      const row = document.createElement('div');
-      row.className = 'audit-q';
-      const pEl = document.createElement('p');
-      pEl.textContent = q;
-      const opts = document.createElement('div');
-      opts.className = 'audit-opts';
-      OPTS.forEach(([label, val]) => {
-        const b = document.createElement('button');
-        b.type = 'button'; b.textContent = label;
-        b.addEventListener('click', () => {
-          answers[idx] = val;
-          [...opts.children].forEach(c => c.classList.remove('sel'));
-          b.classList.add('sel');
-          document.getElementById('progress').textContent = answers.filter(a => a !== null).length + ' / 12 answered';
-        });
-        opts.appendChild(b);
-      });
-      row.appendChild(pEl); row.appendChild(opts);
-      root.appendChild(row);
-    });
+  const wizard = document.getElementById('wizard');
+  const stage = document.getElementById('wizStage');
+  const pillarEl = document.getElementById('wizPillar');
+  const countEl = document.getElementById('wizCount');
+  const fillEl = document.getElementById('wizFill');
+  const qEl = document.getElementById('wizQ');
+  const optBtns = [...document.querySelectorAll('#wizOpts button')];
+  const backBtn = document.getElementById('wizBack');
+  const resultEl = document.getElementById('result');
+
+  let cur = 0, busy = false;
+
+  function paint(){
+    pillarEl.textContent = QUESTIONS[cur].pillar;
+    countEl.textContent = 'Question ' + (cur + 1) + ' / 12';
+    fillEl.style.width = ((cur + 1) / 12 * 100) + '%';
+    qEl.textContent = QUESTIONS[cur].q;
+    optBtns.forEach((b, i) => b.classList.toggle('sel', answers[cur] === i));
+    backBtn.disabled = cur === 0;
+  }
+  function showQ(i){
+    cur = Math.max(0, Math.min(11, i));
+    if (REDUCED) { paint(); return; }
+    stage.classList.add('out');
+    setTimeout(() => { paint(); stage.classList.remove('out'); }, 140);
+  }
+  function pick(v){
+    if (busy || wizard.style.display === 'none') return;
+    answers[cur] = v;
+    optBtns.forEach((b, i) => b.classList.toggle('sel', i === v));
+    busy = true;
+    setTimeout(() => {
+      busy = false;
+      if (cur < 11) showQ(cur + 1);
+      else finish();
+    }, 250);
+  }
+  optBtns.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+  backBtn.addEventListener('click', () => { if (cur > 0 && !busy) showQ(cur - 1); });
+  document.addEventListener('keydown', (e) => {
+    if (wizard.style.display === 'none') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target;
+    if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    if (e.key === '1' || e.key === '2' || e.key === '3') { e.preventDefault(); pick(+e.key - 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (cur > 0 && !busy) showQ(cur - 1); }
   });
 
-  document.getElementById('scoreBtn').addEventListener('click', () => {
-    if (answers.some(a => a === null)) {
-      document.getElementById('progress').textContent = 'Answer all 12 first — ' + answers.filter(a => a !== null).length + ' / 12 done';
-      return;
+  /* ---- Radar chart ---- */
+  const RCX = 210, RCY = 132, RR = 88, RDEG = [-90, 0, 90, 180];
+  function rpt(i, v){
+    const a = RDEG[i] * Math.PI / 180;
+    return [RCX + Math.cos(a) * RR * v / 6, RCY + Math.sin(a) * RR * v / 6];
+  }
+  function esc(s){ return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function buildRadar(pillarScores, weakestIdx){
+    let s = '<svg viewBox="0 0 420 264" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;display:block" role="img" aria-label="Radar chart of the four pillar scores">';
+    [2, 4, 6].forEach(v => {
+      s += '<polygon points="' + [0,1,2,3].map(i => rpt(i, v).map(n => n.toFixed(1)).join(',')).join(' ') + '" fill="none" stroke="var(--rule)" stroke-width="1"/>';
+    });
+    for (let i = 0; i < 4; i++) {
+      const p = rpt(i, 6);
+      s += '<line x1="' + RCX + '" y1="' + RCY + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="var(--rule)" stroke-width="1"/>';
     }
-    const total = answers.reduce((a,b) => a+b, 0);
-    const pillarScores = PILLARS.map((p,i) => ({ name: p.name, score: answers.slice(i*3, i*3+3).reduce((a,b)=>a+b,0) }));
-    const weakest = pillarScores.reduce((min,p) => p.score < min.score ? p : min, pillarScores[0]);
+    s += '<polygon id="radarPoly" points="' + RCX + ',' + RCY + '" fill="var(--accent)" fill-opacity=".14" stroke="var(--accent)" stroke-width="2"/>';
+    for (let i = 0; i < 4; i++) s += '<rect id="radarDot' + i + '" x="' + (RCX - 3) + '" y="' + (RCY - 3) + '" width="6" height="6" fill="var(--accent)"/>';
+    const lp = [[RCX, RCY - RR - 16, 'middle'], [RCX + RR + 14, RCY + 4, 'start'], [RCX, RCY + RR + 26, 'middle'], [RCX - RR - 14, RCY + 4, 'end']];
+    pillarScores.forEach((p, i) => {
+      const w = i === weakestIdx;
+      s += '<text x="' + lp[i][0] + '" y="' + lp[i][1] + '" text-anchor="' + lp[i][2] + '" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase" fill="' + (w ? 'var(--accent)' : 'var(--soft-ink)') + '"' + (w ? ' font-weight="700"' : '') + '>' + esc(p.name) + ' ' + p.score + '/6</text>';
+    });
+    s += '</svg>';
+    document.getElementById('radarWrap').innerHTML = s;
+  }
+  function setRadar(vals){
+    const pts = [0,1,2,3].map(i => rpt(i, vals[i]));
+    document.getElementById('radarPoly').setAttribute('points', pts.map(p => p.map(n => n.toFixed(1)).join(',')).join(' '));
+    pts.forEach((p, i) => {
+      const d = document.getElementById('radarDot' + i);
+      d.setAttribute('x', (p[0] - 3).toFixed(1));
+      d.setAttribute('y', (p[1] - 3).toFixed(1));
+    });
+  }
+
+  /* ---- Results ---- */
+  function renderResults(doScroll){
+    const total = answers.reduce((a, b) => a + b, 0);
+    const pillarScores = PILLARS.map((p, i) => ({ name: p.name, score: answers.slice(i * 3, i * 3 + 3).reduce((a, b) => a + b, 0) }));
+    const weakest = pillarScores.reduce((min, p) => p.score < min.score ? p : min, pillarScores[0]);
+    const weakestIdx = pillarScores.indexOf(weakest);
     let verdict, body;
     if (total >= 20) { verdict = 'Engineered.'; body = 'Your engine is in the top tier — the wins from here are compounding ones: incrementality testing, lead-quality feedback loops, and squeezing CAC. Worth a second opinion, rarely a rebuild.'; }
     else if (total >= 14) { verdict = 'Running, leaking.'; body = 'The engine works but money is leaking — most likely in ' + weakest.name.toLowerCase() + '. Fixing the weakest pillar usually pays for itself within a quarter.'; }
     else if (total >= 8) { verdict = 'Held together.'; body = 'Parts exist, but they don\'t form a system — decisions are being made on numbers that can\'t be trusted. Start with tracking; everything else depends on it.'; }
     else { verdict = 'Pre-engine.'; body = 'You\'re running on effort and intuition. That\'s normal early on — but every month of paid spend without instrumentation is tuition you don\'t get back.'; }
 
-    document.getElementById('scoreBig').textContent = total + '/24';
     document.getElementById('verdict').textContent = verdict;
     document.getElementById('verdictBody').textContent = body;
+    buildRadar(pillarScores, weakestIdx);
     const pc = document.getElementById('pillars');
     pc.innerHTML = '';
-    pillarScores.forEach(p => {
+    pillarScores.forEach((p, i) => {
       const d = document.createElement('div');
       d.style.cssText = 'border-top:2px solid var(--accent);padding-top:10px';
-      d.innerHTML = '<div style="font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.03em">' + p.score + '/6</div><div class="mono-eyebrow" style="opacity:.65;margin-top:4px">' + p.name + '</div>';
+      d.innerHTML = '<div style="font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.03em">' + p.score + '/6</div><div class="mono-eyebrow" style="' + (i === weakestIdx ? '' : 'color:var(--soft-ink);opacity:.65;') + 'margin-top:4px">' + esc(p.name) + '</div>';
       pc.appendChild(d);
     });
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+
+    const scoreBig = document.getElementById('scoreBig');
+    if (REDUCED) {
+      scoreBig.textContent = total + '/24';
+      setRadar(pillarScores.map(p => p.score));
+    } else {
+      const t0 = performance.now(), dur = 800;
+      const step = (t) => {
+        const p = Math.min(1, (t - t0) / dur);
+        const e = 1 - Math.pow(1 - p, 3);
+        scoreBig.textContent = Math.round(total * e) + '/24';
+        setRadar(pillarScores.map(ps => ps.score * e));
+        if (p < 1) requestAnimationFrame(step);
+        else { scoreBig.textContent = total + '/24'; setRadar(pillarScores.map(ps => ps.score)); }
+      };
+      requestAnimationFrame(step);
+    }
+
+    wizard.style.display = 'none';
+    resultEl.style.display = 'block';
     if (typeof gtag === 'function') gtag('event', 'tool_complete', { tool: 'growth_engine_audit', score: total, weakest_pillar: weakest.name });
 
     window.__auditSummary = 'Growth Engine Audit result: ' + total + '/24 (' + verdict + ')\n' +
       pillarScores.map(p => p.name + ': ' + p.score + '/6').join('\n') +
       '\nWeakest pillar: ' + weakest.name;
+    window.__toolSummary = window.__auditSummary;
+
+    if (doScroll && typeof resultEl.scrollIntoView === 'function') resultEl.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+  }
+  function finish(){ renderResults(true); }
+
+  /* ---- Share link ---- */
+  document.getElementById('copyLink').addEventListener('click', async () => {
+    const url = location.origin + location.pathname + '#a=' + answers.join('');
+    const msg = document.getElementById('copyMsg');
+    let ok = false;
+    try { await navigator.clipboard.writeText(url); ok = true; }
+    catch (err) {
+      const inp = document.createElement('input');
+      inp.value = url;
+      inp.style.cssText = 'position:absolute;left:-9999px';
+      document.body.appendChild(inp);
+      inp.select();
+      try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+      inp.remove();
+    }
+    msg.textContent = ok ? 'Link copied' : url;
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 2500);
   });
 
+  /* ---- Retake ---- */
+  document.getElementById('retake').addEventListener('click', (e) => {
+    e.preventDefault();
+    for (let i = 0; i < 12; i++) answers[i] = null;
+    history.replaceState(null, '', location.pathname + location.search);
+    resultEl.style.display = 'none';
+    wizard.style.display = 'flex';
+    cur = 0;
+    paint();
+    if (typeof wizard.scrollIntoView === 'function') wizard.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+  });
+
+  /* ---- Init: hash restore or wizard ---- */
+  const m = /^#a=([0-2]{12})$/.exec(location.hash);
+  if (m) {
+    m[1].split('').forEach((d, i) => { answers[i] = +d; });
+    renderResults(false);
+  } else {
+    paint();
+  }
+
+  /* ---- Lead capture ---- */
   document.getElementById('leadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const f = e.target;

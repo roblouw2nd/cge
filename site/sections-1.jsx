@@ -60,10 +60,10 @@ function Hero() {
         {/* Right sidebar — stat strip */}
         <div style={{ display: 'flex', flexDirection: 'column', borderLeft: `1px solid ${T.rule}`, paddingLeft: 30 }}>
           {[
-            ['8 yrs', 'In performance marketing & growth'],
-            ['3×', 'Fleet growth — IE/UK luxury transport'],
-            ['0→7 figs', 'B2B online store, built from scratch'],
-            ['5 yrs', 'Longest client relationship, ongoing'],
+            ['Days', 'To first fixes live — not months of onboarding'],
+            ['3×', 'More vehicles on the road for a transport client'],
+            ['0→7 figs', 'Store revenue engineered from a standing start'],
+            ['100%', 'Senior work on your account — no juniors, no handoffs'],
           ].map(([k, v], i) => (
             <div key={k} style={{ padding: '20px 0', borderBottom: i < 3 ? `1px solid ${T.rule}` : 'none' }}>
               <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 38, letterSpacing: '-.03em', color: i === 0 ? T.accent : T.ink, lineHeight: 1 }}>

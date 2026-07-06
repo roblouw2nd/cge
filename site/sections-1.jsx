@@ -6,6 +6,7 @@ function Nav() {
     ['Practice', '/#services'],
     ['Method', '/#method'],
     ['Work', '/#work'],
+    ['Tools', '/tools/'],
     ['Thinking', '/#thinking'],
     ['About', '/#about'],
   ];
@@ -60,9 +61,9 @@ function Hero() {
         <div style={{ display: 'flex', flexDirection: 'column', borderLeft: `1px solid ${T.rule}`, paddingLeft: 30 }}>
           {[
             ['8 yrs', 'In performance marketing & growth'],
-            ['3×', 'Fleet growth — EU luxury transport'],
-            ['Local→Nat', 'Brands scaled across markets'],
-            ['GMT+2', 'Flexible to US & Asia hours'],
+            ['3×', 'Fleet growth — IE/UK luxury transport'],
+            ['0→7 figs', 'B2B online store, built from scratch'],
+            ['5 yrs', 'Longest client relationship, ongoing'],
           ].map(([k, v], i) => (
             <div key={k} style={{ padding: '20px 0', borderBottom: i < 3 ? `1px solid ${T.rule}` : 'none' }}>
               <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 38, letterSpacing: '-.03em', color: i === 0 ? T.accent : T.ink, lineHeight: 1 }}>
@@ -81,7 +82,7 @@ function Hero() {
 
 // ─── MARQUEE / CLIENTS ──────────────────────────────────────────────
 function Marquee() {
-  const names = ['Fractional growth engineering', 'Google Ads', 'Conversion tracking', 'Data integrity', 'Online stores', 'Business systems', 'Local → national', 'Luxury transport', 'Fractional CMO', 'Performance marketing'];
+  const names = ['Fractional growth engineering', 'Google Ads', 'Server-side tracking', 'Data integrity', 'Online stores', 'Quote platforms', 'Lead quality', 'Luxury transport', 'Hospitality', 'Self-storage', 'Medical', 'B2B ecommerce'];
   return (
     <section style={{ background: T.ink, color: T.paper, padding: '28px 0', overflow: 'hidden', borderTop: `2px solid ${T.accent}` }}>
       <div style={{

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Growth Engine Audit — Free Self-Scoring Tool | Chief Growth Engineer</title>
+<meta name="description" content="Score your growth engine out of 24 in three minutes — tracking &amp; data, paid acquisition, website &amp; conversion, systems &amp; process. The same first-pass audit a fractional growth engineer runs on real engagements.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/tools/growth-engine-audit.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chiefgrowthengineer.com/tools/growth-engine-audit.html">
+<meta property="og:title" content="Growth Engine Audit — Free Self-Scoring Tool">
+<meta property="og:description" content="Score your growth engine out of 24 in three minutes and find your bottleneck pillar.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Growth Engine Audit",
+  "url": "https://chiefgrowthengineer.com/tools/growth-engine-audit.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@id": "https://chiefgrowthengineer.com/#business" },
+  "description": "Free self-scoring audit of a company's growth engine across four pillars: tracking and data, paid acquisition, website and conversion, systems and process."
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+<style>
+  .audit-q{border-top:1px solid var(--rule);padding:20px 0;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+  .audit-q p{font-family:var(--font-body);font-size:16px;line-height:1.5;margin:0}
+  .audit-opts{display:flex;gap:6px}
+  .audit-opts button{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;border:1.5px solid var(--rule);background:#fff;cursor:pointer}
+  .audit-opts button.sel{background:var(--accent);border-color:var(--accent);color:#fff}
+  .pillar-h{font-family:var(--font-display);font-weight:900;font-size:22px;letter-spacing:-.02em;text-transform:uppercase;margin:44px 0 6px}
+  @media (max-width:640px){.audit-q{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/" class="active">Tools</a>
+      <a href="/blog/">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<section class="section" style="padding-top:80px;padding-bottom:40px">
+  <div class="container">
+    <div class="section-label">§ Tool 01 — Growth Engine Audit</div>
+    <h1 class="display" style="margin-top:24px">Score your<br><span style="color:var(--accent)">growth engine.</span></h1>
+    <p class="lede" style="margin-top:28px;max-width:680px">
+      Twelve questions, four pillars, three minutes. Answer honestly — the score is computed on this page, nothing is sent anywhere unless you ask for the follow-up. This is the first-pass audit I run at the start of every engagement.
+    </p>
+  </div>
+</section>
+
+<section class="section bg-cream" style="padding-top:50px;padding-bottom:80px">
+  <div class="container" style="max-width:860px">
+    <div id="audit"></div>
+
+    <div style="margin-top:44px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <button id="scoreBtn" class="cta" style="border:none;cursor:pointer">Get my score <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
+      <span id="progress" class="mono-eyebrow" style="opacity:.6">0 / 12 answered</span>
+    </div>
+
+    <div id="result" style="display:none;margin-top:40px;background:#fff;border-top:4px solid var(--accent);padding:40px">
+      <div class="mono-eyebrow" style="margin-bottom:10px">Your result</div>
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap">
+        <div id="scoreBig" style="font-family:var(--font-display);font-weight:900;font-size:72px;letter-spacing:-.04em;color:var(--accent);line-height:1"></div>
+        <div id="verdict" style="font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.02em;text-transform:uppercase"></div>
+      </div>
+      <p id="verdictBody" style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--soft-ink);margin-top:14px"></p>
+      <div id="pillars" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px"></div>
+
+      <div style="border-top:1px solid var(--rule);margin-top:30px;padding-top:26px">
+        <div class="mono-eyebrow" style="margin-bottom:8px">Want the fix-list?</div>
+        <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0 0 16px">I'll reply with a prioritised list of fixes for your weakest pillar — written personally, usually within 24 hours. No sequence, no spam.</p>
+        <form id="leadForm" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input type="hidden" name="company_url" value="" tabindex="-1">
+          <input name="name" type="text" required placeholder="Your name" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:180px;outline:none">
+          <input name="email" type="email" required placeholder="you@company.com" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:240px;outline:none">
+          <button type="submit" class="cta" style="border:none;cursor:pointer">Send me the fixes</button>
+        </form>
+        <p id="leadMsg" class="mono-eyebrow" style="display:none;margin-top:12px;color:var(--accent)"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/tools/" style="color:inherit">More free tools</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const PILLARS = [
+    { name: 'Tracking & data', qs: [
+      'If a sale or lead happens, do you know — with confidence — which channel and campaign it came from?',
+      'Is your conversion tracking server-side (or at least first-party), rather than relying only on browser pixels?',
+      'Do your platform numbers (Google Ads, Meta) roughly reconcile with your CRM or bank account?',
+    ]},
+    { name: 'Paid acquisition', qs: [
+      'Are your campaigns optimising toward real revenue or qualified leads — not clicks or raw form-fills?',
+      'Has someone reviewed your search terms and negative keywords in the last 30 days?',
+      'Do you know your cost per qualified lead (or CAC) for each channel you spend on?',
+    ]},
+    { name: 'Website & conversion', qs: [
+      'Can a visitor get a price, a quote, or a booking without emailing you and waiting?',
+      'Does your site load in under 3 seconds on a phone?',
+      'Have you run a deliberate conversion experiment (A/B test or structured change) in the last quarter?',
+    ]},
+    { name: 'Systems & process', qs: [
+      'Do leads land in one system (CRM) automatically — no copy-pasting from inboxes?',
+      'Is there a weekly number the business actually runs on — reviewed by a named person?',
+      'If your marketing person or agency vanished tomorrow, would the documentation let someone take over?',
+    ]},
+  ];
+  const OPTS = [['No',0],['Partly',1],['Yes',2]];
+  const answers = new Array(12).fill(null);
+  const root = document.getElementById('audit');
+
+  let qi = 0;
+  PILLARS.forEach(p => {
+    const h = document.createElement('div');
+    h.className = 'pillar-h';
+    h.innerHTML = '<span style="color:var(--accent)">[</span> ' + p.name + ' <span style="color:var(--accent)">]</span>';
+    root.appendChild(h);
+    p.qs.forEach(q => {
+      const idx = qi++;
+      const row = document.createElement('div');
+      row.className = 'audit-q';
+      const pEl = document.createElement('p');
+      pEl.textContent = q;
+      const opts = document.createElement('div');
+      opts.className = 'audit-opts';
+      OPTS.forEach(([label, val]) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = label;
+        b.addEventListener('click', () => {
+          answers[idx] = val;
+          [...opts.children].forEach(c => c.classList.remove('sel'));
+          b.classList.add('sel');
+          document.getElementById('progress').textContent = answers.filter(a => a !== null).length + ' / 12 answered';
+        });
+        opts.appendChild(b);
+      });
+      row.appendChild(pEl); row.appendChild(opts);
+      root.appendChild(row);
+    });
+  });
+
+  document.getElementById('scoreBtn').addEventListener('click', () => {
+    if (answers.some(a => a === null)) {
+      document.getElementById('progress').textContent = 'Answer all 12 first — ' + answers.filter(a => a !== null).length + ' / 12 done';
+      return;
+    }
+    const total = answers.reduce((a,b) => a+b, 0);
+    const pillarScores = PILLARS.map((p,i) => ({ name: p.name, score: answers.slice(i*3, i*3+3).reduce((a,b)=>a+b,0) }));
+    const weakest = pillarScores.reduce((min,p) => p.score < min.score ? p : min, pillarScores[0]);
+    let verdict, body;
+    if (total >= 20) { verdict = 'Engineered.'; body = 'Your engine is in the top tier — the wins from here are compounding ones: incrementality testing, lead-quality feedback loops, and squeezing CAC. Worth a second opinion, rarely a rebuild.'; }
+    else if (total >= 14) { verdict = 'Running, leaking.'; body = 'The engine works but money is leaking — most likely in ' + weakest.name.toLowerCase() + '. Fixing the weakest pillar usually pays for itself within a quarter.'; }
+    else if (total >= 8) { verdict = 'Held together.'; body = 'Parts exist, but they don\'t form a system — decisions are being made on numbers that can\'t be trusted. Start with tracking; everything else depends on it.'; }
+    else { verdict = 'Pre-engine.'; body = 'You\'re running on effort and intuition. That\'s normal early on — but every month of paid spend without instrumentation is tuition you don\'t get back.'; }
+
+    document.getElementById('scoreBig').textContent = total + '/24';
+    document.getElementById('verdict').textContent = verdict;
+    document.getElementById('verdictBody').textContent = body;
+    const pc = document.getElementById('pillars');
+    pc.innerHTML = '';
+    pillarScores.forEach(p => {
+      const d = document.createElement('div');
+      d.style.cssText = 'border-top:2px solid var(--accent);padding-top:10px';
+      d.innerHTML = '<div style="font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.03em">' + p.score + '/6</div><div class="mono-eyebrow" style="opacity:.65;margin-top:4px">' + p.name + '</div>';
+      pc.appendChild(d);
+    });
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    if (typeof gtag === 'function') gtag('event', 'tool_complete', { tool: 'growth_engine_audit', score: total, weakest_pillar: weakest.name });
+
+    window.__auditSummary = 'Growth Engine Audit result: ' + total + '/24 (' + verdict + ')\n' +
+      pillarScores.map(p => p.name + ': ' + p.score + '/6').join('\n') +
+      '\nWeakest pillar: ' + weakest.name;
+  });
+
+  document.getElementById('leadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const data = new FormData();
+    data.append('name', f.name.value);
+    data.append('email', f.email.value);
+    data.append('budget', 'Tool: Growth Engine Audit');
+    data.append('message', (window.__auditSummary || 'Audit not scored') + '\n\nPlease send me the fix-list.');
+    data.append('company_url', '');
+    const msg = document.getElementById('leadMsg');
+    try {
+      const r = await fetch('/contact.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      msg.textContent = r.ok ? 'Sent — I\'ll reply within 24 hours.' : 'Something went wrong — email rob@chiefgrowthengineer.com instead.';
+    } catch { msg.textContent = 'Something went wrong — email rob@chiefgrowthengineer.com instead.'; }
+    msg.style.display = 'block';
+    if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'growth_engine_audit' });
+  });
+})();
+</script>
+
+</body>
+</html>

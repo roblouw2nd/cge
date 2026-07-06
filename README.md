@@ -68,8 +68,10 @@ php -S localhost:8000
 
 ## Deployment — Afrihost via GitHub Actions
 
-Every push to `main` triggers `.github/workflows/deploy.yml` which syncs the repo to your Afrihost
-`public_html/` via FTP using [SamKirkland/FTP-Deploy-Action](https://github.com/SamKirkland/FTP-Deploy-Action).
+Every push to `main` triggers `.github/workflows/deploy.yml`, which mirrors the repo to your Afrihost
+`public_html/` over **SFTP** (port 22) using `lftp`. Afrihost's firewall blocks plain passive FTP, so
+SFTP is the supported transport. This GitHub Action is the **single** deploy mechanism — there is no
+cPanel auto-deploy (the old `.cpanel.yml` was removed to avoid two systems writing to `public_html`).
 
 ### One-time setup
 
@@ -81,18 +83,21 @@ Every push to `main` triggers `.github/workflows/deploy.yml` which syncs the rep
    - **Password:** as set
    - **Target dir:** usually `public_html/` (Afrihost shared default). If your account routes the domain to a different folder, note that path.
 
-3. **Add three secrets to the GitHub repo** at <https://github.com/roblouw2nd/cge/settings/secrets/actions>:
-   - `FTP_SERVER` — e.g. `ftp.chiefgrowthengineer.com`
-   - `FTP_USERNAME` — full username from cPanel
-   - `FTP_PASSWORD` — the password
-   - *(optional)* `FTP_TARGET_DIR` — default is `public_html/`. Override if Afrihost places your site elsewhere.
+3. **Add the secrets to the GitHub repo** at <https://github.com/roblouw2nd/cge/settings/secrets/actions>:
+   - `FTP_SERVER` — the SFTP/cPanel host (e.g. the Afrihost server hostname, or `chiefgrowthengineer.com`)
+   - `FTP_USERNAME` — your cPanel username
+   - `FTP_PASSWORD` — the cPanel password
+   - *(optional)* `FTP_PORT` — defaults to `22`. Override if Afrihost uses a custom SSH/SFTP port.
+   - *(optional)* `FTP_TARGET_DIR` — defaults to `public_html`. Override if the domain routes elsewhere.
 
-4. **Trigger the first deploy:** push any commit to `main`, or go to the **Actions** tab → "Deploy to Afrihost" → "Run workflow".
+4. **Trigger a deploy:** push any commit to `main`, or go to the **Actions** tab → "Deploy to Afrihost" → "Run workflow".
 
 ### Notes
-- The action uses passive FTP on port 21. If Afrihost requires FTPS, change `protocol: ftp` → `protocol: ftps` in the workflow.
-- The first deploy is full; subsequent deploys are incremental (only changed files are uploaded).
-- The `exclude` block in the workflow keeps `.github/`, `README.md`, `node_modules/`, etc. off the live server.
+- Transport is SFTP over port 22 (set `FTP_PORT` to override). SFTP/SSH access must be enabled on the
+  Afrihost account — if it isn't, request it via Afrihost support, otherwise the connection step fails.
+- `mirror --reverse --delete` makes the server match the repo, so files removed from the repo are also
+  removed from `public_html`. Anything that must live only on the server should sit outside `public_html`.
+- The `exclude` block keeps `.git/`, `.github/`, `README.md`, `node_modules/`, etc. off the live server.
 
 ## Push to GitHub
 

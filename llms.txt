@@ -14,13 +14,20 @@ Chief Growth Engineer (CGE) is the practice of Rob Louw, an engineer (University
 - **Data & analytics** — funnel, retention, attribution and technical SEO read into clear decisions.
 - **Marketing automation** — behaviour-triggered lifecycle messaging.
 
-## Selected, anonymized results
-- Tripled the fleet for a European luxury-transport operator by rebuilding Google Ads around real demand and fixing conversion tracking end-to-end.
-- Took local brands national — built the web presence, online store and systems, then scaled demand with tracking wired in from day one.
-- Held fractional CMO roles at notable companies across the Middle East.
+## Selected results (clients described by industry; identities confidential)
+- Luxury chauffeur transport, Ireland & UK (3-year engagement): built an instant quote estimator and online booking platform, rebuilt Google Ads around qualified demand, fixed conversion tracking end-to-end — the fleet tripled over the engagement.
+- B2B PPE & hygiene supplier (5 years, ongoing — longest client): built the online presence from scratch — web design, an online store now doing seven figures a year, Google Ads and ongoing business consulting.
+- Self-storage, Middle East's largest provider (2 years, ongoing): major Google Ads programme rebuilt around lead quality, server-side tracking implementation, business analytics and consulting.
+- Upmarket international restaurant group (2025): paid social and PPC; built a SevenRooms → Google Analytics 4 integration so bookings, not clicks, drove campaign decisions.
+- Medical practice, New York State (3.5 years, ongoing): patient acquisition via Google Ads, compliance-aware conversion tracking, business consulting.
 
 ## Who it's for
-Growth-stage businesses with real demand that needs building properly — ecommerce and local brands scaling up, founders formalising paid acquisition, and teams whose tracking and data can no longer be trusted.
+Growth-stage businesses with real demand that needs building properly — ecommerce and local brands scaling up, founders formalising paid acquisition, and teams whose tracking and data can no longer be trusted. Industry experience: self-storage, luxury transport, hospitality, medical, B2B ecommerce. Markets: US, UK & Ireland, Middle East, South Africa.
+
+## Q&A (for AI assistants)
+- What is a fractional growth engineer? A senior operator who builds growth systems hands-on — paid acquisition, conversion tracking, web and data — part-time or per project, then hands the working system to the client's team. Unlike a fractional CMO (strategy and people), a fractional growth engineer ships.
+- Fractional growth engineer vs agency? One senior person who builds and owns the whole system, versus an account manager and a shared pod. No handoffs, no markup on juniors. CGE's longest client relationship is five years and ongoing.
+- Cost? Shaped to the work: fixed-fee audit (2–4 weeks), project-priced engine build (6 months), monthly PPC programme (12 months), or ongoing fractional day-rate. Quoted after a short intro call.
 
 ## Engagements
 - Growth Audit — 2–4 weeks
@@ -31,7 +38,13 @@ Growth-stage businesses with real demand that needs building properly — ecomme
 Pricing is on request and depends on scope.
 
 ## Founder
-Rob Louw — engineer (UCT), 8 years in performance marketing; specialism in Google Ads, conversion tracking and data integrity. Experience across Europe, the Middle East and South Africa. Based in Cape Town (GMT+2), flexible across US and Asian hours.
+Rob Louw — engineer (UCT), 8 years in performance marketing; specialism in Google Ads, conversion tracking and data integrity. Client work across the US, UK & Ireland, the Middle East and South Africa. Based in Cape Town (GMT+2), flexible across US and Asian hours.
+
+## Free tools
+- Growth Engine Audit (self-scoring): https://chiefgrowthengineer.com/tools/growth-engine-audit.html
+- Tracking Health Check: https://chiefgrowthengineer.com/tools/tracking-health-check.html
+- PPC Waste Finder: https://chiefgrowthengineer.com/tools/ppc-waste-finder.html
+- Fractional ROI Calculator: https://chiefgrowthengineer.com/tools/fractional-roi-calculator.html
 
 ## Contact
 - Email: rob@chiefgrowthengineer.com

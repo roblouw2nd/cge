@@ -3,10 +3,10 @@
 // ─── THINKING ───────────────────────────────────────────────────────
 function Thinking() {
   const notes = [
-    { n: '004', date: '17 May 2026', cat: 'Operating', title: 'The best growth teams ship faster than they strategize.', dek: 'Three observations from years of growth work — and what makes the high-leverage teams different.' },
+    { n: '005', date: '06 Jul 2026', cat: 'Fractional', href: '/blog/what-is-a-fractional-growth-engineer.html', title: 'What is a fractional growth engineer?', dek: 'How the role differs from a fractional CMO, an agency and a full-time hire — what it costs, when it fits, and the questions to ask anyone wearing the title.' },
+    { n: '004', date: '17 May 2026', cat: 'Operating', href: '/blog/the-best-growth-teams-ship-faster.html', title: 'The best growth teams ship faster than they strategize.', dek: 'Three observations from years of growth work — and what makes the high-leverage teams different.' },
     { n: '003', date: '02 May 2026', cat: 'Tracking', title: 'You don\'t have a data problem. You have a definitions problem.', dek: 'Why "active user" means seven different things across your tools — and how to fix it in one afternoon.' },
     { n: '002', date: '18 Apr 2026', cat: 'Paid', title: 'Server-side conversion APIs aren\'t optional any more.', dek: 'iOS attrition, browser deprecations, and the work that recovers signal most accounts are quietly losing.' },
-    { n: '001', date: '04 Apr 2026', cat: 'CRO', title: 'The five experiments every onboarding should run.', dek: 'A field-tested playbook — what to test, in what order, and why sequence beats volume.' },
   ];
   return (
     <SectionWrap id="thinking" bg={T.paper}>
@@ -27,16 +27,14 @@ function Thinking() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 18, alignItems: 'stretch' }}>
         {/* Featured note */}
-        <div style={{ background: T.cream, padding: 36, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 380 }}>
+        <a href={notes[0].href} style={{ background: T.cream, padding: 36, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 380, textDecoration: 'none', color: 'inherit' }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 18 }}>
               <span style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '.22em', color: T.accent }}>Field note · {notes[0].n}</span>
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .55 }}>{notes[0].date}</span>
             </div>
             <h3 style={{ fontFamily: T.display, fontWeight: 900, fontSize: 36, letterSpacing: '-.03em', lineHeight: 1.02, textTransform: 'uppercase', margin: 0 }}>
-              {notes[0].title.split('faster than they')[0]}
-              <span style={{ color: T.accent }}>faster than they</span>
-              {notes[0].title.split('faster than they')[1]}
+              What is a fractional <span style={{ color: T.accent }}>growth engineer?</span>
             </h3>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, marginTop: 20 }}>
               {notes[0].dek}
@@ -48,11 +46,11 @@ function Thinking() {
             </span>
             <Arrow size={14} color={T.accent} stroke={3} />
           </div>
-        </div>
+        </a>
 
         {/* 3 stacked side notes */}
         {notes.slice(1).map(n => (
-          <article key={n.n} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 24, display: 'flex', flexDirection: 'column', gap: 14, minHeight: 380 }}>
+          <article key={n.n} onClick={n.href ? () => { window.location.href = n.href; } : undefined} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 24, display: 'flex', flexDirection: 'column', gap: 14, minHeight: 380, cursor: n.href ? 'pointer' : 'default' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.22em', color: T.accent }}>№{n.n}</span>
               <span style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .55 }}>{n.cat}</span>
@@ -88,16 +86,14 @@ function About() {
             Rob Louw.
           </h2>
 
-          {/* Portrait placeholder */}
+          {/* Portrait */}
           <div style={{
             width: '100%', maxWidth: 320, aspectRatio: '4 / 5', background: T.ink, position: 'relative', overflow: 'hidden',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <div style={{
-              fontFamily: T.display, fontWeight: 900, fontSize: 120, letterSpacing: '-.08em', color: T.accent, opacity: .5,
-            }}>RL</div>
-            <div style={{ position: 'absolute', bottom: 14, left: 16, fontFamily: T.mono, fontSize: 9, letterSpacing: '.2em', color: T.paper, opacity: .55, textTransform: 'uppercase' }}>
-              Portrait · placeholder
+            <img src="/assets/img/rob-louw.jpeg" alt="Rob Louw — fractional growth engineer" width="320" height="400"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
+            <div style={{ position: 'absolute', bottom: 14, left: 16, fontFamily: T.mono, fontSize: 9, letterSpacing: '.2em', color: T.paper, opacity: .75, textTransform: 'uppercase', textShadow: '0 1px 3px rgba(0,0,0,.4)' }}>
+              Rob Louw · Cape Town
             </div>
             <div style={{ position: 'absolute', top: 14, right: 14 }}>
               <Bracket size={20} color={T.accent} weight={2.5} spaceRatio={.4} side="l" />
@@ -113,7 +109,7 @@ function About() {
             I trained as an engineer at the University of Cape Town, then spent the last eight years in marketing — most of it deep in performance: Google Ads, conversion tracking, and the data integrity that makes both worth trusting.
           </p>
           <p style={{ fontFamily: T.body, fontSize: 17, lineHeight: 1.65, color: T.softInk, margin: 0 }}>
-            I've held fractional CMO roles at notable companies across the Middle East, taken local brands national, built online stores and the systems behind them, and tripled the fleet for a luxury-transport operator in Europe. CGE is where I do that work now — for a small number of clients at a time, and the deliverable is always a system your team can run without me.
+            The work is real and current: the Middle East's largest self-storage provider, a medical practice in New York State, a B2B PPE supplier whose store I took from zero to seven figures over five years, a luxury chauffeur operator in Ireland & the UK whose fleet tripled over our three years together, and an upmarket international restaurant group whose SevenRooms bookings I wired into GA4. CGE is where I do that work — for a small number of clients at a time, and the deliverable is always a system your team can run without me.
           </p>
 
           {/* Quick facts */}
@@ -236,10 +232,12 @@ function Pricing() {
 // ─── FAQ ────────────────────────────────────────────────────────────
 function FAQ() {
   const qs = [
+    { q: 'What is a fractional growth engineer?', a: 'A senior operator who builds a company\'s growth systems hands-on — paid acquisition, conversion tracking, web, and the data behind them — on a part-time or project basis, then hands the working system to your team. Unlike a fractional CMO, who leads strategy and manages people, a fractional growth engineer ships: campaigns, tracking, integrations, stores, quote platforms.' },
+    { q: 'Fractional growth engineer vs agency — why not just hire an agency?', a: 'An agency gives you an account manager and a shared pod. A fractional growth engineer gives you one senior person who builds and owns the whole system — ads, tracking, web, data — with no handoffs and no markup on juniors. My longest client relationship is five years; that doesn\'t happen if the work doesn\'t compound.' },
     { q: 'Are you actually one person?', a: 'Effectively, yes — CGE is me, Rob. I take a small number of concurrent engagements and run every part personally. For specialist work (design, copy, dev) I bring in trusted collaborators on a per-project basis. You\'ll always know exactly who you\'re working with.' },
     { q: 'How long are your engagements?', a: 'It depends on the service. An audit is 2–4 weeks. A full engine build is six months. A PPC programme typically runs twelve. A CRO sprint is 8–12 weeks. Fractional CGE work is ongoing. Pick the shape that fits the work, not the other way round.' },
     { q: 'What if it\'s not working?', a: 'Every engagement carries a no-fault out-clause at the first natural checkpoint — 30 days for sprints, 60 days for builds, 90 days for year-long programmes. Bad work billed in full is worse for both of us. I\'d rather you walk.' },
-    { q: 'Who do you work best with?', a: 'Growth-stage businesses with real demand that needs building properly — ecommerce and local brands scaling up, founders formalising paid acquisition, and teams whose tracking and data can no longer be trusted. If you want senior, hands-on help instead of a big agency, that\'s the fit.' },
+    { q: 'Who do you work best with?', a: 'Growth-stage businesses with real demand that needs building properly. Current and recent clients span self-storage, luxury transport, hospitality, medical and B2B ecommerce — across the US, UK & Ireland and the Middle East. If you want senior, hands-on help instead of a big agency, that\'s the fit.' },
     { q: 'Where are you based, and which hours?', a: 'Cape Town, South Africa — GMT+2. I work flexibly across US and Asian hours and have run engagements across Europe, the Middle East and South Africa. Remote by default, on-site when it earns its travel.' },
     { q: 'Will you sign an NDA?', a: 'Happily. Send yours over. I keep client identities confidential by default and only feature work publicly with written permission.' },
     { q: 'How do you handle handover?', a: 'The handover is the deliverable. By the final fortnight of any build, your team will have written runbooks for every system, pair-programmed sessions on the live tooling, and a 60-day check-in scheduled. I don\'t walk away — I just stop charging.' },
@@ -369,7 +367,7 @@ function Footer() {
           </div>
           {[
             { h: 'Practice', items: ['Web Development', 'PPC & Paid', 'Tracking & Analytics', 'CRO', 'Marketing Automation'] },
-            { h: 'Studio', items: ['About Rob', 'The method', 'Field notes', 'Engagement models', 'FAQ'] },
+            { h: 'Studio', items: ['About Rob', 'The method', 'Field notes', 'Free tools', 'Engagement models', 'FAQ'] },
             { h: 'Contact', items: ['rob@chiefgrowthengineer.com', '+27 66 212 7955', 'Cape Town · GMT+2', 'LinkedIn · Rob Louw'] },
           ].map(col => (
             <div key={col.h}>

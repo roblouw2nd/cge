@@ -1,8 +1,10 @@
 name: Deploy to Afrihost
 
-# Deploy is handled by cPanel Git Version Control on Afrihost.
-# This workflow is kept for reference and only runs when manually triggered.
+# Auto-deploys to Afrihost public_html via SFTP on every push to main.
+# Also runnable manually from the Actions tab.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -17,15 +19,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify deploy secrets are present
+        env:
+          FTP_SERVER:      ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME:    ${{ secrets.FTP_USERNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          missing=0
+          for v in FTP_SERVER FTP_USERNAME SSH_PRIVATE_KEY; do
+            if [ -z "${!v}" ]; then echo "::error::Missing required secret: $v"; missing=1; fi
+          done
+          [ "$missing" -eq 0 ] || { echo "Set secrets at Settings → Secrets and variables → Actions."; exit 1; }
+          echo "All required secrets present."
+
       - name: Stage files (strip dev artefacts)
         run: |
           mkdir -p _dist
           rsync -a \
             --exclude='.git' \
             --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='.cpanel.yml' \
             --exclude='README.md' \
             --exclude='SETUP.sh' \
             --exclude='_dist' \
+            --exclude='node_modules' \
             --exclude='.DS_Store' \
             --exclude='*.log' \
             ./ _dist/
@@ -34,20 +52,27 @@ jobs:
       - name: Install lftp
         run: sudo apt-get update -qq && sudo apt-get install -y lftp
 
-      - name: Upload via SFTP
+      - name: Write SSH deploy key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+      - name: Upload via SFTP (key auth)
         env:
           SFTP_HOST: ${{ secrets.FTP_SERVER }}
           SFTP_USER: ${{ secrets.FTP_USERNAME }}
-          SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
           SFTP_PORT: ${{ secrets.FTP_PORT || '22' }}
           SFTP_DIR:  ${{ secrets.FTP_TARGET_DIR || 'public_html' }}
         run: |
           lftp -c "
-            set sftp:auto-confirm yes;
+            set sftp:connect-program 'ssh -a -x -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null';
             set net:max-retries 3;
             set net:timeout 30;
             set net:reconnect-interval-base 5;
-            open -u '$SFTP_USER','$SFTP_PASS' -p $SFTP_PORT sftp://$SFTP_HOST;
+            open -u '$SFTP_USER',xxx -p $SFTP_PORT sftp://$SFTP_HOST;
             mirror --reverse --delete --parallel=4 --verbose=2 _dist/ $SFTP_DIR/;
             bye
           "

@@ -113,7 +113,7 @@ function CaseSpotlight() {
       <div style={{ background: T.cream, padding: 60, display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 60, alignItems: 'start' }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '.32em', textTransform: 'uppercase', color: T.accent, marginBottom: 14 }}>
-            Luxury transport · Europe
+            Luxury transport · Ireland & UK · 3-year engagement
           </div>
           <h3 style={{
             fontFamily: T.display, fontWeight: 900, fontSize: 56, letterSpacing: '-.04em', lineHeight: .95,
@@ -129,7 +129,7 @@ function CaseSpotlight() {
           </h3>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginTop: 40 }}>
-            {[['3×','Fleet size, over the engagement'],['Google','PPC rebuilt on real demand'],['1st-party','Conversion tracking, fixed'],['EU','Multi-market operation']].map(([k,v]) => (
+            {[['3×','Fleet size, over the engagement'],['Quote','Instant online estimator, built'],['1st-party','Conversion tracking, fixed'],['IE + UK','Regional markets beyond London']].map(([k,v]) => (
               <div key={k} style={{ borderTop: `2px solid ${T.accent}`, paddingTop: 10 }}>
                 <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 30, letterSpacing: '-.03em' }}>{k}</div>
                 <div style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .65, marginTop: 4 }}>{v}</div>
@@ -144,7 +144,7 @@ function CaseSpotlight() {
               The problem
             </div>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, margin: 0 }}>
-              A European luxury-transport operator wanted more bookings and a bigger fleet — but paid spend wasn't tied to real demand, and the conversion tracking couldn't be trusted. No one knew which campaigns actually produced rides.
+              A luxury chauffeur operator serving Ireland and the UK — the regional markets outside London — wanted more bookings and a bigger fleet. But quoting was manual, paid spend wasn't tied to real demand, and the conversion tracking couldn't be trusted.
             </p>
           </div>
           <div>
@@ -152,7 +152,7 @@ function CaseSpotlight() {
               What we shipped
             </div>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, margin: 0 }}>
-              Rebuilt the Google Ads account around qualified, high-intent demand, fixed conversion tracking end-to-end for clean attribution, and tightened the booking funnel. The fleet tripled to meet the demand the system was generating.
+              Over three years: built an instant quote estimator and online booking platform, rebuilt Google Ads around qualified, high-intent demand, and fixed conversion tracking end-to-end. The fleet tripled to meet the demand the system was generating.
             </p>
           </div>
           <div style={{ marginTop: 10 }}>
@@ -176,9 +176,9 @@ function CaseSpotlight() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
           {[
-            { n: '03', name: 'Local retail brand', cat: 'PPC + Web', stat: 'National', label: 'Local brand taken nationwide' },
-            { n: '02', name: 'Ecommerce build', cat: 'Web + Tracking', stat: 'Live', label: 'Online store + clean analytics' },
-            { n: '01', name: 'Fractional CMO · ME', cat: 'Strategy + Systems', stat: 'Portfolio', label: 'Growth across multiple brands' },
+            { n: '03', name: 'B2B PPE & hygiene supply', cat: 'Web + PPC · 5 yrs', stat: '0 → 7 figs', label: 'Online store built from scratch' },
+            { n: '02', name: 'Self-storage · Middle East', cat: 'PPC + Server-side · 2 yrs', stat: 'Lead quality', label: "Region's largest provider" },
+            { n: '01', name: 'Restaurant group · Intl', cat: 'Paid social + Data · 2025', stat: 'Attributed', label: 'SevenRooms bookings → GA4' },
           ].map(c => (
             <div key={c.n} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 26 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>

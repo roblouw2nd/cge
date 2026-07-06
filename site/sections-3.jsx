@@ -49,8 +49,10 @@ function Thinking() {
         </a>
 
         {/* 3 stacked side notes */}
-        {notes.slice(1).map(n => (
-          <article key={n.n} onClick={n.href ? () => { window.location.href = n.href; } : undefined} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 24, display: 'flex', flexDirection: 'column', gap: 14, minHeight: 380, cursor: n.href ? 'pointer' : 'default' }}>
+        {notes.slice(1).map(n => {
+          const Tag = n.href ? 'a' : 'article';
+          return (
+          <Tag key={n.n} href={n.href} style={{ background: T.paper, border: `1px solid ${T.rule}`, padding: 24, display: 'flex', flexDirection: 'column', gap: 14, minHeight: 380, textDecoration: 'none', color: 'inherit', cursor: n.href ? 'pointer' : 'default' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.22em', color: T.accent }}>№{n.n}</span>
               <span style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .55 }}>{n.cat}</span>
@@ -65,8 +67,8 @@ function Thinking() {
               <span style={{ fontFamily: T.mono, fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .55 }}>{n.date}</span>
               <Arrow size={12} color={T.accent} stroke={2.5} />
             </div>
-          </article>
-        ))}
+          </Tag>
+        ); })}
       </div>
     </SectionWrap>
   );
@@ -289,7 +291,7 @@ function BigCTA() {
       <div style={{ maxWidth: 1320, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 60, alignItems: 'end' }}>
         <div>
           <div style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: '.32em', textTransform: 'uppercase', color: T.paper, opacity: .85, marginBottom: 30 }}>
-            Now booking · Two Q3 slots open
+            Now booking · Two Q4 slots open
           </div>
           <h2 style={{
             fontFamily: T.display, fontWeight: 900, fontSize: 124, letterSpacing: '-.045em', lineHeight: .88,
@@ -361,7 +363,7 @@ function Footer() {
             <div style={{ marginTop: 22, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ width: 8, height: 8, background: '#27c93f', borderRadius: '50%' }}/>
               <span style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .7 }}>
-                Booking Q3 · 2026
+                Booking Q4 · 2026
               </span>
             </div>
           </div>

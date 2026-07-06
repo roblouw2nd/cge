@@ -100,7 +100,7 @@ function ServiceHero({ service, detail }) {
             <div style={{ marginTop: 8, padding: '10px 12px', background: 'rgba(214,40,40,.12)', border: `1px solid ${T.accent}`, display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ width: 6, height: 6, background: T.accent, borderRadius: '50%' }}/>
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: T.accent }}>
-                Booking Q3 2026
+                Booking Q4 2026
               </span>
             </div>
           </div>

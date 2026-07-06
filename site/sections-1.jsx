@@ -41,7 +41,7 @@ function Hero() {
     <section id="top" style={{ position: 'relative', background: T.paper, color: T.ink, padding: '60px 80px 100px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 60, alignItems: 'end' }}>
         <div>
-          <SectionLabel style={{ marginBottom: 38 }}>Now booking · Q3 · 2026</SectionLabel>
+          <SectionLabel style={{ marginBottom: 38 }}>Now booking · Q4 · 2026</SectionLabel>
           <HeroLockup growthSize={108} />
           <div style={{ marginTop: 36, display: 'grid', gridTemplateColumns: '1fr', gap: 18, maxWidth: 560 }}>
             <p style={{ fontFamily: T.body, fontSize: 19, lineHeight: 1.55, color: T.softInk, margin: 0 }}>

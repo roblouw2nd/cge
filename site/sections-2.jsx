@@ -91,7 +91,7 @@ function Method() {
           <strong style={{ color: T.paper }}>Note on exclusivity:</strong> I take a small handful of concurrent engagements, not one client at a time — I'm a senior operator, not a freelancer. Capacity is checked before booking.
         </span>
         <span style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: '.22em', textTransform: 'uppercase', color: T.accent }}>
-          Two Q3 slots open
+          Two Q4 slots open
         </span>
       </div>
     </SectionWrap>

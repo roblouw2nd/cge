@@ -64,6 +64,86 @@ function clean(string $s): string {
     return trim($s);
 }
 
+/**
+ * Minimal SMTP client for Google Workspace (smtp.gmail.com).
+ * Port 587 = STARTTLS (default); port 465 = implicit TLS.
+ * Returns true on a 250 response to DATA, false on any failure.
+ */
+function smtp_send(array $cfg, string $to, string $subject, string $body, string $replyName, string $replyEmail): bool {
+    $host = $cfg['smtp_host'] ?? 'smtp.gmail.com';
+    $port = (int)($cfg['smtp_port'] ?? 587);
+    $user = $cfg['smtp_user'];
+    $pass = $cfg['smtp_pass'];
+    $timeout = 15;
+
+    $remote = ($port === 465 ? "ssl://$host:$port" : "tcp://$host:$port");
+    $ctx = stream_context_create(['ssl' => ['SNI_enabled' => true]]);
+    $fp = @stream_socket_client($remote, $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$fp) { error_log("[CGE] SMTP connect failed: $errno $errstr"); return false; }
+    stream_set_timeout($fp, $timeout);
+
+    $read = function () use ($fp): string {
+        $data = '';
+        while (($line = fgets($fp, 515)) !== false) {
+            $data .= $line;
+            if (strlen($line) < 4 || $line[3] !== '-') break; // last line of multi-line reply
+        }
+        return $data;
+    };
+    $cmd = function (string $c, array $expect) use ($fp, $read): bool {
+        fwrite($fp, $c . "\r\n");
+        $r = $read();
+        $code = (int)substr($r, 0, 3);
+        if (!in_array($code, $expect, true)) { error_log("[CGE] SMTP unexpected reply to '" . substr($c, 0, 12) . "…': " . trim($r)); return false; }
+        return true;
+    };
+
+    $hostname = 'chiefgrowthengineer.com';
+    if ((int)substr($read(), 0, 3) !== 220) { fclose($fp); return false; }
+    if (!$cmd("EHLO $hostname", [250])) { fclose($fp); return false; }
+
+    if ($port !== 465) {
+        if (!$cmd('STARTTLS', [220])) { fclose($fp); return false; }
+        if (!@stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+            error_log('[CGE] SMTP STARTTLS negotiation failed'); fclose($fp); return false;
+        }
+        if (!$cmd("EHLO $hostname", [250])) { fclose($fp); return false; }
+    }
+
+    if (!$cmd('AUTH LOGIN', [334])
+        || !$cmd(base64_encode($user), [334])
+        || !$cmd(base64_encode($pass), [235])) { fclose($fp); return false; }
+
+    if (!$cmd("MAIL FROM:<$user>", [250])) { fclose($fp); return false; }
+    if (!$cmd("RCPT TO:<$to>", [250, 251])) { fclose($fp); return false; }
+    if (!$cmd('DATA', [354])) { fclose($fp); return false; }
+
+    $fromName = mb_encode_mimeheader('Chief Growth Engineer Website', 'UTF-8', 'B');
+    $headers = [
+        "From: $fromName <$user>",
+        "To: <$to>",
+        'Reply-To: ' . mb_encode_mimeheader($replyName, 'UTF-8', 'B') . " <$replyEmail>",
+        'Subject: ' . mb_encode_mimeheader($subject, 'UTF-8', 'B'),
+        'Date: ' . date('r'),
+        'Message-ID: <' . bin2hex(random_bytes(12)) . '@chiefgrowthengineer.com>',
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: 8bit',
+    ];
+    // Normalise line endings and dot-stuff the body (RFC 5321 §4.5.2)
+    $data = implode("\r\n", $headers) . "\r\n\r\n" . $body;
+    $data = preg_replace("/\r\n|\r|\n/", "\r\n", $data);
+    $data = preg_replace('/^\./m', '..', $data);
+
+    fwrite($fp, $data . "\r\n.\r\n");
+    $r = $read();
+    $cmdOk = ((int)substr($r, 0, 3) === 250);
+    if (!$cmdOk) error_log('[CGE] SMTP DATA rejected: ' . trim($r));
+    fwrite($fp, "QUIT\r\n");
+    fclose($fp);
+    return $cmdOk;
+}
+
 // ───── HANDLE ─────────────────────────────────────────────────────────
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -115,16 +195,29 @@ $body .= "IP:        $ip\n";
 $body .= "UA:        $ua\n";
 $body .= "When:      " . date('Y-m-d H:i:s') . " UTC\n";
 
-$from_name = mb_encode_mimeheader('Chief Growth Engineer Website', 'UTF-8', 'B');
+// ── Send: SMTP via Google Workspace if a config file exists, else PHP mail() ──
+// Config lives OUTSIDE public_html so it is never in git and never deployed:
+//   /home/<cpanel-user>/cge-mail-config.php  (i.e. one directory above this file's docroot)
+$ok = false;
+$cfgPath = dirname(__DIR__) . '/cge-mail-config.php';
+if (is_readable($cfgPath)) {
+    $cfg = include $cfgPath;
+    if (is_array($cfg) && !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass'])) {
+        $ok = smtp_send($cfg, TO_EMAIL, $subject, $body, $name, $email);
+        if (!$ok) error_log('[CGE] SMTP send failed — falling back to mail()');
+    }
+}
 
-$headers   = [];
-$headers[] = "From: {$from_name} <" . FROM_EMAIL . ">";
-$headers[] = "Reply-To: $name <$email>";
-$headers[] = "X-Mailer: PHP/" . phpversion();
-$headers[] = "MIME-Version: 1.0";
-$headers[] = "Content-Type: text/plain; charset=UTF-8";
-
-$ok = @mail(TO_EMAIL, mb_encode_mimeheader($subject, 'UTF-8', 'B'), $body, implode("\r\n", $headers), '-f' . FROM_EMAIL);
+if (!$ok) {
+    $from_name = mb_encode_mimeheader('Chief Growth Engineer Website', 'UTF-8', 'B');
+    $headers   = [];
+    $headers[] = "From: {$from_name} <" . FROM_EMAIL . ">";
+    $headers[] = "Reply-To: $name <$email>";
+    $headers[] = "X-Mailer: PHP/" . phpversion();
+    $headers[] = "MIME-Version: 1.0";
+    $headers[] = "Content-Type: text/plain; charset=UTF-8";
+    $ok = @mail(TO_EMAIL, mb_encode_mimeheader($subject, 'UTF-8', 'B'), $body, implode("\r\n", $headers), '-f' . FROM_EMAIL);
+}
 
 if (!$ok) {
     // Log it so we can see what happened on the server

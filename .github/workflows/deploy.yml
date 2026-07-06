@@ -42,6 +42,7 @@ jobs:
             --exclude='.cpanel.yml' \
             --exclude='README.md' \
             --exclude='SETUP.sh' \
+            --exclude='docs' \
             --exclude='_dist' \
             --exclude='node_modules' \
             --exclude='.DS_Store' \

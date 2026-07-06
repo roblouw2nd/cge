@@ -61,8 +61,8 @@ function Hero() {
         <div style={{ display: 'flex', flexDirection: 'column', borderLeft: `1px solid ${T.rule}`, paddingLeft: 30 }}>
           {[
             ['Days', 'To first fixes live — not months of onboarding'],
-            ['3×', 'More vehicles on the road for a transport client'],
-            ['0→7 figs', 'Store revenue engineered from a standing start'],
+            ['3×', 'A client\'s entire business, tripled — by engineered demand'],
+            ['0→7 figs', 'A brand-new revenue channel, built from nothing'],
             ['100%', 'Senior work on your account — no juniors, no handoffs'],
           ].map(([k, v], i) => (
             <div key={k} style={{ padding: '20px 0', borderBottom: i < 3 ? `1px solid ${T.rule}` : 'none' }}>

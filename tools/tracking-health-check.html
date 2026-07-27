@@ -147,6 +147,7 @@
           <input type="hidden" name="company_url" value="" tabindex="-1">
           <input name="name" type="text" required placeholder="Your name" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:180px;outline:none">
           <input name="email" type="email" required placeholder="you@company.com" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:240px;outline:none">
+          <input name="phone" type="tel" placeholder="Phone / WhatsApp (optional)" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:210px;outline:none;border-radius:0">
           <button type="submit" class="cta" style="border:none;cursor:pointer">Book the teardown</button>
         </form>
         <p id="leadMsg" class="mono-eyebrow" style="display:none;margin-top:12px;color:var(--accent)"></p>
@@ -328,11 +329,13 @@
     data.append('email', f.email.value);
     data.append('budget', 'Tool: Tracking Health Check');
     data.append('message', (window.__thcSummary || 'Check not run') + '\n\nPlease book me a 20-minute tracking teardown.');
+    data.append('phone', f.phone.value);
     data.append('company_url', '');
     const msg = document.getElementById('leadMsg');
     try {
       const r = await fetch('/contact.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
-      msg.innerHTML = r.ok ? 'Sent — I\'ll reply within 24 hours with times. Or lock a slot in now: <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">book the teardown →</a>' : 'Something went wrong — email rob@chiefgrowthengineer.com instead.';
+      const j = await r.json().catch(() => ({}));
+      msg.innerHTML = (r.ok && j.ok) ? 'Sent — I\'ll reply within 24 hours with times. Or lock a slot in now: <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">book the teardown →</a>' : (j.error ? 'Could not send: ' + j.error : 'Something went wrong — email rob@chiefgrowthengineer.com instead.');
     } catch { msg.textContent = 'Something went wrong — email rob@chiefgrowthengineer.com instead.'; }
     msg.style.display = 'block';
     if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'tracking_health_check' });

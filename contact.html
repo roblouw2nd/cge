@@ -86,7 +86,7 @@
         </p>
         <div style="display:flex;flex-direction:column;gap:12px;margin-top:28px">
           <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">
-            Book a 20-min call
+            Book a 30-min call
             <svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#fff" stroke-width="3"/></svg>
           </a>
           <a href="mailto:rob@chiefgrowthengineer.com" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--ink);color:#fff;font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">
@@ -95,6 +95,10 @@
           </a>
           <a href="tel:+27662127955" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:1.5px solid var(--ink);color:var(--ink);font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">
             Call me now
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="3"/></svg>
+          </a>
+          <a href="https://wa.me/27662127955" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:1.5px solid var(--ink);color:var(--ink);font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">
+            WhatsApp me
             <svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="3"/></svg>
           </a>
         </div>
@@ -143,6 +147,10 @@
                 <option>Not sure yet</option>
               </select>
             </div>
+            <div class="field">
+              <label for="phone">Phone / WhatsApp <span style="opacity:.5">(optional)</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel">
+            </div>
             <div class="field full">
               <label for="message">What's stuck?</label>
               <textarea id="message" name="message" required placeholder="The company, the team, the metric you're trying to move."></textarea>
@@ -163,6 +171,46 @@
         <div id="form-result" style="margin-top:24px"></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS NEXT -->
+<section class="section bg-cream" style="padding:80px">
+  <div class="container">
+    <div class="section-label">§ What happens next</div>
+    <h2 class="display" style="font-size:clamp(32px,5vw,56px);margin-top:24px">No funnel. Three steps.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px" class="steps-grid">
+      <div style="background:#fff;border-top:4px solid var(--accent);padding:28px">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;color:var(--accent)">01</div>
+        <h3 style="font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-.02em;text-transform:uppercase;margin:14px 0 10px">You write, or you book.</h3>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--soft-ink);margin:0">The form, an email, WhatsApp, or straight into the calendar — whatever is least effort. A confirmation lands in your inbox immediately.</p>
+      </div>
+      <div style="background:#fff;border-top:4px solid var(--accent);padding:28px">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;color:var(--accent)">02</div>
+        <h3 style="font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-.02em;text-transform:uppercase;margin:14px 0 10px">I reply within 24 hours.</h3>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--soft-ink);margin:0">Personally, with a first read on your situation and an honest answer on fit. If I'm not the right person, I'll say so and point you at who is.</p>
+      </div>
+      <div style="background:#fff;border-top:4px solid var(--accent);padding:28px">
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;color:var(--accent)">03</div>
+        <h3 style="font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-.02em;text-transform:uppercase;margin:14px 0 10px">We talk. Then a proposal.</h3>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--soft-ink);margin:0">Thirty minutes on a call. If it's a fit, you get a written scope with a fixed price and a start date — no discovery-phase billing, no surprises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK DIRECTLY -->
+<section class="section" style="padding:80px" id="book">
+  <div class="container">
+    <div class="section-label">§ Book directly</div>
+    <h2 class="display" style="font-size:clamp(32px,5vw,56px);margin-top:24px">Grab a slot right now.</h2>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--soft-ink);margin:18px 0 32px;max-width:620px">
+      Thirty minutes, free, on Google Meet. Pick any time that suits your timezone — the calendar below is live.
+    </p>
+    <div style="background:#fff;border:1px solid var(--rule);border-top:4px solid var(--accent)">
+      <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1z_G0Cod5p55vD3nVBsqRmyEHSLhnahJut8y_ngrQ18RYoony2Q6D4g0r0GfGCuHamNT7hAZnu?gv=true" style="border:0;width:100%;height:720px;display:block" loading="lazy" title="Book a 30-minute call with Rob Louw"></iframe>
+    </div>
+    <p class="mono-eyebrow" style="margin-top:14px;opacity:.6">Calendar not loading? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">Open it in a new tab →</a></p>
   </div>
 </section>
 

@@ -375,7 +375,7 @@ h3.display { font-size: clamp(24px, 3vw, 44px); }
   .footer { padding: 56px 24px 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .form-grid { grid-template-columns: 1fr; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .steps-grid { grid-template-columns: 1fr !important; }
   .page { padding: 0 24px; }
   .nav-inner { padding: 14px 24px; }
 }

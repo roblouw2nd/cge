@@ -230,9 +230,22 @@
     </div>
 
     <div style="margin-top:34px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-      <a class="cta" href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener">Book 20 minutes <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+      <a class="cta" href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener">Book 30 minutes <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
       <a class="cta cta-ghost" href="/contact.html">Or write it down first <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
       <span class="mono-eyebrow" style="opacity:.6">Free · no pitch if it's not a fit</span>
+    </div>
+
+    <div style="border-top:1px solid var(--rule);margin-top:34px;padding-top:26px">
+      <div class="mono-eyebrow" style="margin-bottom:8px">Want these numbers pressure-tested?</div>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0 0 16px">Send me your scenario as it stands above and I'll reply with a straight answer — including "don't hire fractional, do X instead" when that's the truth. Written personally, usually within 24 hours. No sequence, no spam.</p>
+      <form id="leadForm" style="display:flex;gap:8px;flex-wrap:wrap">
+        <input type="hidden" name="company_url" value="" tabindex="-1">
+        <input name="name" type="text" required placeholder="Your name" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:180px;outline:none;border-radius:0">
+        <input name="email" type="email" required placeholder="you@company.com" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:240px;outline:none;border-radius:0">
+        <input name="phone" type="tel" placeholder="Phone / WhatsApp (optional)" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:210px;outline:none;border-radius:0">
+        <button type="submit" class="cta" style="border:none;cursor:pointer">Get a straight answer</button>
+      </form>
+      <p id="leadMsg" class="mono-eyebrow" style="display:none;margin-top:12px;color:var(--accent)"></p>
     </div>
   </div>
 </section>
@@ -373,6 +386,29 @@
       btn.classList.add('active');
       calc();
     });
+  });
+
+  // --- Lead capture (same contract as the other tools) ---
+  document.getElementById('leadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const data = new FormData();
+    data.append('name', f.name.value);
+    data.append('email', f.email.value);
+    data.append('phone', f.phone.value);
+    data.append('budget', 'Tool: Fractional ROI Calculator');
+    data.append('message', (window.__toolSummary || 'Calculator not run') + '\n\nPlease pressure-test these numbers against my situation.');
+    data.append('company_url', '');
+    const msg = document.getElementById('leadMsg');
+    try {
+      const r = await fetch('/contact.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      const j = await r.json().catch(() => ({}));
+      msg.innerHTML = (r.ok && j.ok)
+        ? 'Sent — check your inbox for a copy of your scenario. Want to move faster? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">Book a call →</a>'
+        : (j.error ? 'Could not send: ' + j.error : 'Something went wrong — email rob@chiefgrowthengineer.com instead.');
+    } catch { msg.textContent = 'Something went wrong — email rob@chiefgrowthengineer.com instead.'; }
+    msg.style.display = 'block';
+    if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'fractional_roi_calculator' });
   });
 
   // --- Init: restore shared assumptions if present, then run ---

@@ -22,7 +22,7 @@
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
-        result.innerHTML = '<div class="alert ok"><strong>Thanks — message received.</strong> I\'ll reply within 24 hours, and a confirmation is on its way to your inbox. Want to move faster? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener">Book a free 20-minute call →</a></div>';
+        result.innerHTML = '<div class="alert ok"><strong>Thanks — message received.</strong> I\'ll reply within 24 hours, and a confirmation is on its way to your inbox. Want to move faster? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener">Book a free 30-minute call →</a></div>';
         form.reset();
         if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'contact_form' });
       } else {

@@ -54,6 +54,7 @@ All four tools follow the same pattern. Keep it when extending.
 |---|---|
 | `name` | visitor's name (required by handler) |
 | `email` | visitor's email (required, validated server-side) |
+| `phone` | visitor's phone/WhatsApp (optional, ≤60 chars) |
 | `budget` | `"Tool: <Tool Name>"` — used as the engagement tag in the email Rob receives |
 | `message` | plain-text summary of the visitor's results (built in JS, stored on `window.__*Summary`), plus the ask (required) |
 | `company_url` | **honeypot — must be sent empty.** Non-empty silently "succeeds" and drops the mail |
@@ -159,7 +160,7 @@ Guard every call with `if (typeof gtag === 'function')`.
 
 **URL:** `/tools/fractional-roi-calculator.html` · **GA id:** `fractional_roi_calculator` · **Maps to:** Fractional CGE seat (ongoing day-rate).
 
-**Exact purpose:** own the commercial-intent query cluster "fractional growth engineer cost / vs agency / vs hiring". Unlike the other three it has **no email form** — it's a trust asset and SEO/AIO landing page; its CTA is a direct link to `/contact.html` ("Talk through your numbers · 20 minutes · no pitch if it's not a fit"). Do not add a gate to this page.
+**Exact purpose:** own the commercial-intent query cluster "fractional growth engineer cost / vs agency / vs hiring". A trust asset and SEO/AIO landing page. *(Updated 2026-07-27 by Rob's decision:* it now carries the same optional lead form as the other tools — "Want these numbers pressure-tested?" — plus a booking-link CTA. The results themselves remain ungated; never gate them.)
 
 **Mechanics:** 8 editable assumption inputs, all recalculating live on `input` (no button):
 

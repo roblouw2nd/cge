@@ -23,7 +23,7 @@ const SITE_URL    = 'https://chiefgrowthengineer.com';
 const SUBJECT_TAG = '[CGE Enquiry]';
 const BOOKING_URL = 'https://calendar.app.google/vXohio54MnjJy57X7';
 
-const RATE_LIMIT_MAX    = 5;     // submissions …
+const RATE_LIMIT_MAX    = 10;    // submissions …
 const RATE_LIMIT_WINDOW = 3600;  // … per IP per hour
 
 // ───── HELPERS ────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ function respond(int $code, array $payload): void {
         ? "Thanks — I'll reply within 24 hours. A confirmation is on its way to your inbox."
         : htmlspecialchars($payload['error'] ?? 'Something went wrong. Please email rob@chiefgrowthengineer.com directly.', ENT_QUOTES, 'UTF-8');
     $bookBtn = $ok
-        ? "<a href=\"{$booking}\" style=\"display:inline-block;padding:14px 22px;background:#d62828;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;margin-right:12px\">Book a 20-min call →</a>"
+        ? "<a href=\"{$booking}\" style=\"display:inline-block;padding:14px 22px;background:#d62828;color:#fff;font-weight:900;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;margin-right:12px\">Book a 30-min call →</a>"
         : '';
     echo <<<HTML
 <!doctype html>
@@ -306,7 +306,7 @@ function autoreply_html(string $name, string $submitted, bool $isTool, string $t
       <!-- Booking CTA -->
       <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 12px">
         <tr><td style="background-color:#d62828">
-          <a href="{$booking}" style="display:inline-block;padding:16px 26px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:#ffffff;text-decoration:none">Skip the queue — book a 20-min call &nbsp;&rarr;</a>
+          <a href="{$booking}" style="display:inline-block;padding:16px 26px;font-family:Arial,Helvetica,sans-serif;font-weight:900;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:#ffffff;text-decoration:none">Skip the queue — book a 30-min call &nbsp;&rarr;</a>
         </td></tr>
       </table>
       <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#6b6155;margin:0 0 30px">Free, no pitch if it's not a fit. Pick any slot that suits your timezone.</p>
@@ -365,6 +365,7 @@ if (rate_limited($ip)) {
 $name    = clean($_POST['name']    ?? '');
 $email   = clean($_POST['email']   ?? '');
 $company = clean($_POST['company'] ?? '');
+$phone   = clean($_POST['phone']   ?? '');
 $budget  = clean($_POST['budget']  ?? '');
 $message = trim($_POST['message']  ?? ''); // allow line breaks in body
 
@@ -372,7 +373,7 @@ if ($name === '' || $email === '' || $message === '') {
     respond(400, ['ok' => false, 'error' => 'Please fill in your name, email, and message.']);
 }
 
-if (mb_strlen($name) > 200 || mb_strlen($company) > 200 || mb_strlen($budget) > 200) {
+if (mb_strlen($name) > 200 || mb_strlen($company) > 200 || mb_strlen($budget) > 200 || mb_strlen($phone) > 60) {
     respond(400, ['ok' => false, 'error' => 'One of the fields is suspiciously long.']);
 }
 
@@ -393,6 +394,7 @@ log_lead([
     'name'    => $name,
     'email'   => $email,
     'company' => $company,
+    'phone'   => $phone,
     'budget'  => $budget,
     'message' => $message,
     'ip'      => $ip,
@@ -409,6 +411,7 @@ $body .= "───────────────────────�
 $body .= "Name:       $name\n";
 $body .= "Email:      $email\n";
 $body .= "Company:    " . ($company !== '' ? $company : '—') . "\n";
+$body .= "Phone:      " . ($phone   !== '' ? $phone   : '—') . "\n";
 $body .= "Engagement: " . ($budget  !== '' ? $budget  : '—') . "\n";
 $body .= "─────────────────────────────────────\n";
 $body .= "Message:\n\n$message\n";
@@ -440,7 +443,7 @@ $replyText .= $isTool
     ? "Your {$toolName} results landed in my inbox — a copy is below for your records.\n"
     : "Your message landed in my inbox — a copy is below for your records.\n";
 $replyText .= "I read every enquiry myself and reply personally, usually within 24 hours (Mon–Fri, GMT+2).\n\n";
-$replyText .= "Want to skip the queue? Book a free 20-minute call:\n" . BOOKING_URL . "\n";
+$replyText .= "Want to skip the queue? Book a free 30-minute call:\n" . BOOKING_URL . "\n";
 $replyText .= "No pitch if it's not a fit.\n\n";
 $replyText .= "───── " . ($isTool ? 'Your results' : 'What you sent') . " ─────\n\n";
 $replyText .= $message . "\n\n";

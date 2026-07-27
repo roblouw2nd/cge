@@ -3,10 +3,10 @@
 // ─── THINKING ───────────────────────────────────────────────────────
 function Thinking() {
   const notes = [
-    { n: '005', date: '06 Jul 2026', cat: 'Fractional', href: '/blog/what-is-a-fractional-growth-engineer.html', title: 'What is a fractional growth engineer?', dek: 'How the role differs from a fractional CMO, an agency and a full-time hire — what it costs, when it fits, and the questions to ask anyone wearing the title.' },
-    { n: '004', date: '17 May 2026', cat: 'Operating', href: '/blog/the-best-growth-teams-ship-faster.html', title: 'The best growth teams ship faster than they strategize.', dek: 'Three observations from years of growth work — and what makes the high-leverage teams different.' },
-    { n: '003', date: '02 May 2026', cat: 'Tracking', title: 'You don\'t have a data problem. You have a definitions problem.', dek: 'Why "active user" means seven different things across your tools — and how to fix it in one afternoon.' },
-    { n: '002', date: '18 Apr 2026', cat: 'Paid', title: 'Server-side conversion APIs aren\'t optional any more.', dek: 'iOS attrition, browser deprecations, and the work that recovers signal most accounts are quietly losing.' },
+    { n: '009', date: '27 Jul 2026', cat: 'Fractional', href: '/blog/what-does-a-fractional-growth-engineer-cost.html', title: 'What does a fractional growth engineer cost?', dek: 'Day rates, project fees and retainers. What drives the price, how it compares to agencies and full-time hires, and an honest account of when fractional is not the cheapest option.' },
+    { n: '008', date: '27 Jul 2026', cat: 'Paid', href: '/blog/google-ads-for-self-storage.html', title: 'Google Ads for self-storage: lead quality over lead volume.', dek: 'The playbook from two years running paid for the Middle East\'s largest storage provider: optimise for move-ins, not enquiries.' },
+    { n: '007', date: '27 Jul 2026', cat: 'Tracking', href: '/blog/why-ga4-and-google-ads-conversions-dont-match.html', title: 'Why GA4 and Google Ads conversions don\'t match.', dek: 'The two platforms answer different questions by design. The six reasons the numbers differ, and which to trust for what.' },
+    { n: '006', date: '27 Jul 2026', cat: 'Fractional', href: '/blog/fractional-growth-engineer-vs-fractional-cmo.html', title: 'Fractional growth engineer vs fractional CMO.', dek: 'One leads, one builds. The three questions that tell you which your company actually needs first.' },
   ];
   return (
     <SectionWrap id="thinking" bg={T.paper}>
@@ -22,6 +22,7 @@ function Thinking() {
         </div>
         <p style={{ fontFamily: T.body, fontSize: 16, lineHeight: 1.6, color: T.softInk, margin: 0, maxWidth: 380 }}>
           A few operating principles and playbooks I write up when there's something worth saying.
+          {' '}<a href="/blog/" style={{ color: T.accent, fontWeight: 700 }}>All field notes →</a>
         </p>
       </div>
 
@@ -34,7 +35,7 @@ function Thinking() {
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', opacity: .55 }}>{notes[0].date}</span>
             </div>
             <h3 style={{ fontFamily: T.display, fontWeight: 900, fontSize: 36, letterSpacing: '-.03em', lineHeight: 1.02, textTransform: 'uppercase', margin: 0 }}>
-              What is a fractional <span style={{ color: T.accent }}>growth engineer?</span>
+              What does a fractional <span style={{ color: T.accent }}>growth engineer cost?</span>
             </h3>
             <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, marginTop: 20 }}>
               {notes[0].dek}
@@ -256,7 +257,7 @@ function FAQ() {
             Questions<br/>founders ask.
           </h2>
           <p style={{ fontFamily: T.body, fontSize: 15, lineHeight: 1.6, color: T.softInk, margin: 0 }}>
-            If yours isn't here, the fastest answer is a 20-minute call. <a href="#contact" style={{ color: T.accent, textDecoration: 'underline' }}>Book one</a>.
+            If yours isn't here, the fastest answer is a 30-minute call. <a href="#contact" style={{ color: T.accent, textDecoration: 'underline' }}>Book one</a>.
           </p>
         </div>
         <div>
@@ -319,7 +320,7 @@ function BigCTA() {
               fontFamily: T.display, fontWeight: 900, fontSize: 16, letterSpacing: '.04em', textTransform: 'uppercase',
               textDecoration: 'none',
             }}>
-              Book a 20-min call
+              Book a 30-min call
               <Arrow size={16} color={T.accent} stroke={3} />
             </a>
             <a href="mailto:rob@chiefgrowthengineer.com" style={{
@@ -395,7 +396,7 @@ function Footer() {
             ] },
             { h: 'Contact', items: [
               ['rob@chiefgrowthengineer.com', 'mailto:rob@chiefgrowthengineer.com'],
-              ['Book a 20-min call', 'https://calendar.app.google/vXohio54MnjJy57X7'],
+              ['Book a 30-min call', 'https://calendar.app.google/vXohio54MnjJy57X7'],
               ['Call now', 'tel:+27662127955'],
               ['Cape Town · GMT+2', null],
               ['LinkedIn · Rob Louw', 'https://www.linkedin.com/in/robert-louw-b15703107/'],

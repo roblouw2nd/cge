@@ -373,7 +373,7 @@ function ServiceCTA({ detail }) {
             fontFamily: T.display, fontWeight: 900, fontSize: 15, letterSpacing: '.04em', textTransform: 'uppercase',
             textDecoration: 'none',
           }}>
-            Book a 20-min call
+            Book a 30-min call
             <Arrow size={15} color={T.accent} stroke={3} />
           </a>
           <a href="mailto:rob@chiefgrowthengineer.com" style={{

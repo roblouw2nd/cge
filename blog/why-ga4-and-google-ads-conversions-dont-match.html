@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why GA4 and Google Ads Conversions Don't Match (And Which to Trust)</title>
+<meta name="description" content="GA4 and Google Ads will never show the same conversion number. Attribution, timing, consent modelling and counting rules all differ. What each one is for, and which to trust for what.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html">
+<meta property="og:title" content="Why GA4 and Google Ads Conversions Don't Match (And Which to Trust)">
+<meta property="og:description" content="The two platforms are answering different questions. The six reasons the numbers differ, and which to trust for what.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="alternate icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html#article",
+      "headline": "Why GA4 and Google Ads Conversions Don't Match (And Which to Trust)",
+      "description": "GA4 and Google Ads measure conversions differently by design. Attribution model, conversion timing, counting rules and consent modelling all diverge. Neither is wrong; they answer different questions.",
+      "author": { "@id": "https://chiefgrowthengineer.com/#rob" },
+      "publisher": { "@id": "https://chiefgrowthengineer.com/#business" },
+      "datePublished": "2026-07-27",
+      "dateModified": "2026-07-27",
+      "mainEntityOfPage": "https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Why don't GA4 and Google Ads show the same number of conversions?", "acceptedAnswer": { "@type": "Answer", "text": "Because they measure different things by design. Google Ads credits conversions to the click date and only counts conversions it can tie to an ad interaction, while GA4 reports on the conversion date across all channels under its own attribution model. Add different counting rules, consent-based modelling and view-through conversions, and the numbers will never match exactly." } },
+        { "@type": "Question", "name": "Which should I trust, GA4 or Google Ads conversions?", "acceptedAnswer": { "@type": "Answer", "text": "Use Google Ads conversion data to judge and optimise campaigns, because it is what Smart Bidding learns from. Use GA4 to understand the full journey across channels. For the business question of what actually made money, trust neither alone. Reconcile against your CRM or sales records." } },
+        { "@type": "Question", "name": "How close should GA4 and Google Ads numbers be?", "acceptedAnswer": { "@type": "Answer", "text": "A persistent gap is normal. What matters is that the gap is stable and explainable. A gap that suddenly widens usually means something broke, such as a tag, consent configuration or import, and is worth investigating immediately." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://chiefgrowthengineer.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Field Notes", "item": "https://chiefgrowthengineer.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Why GA4 and Google Ads Conversions Don't Match", "item": "https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/">Tools</a>
+      <a href="/blog/" class="active">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="post-meta">Field note · №007 · 27 Jul 2026 · 7 min read</div>
+  <h1>Why GA4 and Google Ads conversions don't match. (And which to trust.)</h1>
+
+  <p>GA4 and Google Ads will never show the same conversion number, because they answer different questions by design. Google Ads asks which ad interactions led to conversions, and books the conversion against the date of the click. GA4 asks what happened on the site across every channel, and books it against the date it happened, under its own attribution model. Neither is lying. They are different instruments, and the mistake is expecting them to agree.</p>
+
+  <p>This is one of the first questions in almost every engagement, usually phrased as "which of these is broken?". It deserves a proper answer, so here it is.</p>
+
+  <h2>The six reasons the numbers differ.</h2>
+
+  <p><strong>1. Attribution model.</strong> Google Ads credits conversions using its own attribution settings and only sees Google Ads touchpoints. GA4 attributes across every channel it can see: paid, organic, email, direct. A conversion that GA4 credits to organic because the last touch was a branded search can still show as a Google Ads conversion in the Ads interface. Both are internally consistent. They simply disagree about who gets the credit, because they look at different slices of the journey.</p>
+
+  <p><strong>2. Conversion time vs click time.</strong> This is the one that catches everyone. Google Ads reports conversions against the date of the <em>click</em>. GA4 reports against the date of the <em>conversion</em>. If someone clicks on the 28th and converts on the 3rd, the two platforms put that conversion in different months, so any month-end comparison between them is comparing different populations by construction. Ads does offer "Conversions (by conv. time)" columns for exactly this, though almost nobody uses them.</p>
+
+  <p><strong>3. Counting rules.</strong> Ads conversion actions can be set to count "one" or "every". GA4 counts key events (Google renamed conversions to key events in 2024) under its own counting method, once per event or once per session. A lead form set to one-per-click in Ads and once-per-event in GA4 will diverge the moment anyone submits twice.</p>
+
+  <p><strong>4. Consent and modelling.</strong> With consent mode, both platforms model conversions for users who declined tracking, but they model independently, with different methods and thresholds. The gap this creates varies by market. It grows where consent rates are lower, and it moves whenever your consent banner changes. Neither modelled number is observable truth. They are two different estimates of the same missing data.</p>
+
+  <p><strong>5. View-through and engaged-view conversions.</strong> Ads can count conversions after impressions or video views with no click at all. GA4 has no equivalent for most of these. The exception is YouTube engaged-view key events, which GA4 can record when the Ads account is linked. Display view-through has no GA4 counterpart at all. If you run Display, YouTube or Demand Gen, this alone guarantees a gap.</p>
+
+  <p><strong>6. Plumbing.</strong> Everything above is divergence by design. On top of it sits the accidental kind: tags firing twice, missing gclid parameters, cross-domain journeys losing the session, redirects stripping URL parameters, a conversion import failing quietly. Design gaps are stable. Plumbing gaps drift, and that difference is your diagnostic.</p>
+
+  <blockquote>A stable, explainable gap is a measurement artefact. A gap that suddenly widens is a broken pipe.</blockquote>
+
+  <h2>So which do you trust?</h2>
+
+  <p>Use each instrument for what it was built for. For campaign optimisation, trust Google Ads. Not because it's more accurate, but because it's the data Smart Bidding learns from, and feeding the algorithm clean conversion signals matters more than any report you read. For understanding the journey, use GA4. It's the only one of the two that can see all your channels in one place.</p>
+
+  <p>For the business question of what actually made you money, trust neither on its own. Reconcile against the system that records revenue: your CRM, your booking platform, your order database. When I rebuilt a self-storage operator's paid programme around lead quality, and again when I wired a restaurant group's bookings into GA4, the fix had the same shape both times. Get real revenue events, qualified leads and seated covers, driving the campaign decisions, and wherever possible the conversion signal itself. That is <a href="/services/tracking.html">tracking and implementation work</a>, and it sits upstream of every reporting argument you will ever have.</p>
+
+  <h2>What "fixed" looks like.</h2>
+
+  <p>You don't fix this by making the numbers match. You can't, and anyone who promises to hasn't understood the problem. Fixed looks like a documented event taxonomy, so both platforms at least count the same named things. Server-side tagging, so the signal survives browsers and ad blockers. Offline conversion feeds (enhanced conversions for leads, or imports via Google's Data Manager), so revenue trains the bidding rather than form fills. And a one-page reconciliation that states the expected gap and why it exists. After that, the monthly conversation stops being about whose number is right and becomes about where to spend more and where to spend less, which is the conversation the business needed all along.</p>
+
+  <p>If you want a quick read on whether your setup has the common failure modes, the <a href="/tools/tracking-health-check.html">Tracking Health Check</a> is free, takes about three minutes, and doesn't ask for your email before showing the result.</p>
+
+  <hr>
+
+  <p style="font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.7">
+    Filed under: Tracking · GA4 · Google Ads · 2026
+  </p>
+
+  <div style="margin-top:48px;padding:32px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="mono-eyebrow" style="margin-bottom:6px">Is your tracking lying?</div>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0;max-width:480px">Twelve signs your conversion tracking can't be trusted. Tick the ones you recognise and get a live trust score. Free, no signup.</p>
+    </div>
+    <a class="cta" href="/tools/tracking-health-check.html">Run the check <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/blog/" style="color:inherit">More field notes</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

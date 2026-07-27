@@ -114,13 +114,25 @@ git push -u origin main
 
 After the push, configure the FTP secrets (above) and the next push will deploy automatically.
 
-## Contact form
+## Contact form / lead backend
 
-`contact.php` validates input, runs a honeypot check (`company_url` field), and sends an email
-to `rob@chiefgrowthengineer.com` via PHP `mail()`. Reply-To is set to the sender.
+`contact.php` handles the contact page **and** all `/tools/` lead forms. On every valid submission it:
 
-If Afrihost requires SMTP authentication instead of `sendmail`, swap the `mail()` call for
-PHPMailer with SMTP creds — see Afrihost's docs on the right SMTP host/port for your account.
+1. **Logs the lead** to `~/cge-leads.jsonl` (one directory above `public_html`, never deployed,
+   never in git) *before* attempting mail — a mail outage can't lose a lead.
+2. **Emails the enquiry to `rob@chiefgrowthengineer.com`** with Reply-To set to the sender.
+3. **Sends the sender a branded thank-you** (multipart plain-text + HTML) containing the booking
+   link (`https://calendar.app.google/vXohio54MnjJy57X7`) and a copy of what they submitted —
+   for tool leads that means their own scorecard lands in their inbox. Auto-reply failures are
+   logged but never fail the request. `Auto-Submitted: auto-replied` prevents responder loops.
+
+Protections: honeypot (`company_url` must be empty), per-IP rate limit (5/hour, timestamp files
+in `~/cge-ratelimit/`, fails open), field-length caps, header-injection stripping.
+
+Transport: if `/home/<cpanel-user>/cge-mail-config.php` exists (returns
+`['smtp_user' => ..., 'smtp_pass' => ..., 'smtp_host' => 'smtp.gmail.com', 'smtp_port' => 587]`),
+mail goes out via authenticated Google Workspace SMTP; otherwise it falls back to PHP `mail()`.
+Test with a real submission after any deploy.
 
 ## Editing content
 

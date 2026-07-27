@@ -58,7 +58,9 @@ All four tools follow the same pattern. Keep it when extending.
 | `message` | plain-text summary of the visitor's results (built in JS, stored on `window.__*Summary`), plus the ask (required) |
 | `company_url` | **honeypot — must be sent empty.** Non-empty silently "succeeds" and drops the mail |
 
-On success show inline confirmation ("Sent — I'll reply within 24 hours"); on failure show fallback text with `rob@chiefgrowthengineer.com`. Never redirect.
+On success show inline confirmation ("Sent — I'll reply within 24 hours") **plus a link to the booking calendar (`https://calendar.app.google/vXohio54MnjJy57X7`)**; on failure show fallback text with `rob@chiefgrowthengineer.com`. Never redirect.
+
+**Server side (since 2026-07-27):** `contact.php` also (a) appends every lead to `~/cge-leads.jsonl` outside `public_html` before mailing, (b) sends the visitor a branded thank-you email containing the booking link and a copy of their `message` (i.e. their own scorecard — "results-by-email" is now automatic), and (c) rate-limits 5 submissions/IP/hour. The `budget` prefix `"Tool: "` switches the thank-you subject to "Your {tool} results — and what happens next". Contract fields are unchanged.
 
 **Analytics events (GA4, via `gtag`):**
 - `tool_complete` — fired when a verdict is rendered. Params: `tool` (snake_case id) + tool-specific params listed per tool below.
@@ -185,8 +187,8 @@ Guard every call with `if (typeof gtag === 'function')`.
 
 ## 7. Known gaps / future enhancements (in priority order)
 
-1. **Email notification hygiene** — leads currently rely on PHP `mail()`; if Afrihost deliverability is poor, swap to PHPMailer + SMTP (noted in repo README). Test with a real submission after any deploy.
-2. **Results-by-email option** — add "email me my scorecard" that includes the visitor's full answers back to *them* (currently results go only to Rob). Requires adding a send-to-visitor path in `contact.php` — keep the honeypot.
+1. **Email notification hygiene** — ~~leads rely on PHP `mail()` alone~~ *partly done 2026-07-27:* `contact.php` prefers authenticated Google Workspace SMTP when `~/cge-mail-config.php` exists and logs every lead to `~/cge-leads.jsonl` as a backstop. Still to do: create that config on the server and test deliverability with a real submission.
+2. **Results-by-email option** — ~~add "email me my scorecard"~~ *done 2026-07-27:* every submitter automatically receives a branded confirmation containing their own results and the booking link. Honeypot kept.
 3. **Debounce ROI calculator analytics** — currently fires `tool_complete` per keystroke.
 4. **Shareable results** — encode answers in the URL hash (e.g. `#a=201102...`) so verdicts can be shared/bookmarked; no backend needed.
 5. **PDF export of audit results** — client-side (e.g. print stylesheet) rather than server-side.

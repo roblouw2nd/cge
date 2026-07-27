@@ -313,14 +313,24 @@ function BigCTA() {
             Tell me about the company, the team, and what's stuck. I'll reply within 24 hours with whether I'm the right fit — and if not, who is.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 18 }}>
-            <a href="mailto:rob@chiefgrowthengineer.com" style={{
+            <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
               padding: '18px 22px', background: T.paper, color: T.accent,
               fontFamily: T.display, fontWeight: 900, fontSize: 16, letterSpacing: '.04em', textTransform: 'uppercase',
               textDecoration: 'none',
             }}>
-              rob@chiefgrowthengineer.com
+              Book a 20-min call
               <Arrow size={16} color={T.accent} stroke={3} />
+            </a>
+            <a href="mailto:rob@chiefgrowthengineer.com" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+              padding: '18px 22px', background: 'transparent', color: T.paper,
+              border: `2px solid ${T.paper}`,
+              fontFamily: T.display, fontWeight: 900, fontSize: 16, letterSpacing: '.04em', textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}>
+              rob@chiefgrowthengineer.com
+              <Arrow size={16} color={T.paper} stroke={3} />
             </a>
             <a href="tel:+27662127955" style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
@@ -368,18 +378,40 @@ function Footer() {
             </div>
           </div>
           {[
-            { h: 'Practice', items: ['Web Development', 'PPC & Paid', 'Tracking & Analytics', 'CRO', 'Marketing Automation'] },
-            { h: 'Studio', items: ['About Rob', 'The method', 'Field notes', 'Free tools', 'Engagement models', 'FAQ'] },
-            { h: 'Contact', items: ['rob@chiefgrowthengineer.com', 'Call now — via /contact', 'Cape Town · GMT+2', 'LinkedIn · Rob Louw'] },
+            { h: 'Practice', items: [
+              ['Web Development', '/services/web-development.html'],
+              ['PPC & Paid', '/services/ppc.html'],
+              ['Tracking & Analytics', '/services/tracking.html'],
+              ['CRO', '/services/optimization.html'],
+              ['Marketing Automation', '/services/automation.html'],
+            ] },
+            { h: 'Studio', items: [
+              ['About Rob', '/about.html'],
+              ['The method', '/#method'],
+              ['Field notes', '/blog/'],
+              ['Free tools', '/tools/'],
+              ['Engagement models', '/#pricing'],
+              ['FAQ', '/#faq'],
+            ] },
+            { h: 'Contact', items: [
+              ['rob@chiefgrowthengineer.com', 'mailto:rob@chiefgrowthengineer.com'],
+              ['Book a 20-min call', 'https://calendar.app.google/vXohio54MnjJy57X7'],
+              ['Call now', 'tel:+27662127955'],
+              ['Cape Town · GMT+2', null],
+              ['LinkedIn · Rob Louw', 'https://www.linkedin.com/in/robert-louw-b15703107/'],
+            ] },
           ].map(col => (
             <div key={col.h}>
               <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.32em', textTransform: 'uppercase', color: T.accent, marginBottom: 18 }}>
                 {col.h}
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {col.items.map(i => (
-                  <li key={i} style={{ fontFamily: T.body, fontSize: 13.5, color: 'rgba(255,255,255,.8)' }}>
-                    {i}
+                {col.items.map(([label, href]) => (
+                  <li key={label} style={{ fontFamily: T.body, fontSize: 13.5, color: 'rgba(255,255,255,.8)' }}>
+                    {href
+                      ? <a href={href} style={{ color: 'inherit', textDecoration: 'none' }}
+                           {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>{label}</a>
+                      : label}
                   </li>
                 ))}
               </ul>
@@ -392,8 +424,8 @@ function Footer() {
             © MMXXVI · CGE Group · All rights reserved.
           </div>
           <div style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', opacity: .55, display: 'flex', gap: 20 }}>
-            <span>Privacy</span>
-            <span>Terms</span>
+            <a href="/privacy.html" style={{ color: 'inherit' }}>Privacy</a>
+            <a href="/terms.html" style={{ color: 'inherit' }}>Terms</a>
             <span>chiefgrowthengineer.com</span>
           </div>
         </div>

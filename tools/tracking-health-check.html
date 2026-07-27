@@ -150,6 +150,7 @@
           <button type="submit" class="cta" style="border:none;cursor:pointer">Book the teardown</button>
         </form>
         <p id="leadMsg" class="mono-eyebrow" style="display:none;margin-top:12px;color:var(--accent)"></p>
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--soft-ink);margin:14px 0 0">Rather pick a time yourself? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">Book the 20-minute teardown directly →</a></p>
       </div>
     </div>
   </div>
@@ -331,7 +332,7 @@
     const msg = document.getElementById('leadMsg');
     try {
       const r = await fetch('/contact.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
-      msg.textContent = r.ok ? 'Sent — I\'ll reply within 24 hours with times.' : 'Something went wrong — email rob@chiefgrowthengineer.com instead.';
+      msg.innerHTML = r.ok ? 'Sent — I\'ll reply within 24 hours with times. Or lock a slot in now: <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">book the teardown →</a>' : 'Something went wrong — email rob@chiefgrowthengineer.com instead.';
     } catch { msg.textContent = 'Something went wrong — email rob@chiefgrowthengineer.com instead.'; }
     msg.style.display = 'block';
     if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'tracking_health_check' });

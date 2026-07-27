@@ -367,14 +367,24 @@ function ServiceCTA({ detail }) {
           </h2>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <a href="mailto:rob@chiefgrowthengineer.com" style={{
+          <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
             padding: '16px 22px', background: T.paper, color: T.accent,
             fontFamily: T.display, fontWeight: 900, fontSize: 15, letterSpacing: '.04em', textTransform: 'uppercase',
             textDecoration: 'none',
           }}>
-            rob@chiefgrowthengineer.com
+            Book a 20-min call
             <Arrow size={15} color={T.accent} stroke={3} />
+          </a>
+          <a href="mailto:rob@chiefgrowthengineer.com" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+            padding: '16px 22px', background: 'transparent', color: T.paper,
+            border: `2px solid ${T.paper}`,
+            fontFamily: T.display, fontWeight: 900, fontSize: 15, letterSpacing: '.04em', textTransform: 'uppercase',
+            textDecoration: 'none',
+          }}>
+            rob@chiefgrowthengineer.com
+            <Arrow size={15} color={T.paper} stroke={3} />
           </a>
           <a href="tel:+27662127955" style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,

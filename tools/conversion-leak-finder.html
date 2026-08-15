@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversion Leak Finder — Free CRO Revenue Calculator | CGE</title>
+<meta name="description" content="Estimate how much monthly revenue your page is losing to common conversion leaks — slow mobile load, unclear CTAs, form friction and more. Free, interactive, no signup.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/tools/conversion-leak-finder.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chiefgrowthengineer.com/tools/conversion-leak-finder.html">
+<meta property="og:title" content="Conversion Leak Finder — How Much Revenue Is Your Page Losing?">
+<meta property="og:description" content="Tick the leaks you recognise, get a live estimate of monthly revenue left on the table. Free, on-page, no signup.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="alternate icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Conversion Leak Finder",
+  "url": "https://chiefgrowthengineer.com/tools/conversion-leak-finder.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@id": "https://chiefgrowthengineer.com/#business" },
+  "description": "Free calculator that estimates monthly revenue lost to common conversion-rate leaks on a landing page or site."
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+<style>
+  /* Input controls */
+  .field-card{background:#fff;padding:26px;border-top:4px solid var(--accent)}
+  .field-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .field-fields{display:flex;align-items:center;gap:8px}
+  .field-fields select{font-family:var(--font-mono);font-size:14px;padding:12px;border:1.5px solid var(--rule);background:#fff;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+  .field-fields input[type=number]{font-family:var(--font-mono);font-size:18px;padding:12px 16px;border:1.5px solid var(--rule);background:#fff;width:160px;outline:none;border-radius:0}
+  .field-fields select:focus,.field-fields input:focus{border-color:var(--accent)}
+  .field-scale{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.6;margin-top:8px}
+  .field-block+.field-block{margin-top:28px;padding-top:24px;border-top:1px solid var(--rule)}
+
+  /* Flat square range sliders */
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;outline:none;margin:18px 0 0;padding:0;cursor:pointer}
+  input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--rule);border-radius:0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;background:var(--accent);border:none;border-radius:0;margin-top:-7px;cursor:pointer}
+  input[type=range]::-moz-range-track{height:4px;background:var(--rule);border-radius:0}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--accent);border:none;border-radius:0;cursor:pointer}
+  input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--ink);outline-offset:2px}
+  input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--ink);outline-offset:2px}
+
+  /* Leak toggle cards */
+  .leak{display:flex;flex-direction:column;gap:8px;text-align:left;background:#fff;border:1px solid var(--rule);border-left:4px solid rgba(10,10,10,.12);padding:18px 20px;cursor:pointer;color:inherit;border-radius:0;transition:border-color .15s ease,transform .15s ease}
+  .leak:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .leak[aria-pressed="true"]{border-left-color:var(--accent);border-color:var(--accent)}
+  .leak-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .leak-top strong{font-family:var(--font-display);font-weight:900;font-size:15px;letter-spacing:-.01em;text-transform:uppercase}
+  .leak .pct{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--accent);white-space:nowrap;border:1px solid currentColor;padding:2px 8px;flex-shrink:0}
+  .leak .desc{font-family:var(--font-body);font-size:13.5px;line-height:1.5;color:var(--soft-ink)}
+
+  /* Live result */
+  #burn{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;color:var(--ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:12px 0;margin-top:20px}
+  #burn strong{color:var(--accent);font-weight:700}
+  .caveat{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--soft-ink);opacity:.75;margin-top:14px}
+</style>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/" class="active">Tools</a>
+      <a href="/blog/">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<section class="section" style="padding-top:80px;padding-bottom:40px">
+  <div class="container">
+    <div class="section-label">§ Tool 05 — Conversion Leak Finder</div>
+    <h1 class="display" style="margin-top:24px">How much revenue is<br><span style="color:var(--accent)">leaking off the page?</span></h1>
+    <p class="lede" style="margin-top:28px;max-width:680px">
+      Eight leaks I find on almost every landing page I audit — each with the conversion-rate uplift range I typically see once it's fixed. Enter your monthly visitors, average order or lead value, and current conversion rate, tick what you recognise, and watch the number update live. Ranges are field estimates, not guarantees; a real session recording or a structured A/B test holds the truth.
+    </p>
+  </div>
+</section>
+
+<section class="section bg-cream" style="padding-top:50px;padding-bottom:80px">
+  <div class="container" style="max-width:860px">
+
+    <div class="field-card">
+      <div class="field-block">
+        <div class="field-head">
+          <label class="mono-eyebrow" for="visitors">Monthly visitors to this page</label>
+          <div class="field-fields">
+            <input id="visitors" type="number" min="0" step="100" value="5000">
+          </div>
+        </div>
+        <input id="visitorsRange" type="range" min="0" max="1000" step="1" value="500" aria-label="Monthly visitors slider, logarithmic scale from 100 to 1,000,000">
+        <div class="field-scale"><span>100</span><span>1,000</span><span>10,000</span><span>100,000</span><span>1,000,000</span></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-head">
+          <label class="mono-eyebrow" for="avgValue">Average order / lead value</label>
+          <div class="field-fields">
+            <select id="currency" aria-label="Currency">
+              <option>$</option><option>£</option><option>€</option><option>AED</option><option>R</option>
+            </select>
+            <input id="avgValue" type="number" min="0" step="5" value="150">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-head">
+          <label class="mono-eyebrow" for="curCR">Current conversion rate</label>
+          <div class="field-fields">
+            <input id="curCR" type="number" min="0.1" max="50" step="0.1" value="2">
+            <span class="mono-eyebrow" style="opacity:.6">%</span>
+          </div>
+        </div>
+        <input id="curCRRange" type="range" min="0.1" max="20" step="0.1" value="2" aria-label="Current conversion rate slider, linear scale from 0.1% to 20%">
+        <div class="field-scale"><span>0.1%</span><span>5%</span><span>10%</span><span>20%</span></div>
+      </div>
+    </div>
+
+    <div class="mono-eyebrow" style="margin-top:34px">Tick the leaks you recognise</div>
+    <div id="leaks" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px"></div>
+
+    <div style="margin-top:40px">
+      <button id="scoreBtn" class="cta" style="border:none;cursor:pointer">Estimate my revenue leak <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></button>
+    </div>
+
+    <div id="result" style="margin-top:40px;background:#fff;border-top:4px solid var(--accent);padding:40px">
+      <div class="mono-eyebrow" style="margin-bottom:10px">Estimated monthly revenue left on the table</div>
+      <div id="scoreBig" style="font-family:var(--font-display);font-weight:900;font-size:clamp(34px,7vw,64px);letter-spacing:-.04em;color:var(--accent);line-height:1"></div>
+      <div id="annual" class="mono-eyebrow" style="opacity:.7;margin-top:8px"></div>
+      <div id="burn" aria-live="off">While this page has been open: ≈ <strong id="burnAmt">$0.00</strong> in revenue leaked<span id="burnPaused"> · paused — tick a leak to start the clock</span></div>
+      <p id="verdictBody" style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--soft-ink);margin-top:16px"></p>
+      <p class="caveat">Ranges are field estimates, not guarantees — a real session recording or a structured A/B test holds the truth.</p>
+
+      <div style="border-top:1px solid var(--rule);margin-top:30px;padding-top:26px">
+        <div class="mono-eyebrow" style="margin-bottom:8px">Want the fix-list?</div>
+        <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0 0 16px">An estimate from checkboxes is a starting point. Send me the page and I'll send back the three highest-leverage fixes, ranked by expected impact — free, no strings.</p>
+        <form id="leadForm" style="display:flex;gap:8px;flex-wrap:wrap">
+          <input type="hidden" name="company_url" value="" tabindex="-1">
+          <input name="name" type="text" required placeholder="Your name" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:180px;outline:none;border-radius:0">
+          <input name="email" type="email" required placeholder="you@company.com" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:240px;outline:none;border-radius:0">
+          <input name="phone" type="tel" placeholder="Phone / WhatsApp (optional)" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:210px;outline:none;border-radius:0">
+          <input name="pageUrl" type="text" placeholder="Page or site URL (optional)" style="font-family:var(--font-body);font-size:15px;padding:14px 16px;border:1.5px solid var(--rule);background:#fff;min-width:210px;outline:none;border-radius:0">
+          <button type="submit" class="cta" style="border:none;cursor:pointer">Get the fix-list</button>
+        </form>
+        <p id="leadMsg" class="mono-eyebrow" style="display:none;margin-top:12px;color:var(--accent)"></p>
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--soft-ink);margin:14px 0 0">Prefer to talk it through? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">Book a free 30-minute call →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/tools/" style="color:inherit">More free tools</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // [name, description, low% relative CR uplift, high% relative CR uplift]
+  const LEAKS = [
+    ['Mobile load time over 3 seconds', 'Most visitors are on mobile, and every extra second past three drops conversion sharply before anyone\'s even seen the offer.', 0.08, 0.18],
+    ['No single, clear call-to-action above the fold', 'Multiple competing buttons, or the primary action buried below a scroll — visitors leave before finding out what you want them to do.', 0.06, 0.14],
+    ['Form or checkout asks for more than it needs', 'Every extra field is a reason to abandon. Name, email and the one thing you actually need — everything else can wait until after the conversion.', 0.08, 0.16],
+    ['No trust signals near the point of conversion', 'Reviews, guarantees, security marks or real photos placed right where the visitor is about to commit — not buried on an about page.', 0.05, 0.12],
+    ['What happens after submitting isn\'t clear', 'Price, next step, or what to expect isn\'t stated before the visitor commits — uncertainty at the moment of decision kills conversions that were otherwise ready to happen.', 0.06, 0.14],
+    ['Mobile is just the desktop layout shrunk down', 'Tap targets too small, forms not built for a thumb and a keyboard, no mobile-specific flow — mobile visitors get a worse version of the same page.', 0.08, 0.18],
+    ['No recovery for abandoned carts or forms', 'Nothing brings back the visitor who got most of the way there — no recovery email, no retargeting, no exit-intent offer.', 0.04, 0.10],
+    ['Never run a structured test on this page', 'The page has looked the same since launch. Without testing, every "improvement" is a guess, and guesses are wrong more often than they\'re right.', 0.04, 0.10],
+  ];
+
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  const fmt2 = n => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // --- Build leak toggle cards ---
+  const root = $('leaks');
+  LEAKS.forEach((l, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'leak';
+    b.setAttribute('aria-pressed', 'false');
+    b.dataset.i = i;
+    b.innerHTML = '<span class="leak-top"><strong>' + l[0] + '</strong><span class="pct">+' + Math.round(l[2]*100) + '–' + Math.round(l[3]*100) + '%</span></span><span class="desc">' + l[1] + '</span>';
+    b.addEventListener('click', () => {
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      update();
+    });
+    root.appendChild(b);
+  });
+  const leakBtns = [...root.querySelectorAll('.leak')];
+
+  // --- Log-scale visitors slider (100 → 1,000,000) synced with number input ---
+  const visitorsEl = $('visitors'), vSlider = $('visitorsRange'), curEl = $('currency');
+  const avgValueEl = $('avgValue'), curCREl = $('curCR'), crSlider = $('curCRRange');
+  const LOGMIN = Math.log(100), LOGMAX = Math.log(1000000), STEPS = 1000;
+  function sliderToVisitors(t){
+    const v = Math.exp(LOGMIN + (t / STEPS) * (LOGMAX - LOGMIN));
+    const step = v < 1000 ? 10 : (v < 10000 ? 100 : (v < 100000 ? 500 : 5000));
+    return Math.round(v / step) * step;
+  }
+  function visitorsToSlider(s){
+    const c = Math.min(Math.max(s || 100, 100), 1000000);
+    return Math.round((Math.log(c) - LOGMIN) / (LOGMAX - LOGMIN) * STEPS);
+  }
+  vSlider.addEventListener('input', () => { visitorsEl.value = sliderToVisitors(+vSlider.value); update(); });
+  visitorsEl.addEventListener('input', () => { vSlider.value = visitorsToSlider(+visitorsEl.value); update(); });
+  curEl.addEventListener('change', update);
+  avgValueEl.addEventListener('input', update);
+
+  // --- Linear conversion-rate slider (0.1% → 20%) synced with number input ---
+  crSlider.addEventListener('input', () => { curCREl.value = crSlider.value; update(); });
+  curCREl.addEventListener('input', () => {
+    const v = Math.min(Math.max(+curCREl.value || 0.1, 0.1), 20);
+    crSlider.value = v;
+    update();
+  });
+
+  // --- Scoring (formulas and caps as specified) ---
+  function compute(){
+    const visitors = Math.max(0, +visitorsEl.value || 0);
+    const avgValue = Math.max(0, +avgValueEl.value || 0);
+    const curCR = Math.max(0.1, +curCREl.value || 0.1);
+    const cur = curEl.value;
+    const checked = leakBtns.filter(b => b.getAttribute('aria-pressed') === 'true').map(b => LEAKS[+b.dataset.i]);
+    // Sum relative uplift ranges, capped — leaks overlap, so apply a dampening cap
+    let lo = checked.reduce((a,l) => a + l[2], 0);
+    let hi = checked.reduce((a,l) => a + l[3], 0);
+    lo = Math.min(lo, 0.40); hi = Math.min(hi, 0.90);
+    const potentialCRlo = curCR * (1 + lo);
+    const potentialCRhi = curCR * (1 + hi);
+    const currentConversions = visitors * curCR / 100;
+    const potentialConvLo = visitors * potentialCRlo / 100;
+    const potentialConvHi = visitors * potentialCRhi / 100;
+    const extraConvLo = Math.max(0, potentialConvLo - currentConversions);
+    const extraConvHi = Math.max(0, potentialConvHi - currentConversions);
+    const loV = extraConvLo * avgValue;
+    const hiV = extraConvHi * avgValue;
+    return { visitors, avgValue, curCR, cur, checked, lo, hi, loV, hiV };
+  }
+
+  // --- Animated count-up for the headline range ---
+  let shownLo = 0, shownHi = 0, animId = null;
+  function showBig(s){
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    if (!s.checked.length) { shownLo = 0; shownHi = 0; $('scoreBig').textContent = s.cur + '0 flagged'; return; }
+    if (reduced) { shownLo = s.loV; shownHi = s.hiV; $('scoreBig').textContent = s.cur + fmt(s.loV) + ' – ' + s.cur + fmt(s.hiV) + ' / mo'; return; }
+    const fromLo = shownLo, fromHi = shownHi, t0 = performance.now(), D = 550;
+    function step(t){
+      const p = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - p, 3);
+      shownLo = fromLo + (s.loV - fromLo) * e;
+      shownHi = fromHi + (s.hiV - fromHi) * e;
+      $('scoreBig').textContent = s.cur + fmt(shownLo) + ' – ' + s.cur + fmt(shownHi) + ' / mo';
+      if (p < 1) animId = requestAnimationFrame(step); else animId = null;
+    }
+    animId = requestAnimationFrame(step);
+  }
+
+  // --- Live burn ticker ---
+  let burnRate = 0;      // currency units per second (midpoint of monthly estimate)
+  let burned = 0, lastTick = performance.now();
+  setInterval(() => {
+    const now = performance.now();
+    if (burnRate > 0) burned += burnRate * (now - lastTick) / 1000;
+    lastTick = now;
+    $('burnAmt').textContent = curEl.value + fmt2(burned);
+    $('burnPaused').style.display = burnRate > 0 ? 'none' : 'inline';
+  }, reduced ? 1000 : 100);
+
+  // --- Share link (#w=visitors|currency|curCR|ticks) ---
+  function writeHash(s){
+    const bits = leakBtns.map(b => b.getAttribute('aria-pressed') === 'true' ? '1' : '0').join('');
+    history.replaceState(null, '', '#w=' + s.visitors + '|' + encodeURIComponent(s.cur) + '|' + s.curCR + '|' + bits);
+  }
+  function readHash(){
+    let h = location.hash || '';
+    try { h = decodeURIComponent(h); } catch { return; }
+    const m = h.match(/^#w=([\d.]+)\|([^|]+)\|([\d.]+)\|([01]{8})$/);
+    if (!m) return;
+    visitorsEl.value = +m[1];
+    vSlider.value = visitorsToSlider(+m[1]);
+    if ([...curEl.options].some(o => o.value === m[2])) curEl.value = m[2];
+    curCREl.value = +m[3];
+    crSlider.value = Math.min(Math.max(+m[3], 0.1), 20);
+    m[4].split('').forEach((bit, i) => leakBtns[i].setAttribute('aria-pressed', bit === '1' ? 'true' : 'false'));
+  }
+
+  // --- Debounced analytics (never fires for the untouched initial render) ---
+  let gtimer = null, booted = false;
+  function track(s, immediate){
+    if (!booted) return;
+    clearTimeout(gtimer);
+    const fire = () => { if (typeof gtag === 'function') gtag('event', 'tool_complete', { tool: 'conversion_leak_finder', leaks: s.checked.length, visitors: s.visitors }); };
+    if (immediate) fire(); else gtimer = setTimeout(fire, 2000);
+  }
+
+  // --- Live render ---
+  function update(immediate){
+    const s = compute();
+    let body;
+    if (s.checked.length === 0) body = 'No leaks ticked. Either the page is already tight, or nobody\'s watched a real user session on it recently — five minutes of session recordings will settle it.';
+    else if (s.hi < 0.20) body = 'A modest gap — worth a focused day or two of fixes, not a redesign. Fix the ticked items in order and re-check conversion rate in 30 days.';
+    else if (s.hi < 0.45) body = 'A meaningful share of visitors are likely dropping off for fixable reasons. These are mostly structural fixes, not a rebuild — recoverable in a focused sprint.';
+    else body = 'At this level the page itself is working against the traffic you\'re paying to send to it. Fix conversion before spending more on acquisition — the same budget converts multiples better once these are addressed.';
+
+    showBig(s);
+    $('annual').textContent = s.checked.length ? ('≈ ' + s.cur + fmt(s.loV*12) + ' – ' + s.cur + fmt(s.hiV*12) + ' a year · ' + s.checked.length + ' of 8 leaks ticked') : 'Nothing ticked';
+    $('verdictBody').textContent = body;
+
+    burnRate = s.checked.length ? ((s.loV + s.hiV) / 2) / (30 * 24 * 3600) : 0;
+
+    window.__toolSummary = window.__clfSummary = 'Conversion Leak Finder: ' + fmt(s.visitors) + ' visitors/mo, ' + s.curCR + '% current CR, avg value ' + s.cur + fmt(s.avgValue) + ', ' + s.checked.length + '/8 leaks: ' +
+      (s.checked.map(l => l[0]).join('; ') || 'none') + '. Estimated revenue left on the table ' + s.cur + fmt(s.loV) + '–' + s.cur + fmt(s.hiV) + '/mo.';
+
+    writeHash(s);
+    track(s, immediate === true);
+  }
+
+  // #scoreBtn stays as a scroll-to-results affordance (and forces a fresh score + event)
+  $('scoreBtn').addEventListener('click', () => {
+    update(true);
+    $('result').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  });
+
+  // --- Lead capture (contract with /contact.php unchanged) ---
+  $('leadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const pageUrl = (f.pageUrl.value || '').trim();
+    const data = new FormData();
+    data.append('name', f.name.value);
+    data.append('email', f.email.value);
+    data.append('budget', 'Tool: Conversion Leak Finder');
+    data.append('message', (window.__toolSummary || 'Estimate not run') + (pageUrl ? ('\n\nPage: ' + pageUrl) : '') + '\n\nPlease send the fix-list.');
+    data.append('phone', f.phone.value);
+    data.append('company_url', '');
+    const msg = $('leadMsg');
+    try {
+      const r = await fetch('/contact.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      const j = await r.json().catch(() => ({}));
+      msg.innerHTML = (r.ok && j.ok) ? 'Sent — I\'ll reply within 24 hours with the fix-list. Want to talk it through first? <a href="https://calendar.app.google/vXohio54MnjJy57X7" target="_blank" rel="noopener" style="color:var(--accent)">Book a call →</a>' : (j.error ? 'Could not send: ' + j.error : 'Something went wrong — email rob@chiefgrowthengineer.com instead.');
+    } catch { msg.textContent = 'Something went wrong — email rob@chiefgrowthengineer.com instead.'; }
+    msg.style.display = 'block';
+    if (typeof gtag === 'function') gtag('event', 'generate_lead', { tool: 'conversion_leak_finder' });
+  });
+
+  // --- Init: restore shared state, then render live ---
+  readHash();
+  vSlider.value = visitorsToSlider(+visitorsEl.value);
+  crSlider.value = Math.min(Math.max(+curCREl.value, 0.1), 20);
+  update();
+  booted = true;
+})();
+</script>
+
+</body>
+</html>

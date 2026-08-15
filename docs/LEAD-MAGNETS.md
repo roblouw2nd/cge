@@ -1,6 +1,6 @@
 # CGE Lead Magnets — Specification & Build Guide
 
-Reference document for the four free tools at `chiefgrowthengineer.com/tools/`. Written so any developer or AI model can rebuild, modify or extend them without prior context. Last updated: 2026-07-06 (v2 — interactive rebuild).
+Reference document for the five free tools at `chiefgrowthengineer.com/tools/`. Written so any developer or AI model can rebuild, modify or extend them without prior context. Last updated: 2026-08-15 (v3 — added Tool 05, Conversion Leak Finder).
 
 **v2 additions (all four tools; content, scoring, verdict copy and lead-capture contract unchanged):** the audit is now a one-question-at-a-time wizard (keyboard 1/2/3, back button, progress bar) ending in an animated count-up + SVG radar chart of the four pillars; the tracking check has a live semicircular "Tracking Trust Score" gauge (starts at 100, drops per ticked sign) with toggle-card signs; the waste finder has a log-scale spend slider, leak toggle cards, an always-live result and a real-time "burned while this page has been open" ticker; the ROI calculator has US/UK/UAE/ZA market presets, slider+number input pairs, and an animated SVG bar chart. All four support shareable result links via URL hash (restored on load), respect `prefers-reduced-motion`, expose `window.__toolSummary` after scoring for tests, and debounce high-frequency `tool_complete` events (ROI/waste). Former roadmap items #3 (debounce), #4 (shareable results) and #7 (localised defaults) are done.
 
@@ -23,7 +23,7 @@ Reference document for the four free tools at `chiefgrowthengineer.com/tools/`. 
 
 ## 2. Shared technical architecture
 
-All four tools follow the same pattern. Keep it when extending.
+All five tools follow the same pattern. Keep it when extending.
 
 **Stack:** single self-contained HTML file per tool, vanilla JS (IIFE, no dependencies, no build step), shared site stylesheet `/assets/css/site.css`, hosted on Afrihost shared Linux (Apache + PHP 7+), deployed by GitHub Actions SFTP mirror on push to `main` (repo `roblouw2nd/cge`).
 
@@ -31,11 +31,12 @@ All four tools follow the same pattern. Keep it when extending.
 
 | File | URL |
 |---|---|
-| `tools/index.html` | `/tools/` — hub page listing all four |
+| `tools/index.html` | `/tools/` — hub page listing all five |
 | `tools/growth-engine-audit.html` | `/tools/growth-engine-audit.html` |
 | `tools/tracking-health-check.html` | `/tools/tracking-health-check.html` |
 | `tools/ppc-waste-finder.html` | `/tools/ppc-waste-finder.html` |
 | `tools/fractional-roi-calculator.html` | `/tools/fractional-roi-calculator.html` |
+| `tools/conversion-leak-finder.html` | `/tools/conversion-leak-finder.html` |
 
 **Page skeleton (identical across tools):**
 1. `<head>`: title/meta-description written for the tool's target query; canonical URL; OG + Twitter tags; favicon; Google Fonts (Instrument Serif, Archivo, JetBrains Mono); `site.css`; JSON-LD (see below); GA4 gtag `G-R9WM1Q42DN`; small `<style>` block for tool-specific controls.
@@ -186,7 +187,38 @@ Guard every call with `if (typeof gtag === 'function')`.
 
 ---
 
-## 7. Known gaps / future enhancements (in priority order)
+## 7. Tool 05 — Conversion Leak Finder
+
+**URL:** `/tools/conversion-leak-finder.html` · **GA id:** `conversion_leak_finder` · **Maps to:** CRO Sprint (8–12 wk engagement).
+
+**Exact purpose:** attach a currency figure to conversion-rate neglect, the funnel-side mirror of the PPC Waste Finder's spend-side estimate. Turns the vague sense that "the page just doesn't convert" into a concrete monthly-revenue-left-on-the-table number, and the follow-up offer (send the page, get the three highest-leverage fixes ranked by expected impact) is a naturally reciprocal step toward a CRO Sprint engagement.
+
+**Mechanics:** three live inputs — monthly visitors to the page (log-scale slider, 100–1,000,000, synced with a number input, default 5,000), average order/lead value (currency select `$ £ € AED R` + number input, default 150), current conversion rate (linear slider, 0.1–20%, default 2%) — plus 8 leak toggle cards, each displaying its relative conversion-rate uplift range:
+
+| Leak | Relative CR uplift range |
+|---|---|
+| Mobile load time over 3 seconds | +8–18% |
+| No single, clear call-to-action above the fold | +6–14% |
+| Form or checkout asks for more than it needs | +8–16% |
+| No trust signals near the point of conversion | +5–12% |
+| What happens after submitting isn't clear | +6–14% |
+| Mobile is just the desktop layout shrunk down | +8–18% |
+| No recovery for abandoned carts or forms | +4–10% |
+| Never run a structured test on this page | +4–10% |
+
+**Calculation:** sum the low and high relative uplifts of ticked leaks, then **cap low at 40% and high at 90%** (leaks overlap; the cap keeps the estimate defensible). Potential CR = current CR × (1 + low/high). Extra monthly conversions = visitors × (potential CR − current CR) / 100, floored at 0. Estimated monthly revenue leak = extra conversions × average value, shown as a low–high range plus a ×12 annual line, and driving a live "burned while this page has been open" ticker (currency/second = range midpoint ÷ seconds in a 30-day month). Output formatted with `toLocaleString`.
+
+**Integrity requirement:** the page must keep the caveat that ranges are field estimates and "a real session recording or a structured A/B test holds the truth" — the same integrity rule as the PPC Waste Finder. If ranges are ever tuned, tune from real audit/testing data.
+
+**Verdict bands (on capped high% relative uplift):** 0 ticked → either the page is already tight, or nobody's watched a real user session on it recently, "five minutes of session recordings will settle it"; <20% → a modest gap, a focused day or two of fixes, not a redesign; <45% → a meaningful share of visitors likely dropping off for fixable reasons, mostly structural fixes, recoverable in a focused sprint; ≥45% → the page itself is working against the traffic being paid to send to it — fix conversion before spending more on acquisition.
+
+**Lead form ask:** "Want the fix-list?" — send the page, get the three highest-leverage fixes ranked by expected impact, free, no strings. Fields: name, email, phone (optional), page/site URL (optional). `message` = visitors, current CR, avg value, ticked leak names, estimated range, plus the page URL if given.
+
+**GA `tool_complete` params:** `leaks` (int), `visitors` (number). Debounced 2s like the ROI calculator and waste finder; fires immediately on the "Estimate my revenue leak" button click.
+
+---
+
+## 8. Known gaps / future enhancements (in priority order)
 
 1. **Email notification hygiene** — ~~leads rely on PHP `mail()` alone~~ *partly done 2026-07-27:* `contact.php` prefers authenticated Google Workspace SMTP when `~/cge-mail-config.php` exists and logs every lead to `~/cge-leads.jsonl` as a backstop. Still to do: create that config on the server and test deliverability with a real submission.
 2. **Results-by-email option** — ~~add "email me my scorecard"~~ *done 2026-07-27:* every submitter automatically receives a branded confirmation containing their own results and the booking link. Honeypot kept.
@@ -197,7 +229,7 @@ Guard every call with `if (typeof gtag === 'function')`.
 7. **Localised defaults** — ROI calculator could set currency + salary defaults from `navigator.language` or a country dropdown (US/UK/UAE/ZA presets).
 8. **Nurture** — Rob replies personally today; if volume grows, add a single plain-text follow-up email, not a sequence. The no-spam promise is on the pages ("No sequence, no spam") — honour it.
 
-## 8. Invariants — do not break
+## 9. Invariants — do not break
 
 - Result always shown on-page without email. Email is optional follow-up.
 - Honeypot `company_url` sent empty on every programmatic submit.

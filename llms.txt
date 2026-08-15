@@ -45,6 +45,7 @@ Rob Louw — engineer (UCT), 8 years in performance marketing; specialism in Goo
 - Tracking Health Check: https://chiefgrowthengineer.com/tools/tracking-health-check.html
 - PPC Waste Finder: https://chiefgrowthengineer.com/tools/ppc-waste-finder.html
 - Fractional ROI Calculator: https://chiefgrowthengineer.com/tools/fractional-roi-calculator.html
+- Conversion Leak Finder: https://chiefgrowthengineer.com/tools/conversion-leak-finder.html
 
 ## Contact
 - Email: rob@chiefgrowthengineer.com

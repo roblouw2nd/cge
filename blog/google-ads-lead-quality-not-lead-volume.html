@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Ads for Lead Quality, Not Lead Volume: The Instrumentation That Makes It Possible</title>
+<meta name="description" content="Optimising for lead volume is the default setting of every Google Ads account, and it's usually wrong. The instrumentation that lets you optimise for quality instead.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html">
+<meta property="og:title" content="Google Ads for Lead Quality, Not Lead Volume: The Instrumentation That Makes It Possible">
+<meta property="og:description" content="Why the default lead-volume optimisation is usually wrong, and the tracking layer that lets you optimise for quality instead.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="alternate icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html#article",
+      "headline": "Google Ads for Lead Quality, Not Lead Volume: The Instrumentation That Makes It Possible",
+      "description": "Why optimising Google Ads for raw lead volume trains the algorithm to buy the wrong customers, and the conversion-value instrumentation, qualified lead scoring, CRM stage as signal, that lets an account optimise for quality instead.",
+      "author": { "@id": "https://chiefgrowthengineer.com/#rob" },
+      "publisher": { "@id": "https://chiefgrowthengineer.com/#business" },
+      "datePublished": "2026-08-15",
+      "dateModified": "2026-08-15",
+      "mainEntityOfPage": "https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do I optimise Google Ads for lead quality instead of volume?", "acceptedAnswer": { "@type": "Answer", "text": "Replace the conversion action, or add conversion value rules, so the signal Google Ads optimises against reflects qualification or deal value rather than raw form submissions. That requires your CRM stages or lead-scoring output to flow back into Ads, which is a tracking project before it's an account-settings change." } },
+        { "@type": "Question", "name": "What is a qualified lead conversion action?", "acceptedAnswer": { "@type": "Answer", "text": "A conversion event fired only when a lead clears a qualification bar you define, passed a scoring threshold, booked a call, or reached a specific CRM stage, rather than the moment someone submits a form. It's a stricter, later signal, and it's what Smart Bidding should actually be learning from." } },
+        { "@type": "Question", "name": "Does optimising for lead quality reduce total leads?", "acceptedAnswer": { "@type": "Answer", "text": "Usually, yes, at first. Total lead count often drops because the algorithm stops chasing cheap, unqualified volume. Cost per qualified lead and downstream revenue are the numbers that should be watched instead, and they typically improve even as raw volume falls." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://chiefgrowthengineer.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Field Notes", "item": "https://chiefgrowthengineer.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Google Ads for lead quality, not lead volume", "item": "https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/">Tools</a>
+      <a href="/blog/" class="active">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="post-meta">Field note · №016 · 15 Aug 2026 · 7 min read</div>
+  <h1>Google Ads for lead quality, not lead volume.</h1>
+
+  <p>Open almost any Google Ads account and you'll find the same implicit goal baked into it, whether anyone wrote it down or not: more leads. The conversion action fires on form submission. Smart Bidding is told to get as many of those as it can at a target cost. The weekly report leads with a lead count, and everyone in the room, agency, client, whoever's watching the dashboard, treats that number as the scoreboard. It's the wrong number. Not because more leads is a bad thing to want, but because "lead" as defined by a form submission is a signal so cheap and so easy to manufacture that the algorithm will always find a way to produce more of it, regardless of whether those leads are worth anything.</p>
+
+  <p>This isn't a flaw in Google's system. It's the system working exactly as designed. Smart Bidding is a search process: it finds the cheapest reliable path to whatever event you've told it counts as success. If that event is "someone typed a phone number into a form," it will happily find you an endless supply of people who type phone numbers into forms, curious browsers, competitors' customers doing research, people three cities outside your service area, students filling in forms for a class assignment. None of that is malicious. It's just the algorithm doing its job on a badly specified target. The fix isn't a bidding strategy change. It's upstream of bidding, in what you're measuring in the first place.</p>
+
+  <h2>What "optimising for quality" actually requires</h2>
+
+  <p>Saying you want to optimise for lead quality is easy. Building the instrumentation that makes it possible is the actual work, and it has three parts, none of which is optional if you want the other two to function.</p>
+
+  <p>The first is a qualified conversion action, a conversion event that fires only once a lead clears a real bar, not at the moment of form submission. That bar might be a sales-qualified flag set by a rep, a lead score crossing a threshold, a booked and attended call, or entry into a specific CRM pipeline stage. The point is that it happens later than the form fill and it requires something to be true about the lead beyond the fact that they exist. Google Ads can only optimise toward events it can see, so if the qualification decision lives entirely in someone's head or a spreadsheet nobody exports, the algorithm is still optimising blind.</p>
+
+  <p>The second is getting that qualification signal to actually flow back into Ads. This is exactly the same plumbing problem as <a href="/services/tracking.html">offline conversion tracking</a>: a lead converts online, gets worked through a sales process offline, and the outcome of that process needs to travel back to the ad platform days or weeks later, matched to the original click. If you've already built that pipe for offline sales, you have most of what you need for quality-based Ads optimisation too. CRM stage changes and lead-scoring output are just another category of offline event travelling the same route back to Google.</p>
+
+  <p>The third is conversion value rules, so that not every qualified lead counts the same. A lead worth ten times more to the business than another lead should tell the bidding algorithm that, not get lumped into the same undifferentiated conversion count. This is where most accounts stop even after they've done the first two steps, and it's a mistake, because a flat qualified-conversion count still tells Smart Bidding that a marginal lead and a dream customer are interchangeable. They aren't, and the account should say so.</p>
+
+  <blockquote>An algorithm can only protect the thing you told it to protect. Tell it to protect volume and it will, cheerfully, at the expense of everything else.</blockquote>
+
+  <h2>Where this has actually worked</h2>
+
+  <p>I've run this exact rebuild on accounts in genuinely unrelated categories, which is the point, it's not an industry trick, it's a measurement fix. On a self-storage client, the form-fill conversion action was rewarding every unit enquiry equally, including the ones from people three months out just browsing prices. We rebuilt the conversion action around actual move-ins, fed back from the property management system once a reservation converted to a paid tenancy, and let Smart Bidding chase that instead. Enquiry volume dropped. Move-ins per dollar spent went up, because the algorithm stopped paying to attract browsers and started paying to attract people who actually move in.</p>
+
+  <p>On a chauffeur service, the original setup counted every quote request as a conversion, one-way airport transfers worth a fraction of what a multi-day corporate booking is worth, weighted identically. We split the signal: a "qualified quote request" conversion action that only fired past a minimum trip value and a real contact match, with conversion value rules layered on top so a corporate account enquiry pulled far more optimisation weight than a single airport run. Total quote requests fell. Average booking value climbed, and it kept climbing, because the algorithm was now being rewarded for the trips that actually mattered to the business.</p>
+
+  <h2>The uncomfortable part nobody warns you about</h2>
+
+  <p>Here's what happens next, and it happens almost every time: total lead count falls. Sometimes by a lot. If your organisation has spent months or years watching a lead-count dashboard as the primary health metric, this reads as a crisis, even when cost per qualified lead is falling and revenue is climbing at the same time. This is the actual obstacle to making this switch, and it's not technical. It's that somebody in the business has been trained to associate a falling top-line number with something going wrong, and you need to retrain that association before you flip the switch, not after.</p>
+
+  <p>The way to do it is to change what's on the dashboard before you change what the account optimises for. Put cost per qualified lead next to cost per lead, not instead of it, so the drop in raw volume has context the moment it happens. Add downstream revenue or pipeline value per dollar of ad spend as the number that actually gets discussed in the monthly review. Set the expectation explicitly, in writing, before the switch goes live: lead count will likely fall, that is the mechanism working, and the numbers that matter will move in the other direction. Stakeholders who are ambushed by a falling lead count lose confidence in the whole account. Stakeholders who were told to expect it, and who can see cost per qualified lead and revenue improving in real time, stay calm.</p>
+
+  <h2>How to actually make the switch</h2>
+
+  <p>Start by defining the qualification bar with sales, not marketing, because marketing's incentive is usually more leads and sales' incentive is usually better ones, and the bar needs to reflect what sales actually treats as a real opportunity. Then confirm the qualification event, whatever it is, CRM stage, score threshold, booked call, is exportable and can be matched back to the original click or GCLID. Build that pipe before you touch a single Google Ads setting. Once the data is flowing reliably, run the new qualified conversion action alongside the old form-fill action for a few weeks rather than replacing it outright, so you can watch the qualified signal accumulate real volume before Smart Bidding starts learning from it exclusively. Add conversion value rules once you have enough qualified conversions to differentiate tiers with confidence, not before, because value rules on thin data just add noise. And set the dashboard and the expectations conversation up before launch, not after the lead count drops and someone asks what happened.</p>
+
+  <p>This is the same discipline that runs through everything I do on <a href="/services/ppc.html">paid media accounts</a>: the account can only optimise for what it can measure, so the measurement has to be right before the bidding strategy gets any credit or blame. If you want a fast read on whether your own account is currently optimising for volume it shouldn't be chasing, the <a href="/tools/ppc-waste-finder.html">PPC Waste Finder</a> will flag the patterns that usually point straight at this problem.</p>
+
+  <hr>
+
+  <p style="font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.7">
+    Filed under: PPC · Lead quality · Instrumentation · 2026
+  </p>
+
+  <div style="margin-top:48px;padding:32px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="mono-eyebrow" style="margin-bottom:6px">What is your account burning?</div>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0;max-width:480px">Enter your spend, tick the leaks you recognise, and get a live estimate of monthly wasted budget. Free, no signup.</p>
+    </div>
+    <a class="cta" href="/tools/ppc-waste-finder.html">Find the waste <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/blog/" style="color:inherit">More field notes</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First-Party Tracking After Cookie Deprecation: A Practical Setup</title>
+<meta name="description" content="Third-party cookies are already unreliable in Safari and Firefox, whatever Chrome eventually does. The first-party tracking setup that survives the transition, practically, not theoretically.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html">
+<meta property="og:title" content="First-Party Tracking After Cookie Deprecation: A Practical Setup">
+<meta property="og:description" content="The first-party subdomain, consent mode and enhanced conversions setup that keeps your data reliable regardless of what Chrome does next.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="alternate icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html#article",
+      "headline": "First-Party Tracking After Cookie Deprecation: A Practical Setup",
+      "description": "A practical first-party tracking setup, a CNAME subdomain, server-side tagging, consent mode v2 and enhanced conversions, that holds up regardless of Chrome's shifting cookie deprecation timeline.",
+      "author": { "@id": "https://chiefgrowthengineer.com/#rob" },
+      "publisher": { "@id": "https://chiefgrowthengineer.com/#business" },
+      "datePublished": "2026-08-15",
+      "dateModified": "2026-08-15",
+      "mainEntityOfPage": "https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is first-party tracking?", "acceptedAnswer": { "@type": "Answer", "text": "Tracking that runs from your own domain rather than a third party's, using cookies and requests the browser treats as belonging to the site the visitor is actually on. It survives the browser restrictions built to block cross-site advertising trackers, because it was never a cross-site tracker to begin with." } },
+        { "@type": "Question", "name": "Do I still need first-party tracking if Google delayed cookie deprecation?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Safari's ITP and Firefox's ETP have blocked third-party cookies for years regardless of what Chrome does, and that's already a large share of most sites' traffic. Chrome's timeline has moved before and can move again; building around it is planning for the wrong risk." } },
+        { "@type": "Question", "name": "What's the first step to set up first-party tracking?", "acceptedAnswer": { "@type": "Answer", "text": "Point a CNAME subdomain, something like data.yoursite.com, at your analytics and tag infrastructure. That single change is what lets cookies and requests be treated as first-party, and everything else, server-side tagging, enhanced conversions, consent mode, builds on top of it." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://chiefgrowthengineer.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Field Notes", "item": "https://chiefgrowthengineer.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "First-party tracking after cookie deprecation: a practical setup", "item": "https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/">Tools</a>
+      <a href="/blog/" class="active">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="post-meta">Field note · №012 · 15 Aug 2026 · 7 min read</div>
+  <h1>First-party tracking after cookie deprecation: a practical setup.</h1>
+
+  <p>Most business owners I talk to are waiting for a single date. The day Chrome finally kills third-party cookies, the "cookiepocalypse," the moment their tracking is supposed to break. That date has been pushed back so many times it's become a running joke inside the industry, and I understand why it's easy to conclude the whole thing is overblown and there's no urgency to act.</p>
+
+  <p>Here's the problem with that thinking. Safari's Intelligent Tracking Prevention has blocked third-party cookies since 2020. Firefox's Enhanced Tracking Protection has done the same since 2019. Between them, depending on your audience, that's commonly somewhere between a quarter and half of your traffic where third-party cookie tracking has already been dead for years. Chrome's timeline is irrelevant to that traffic. It was never going to save it, and waiting for Chrome to move is waiting for a deadline that, for a huge share of your visitors, already passed.</p>
+
+  <blockquote>If a third of your conversions are happening in a browser where third-party cookies don't work, you don't have a future problem. You have a current one, and it's been quietly cutting your reported conversions for years.</blockquote>
+
+  <h2>You're planning for the wrong risk</h2>
+
+  <p>This matters because it changes what "urgent" means. If you're treating cookie deprecation as a Chrome-shaped cliff edge you'll deal with when Google finally commits to a date, you're optimising for the wrong risk entirely. The actual risk is the one already sitting in your GA4 property and your Google Ads account right now, in the form of under-counted conversions, inflated cost-per-acquisition numbers, and attribution that quietly favours whatever channel happens to survive cookie blocking best. I see this constantly when I run a <a href="/tools/tracking-health-check.html">tracking health check</a> for a new client. The gap between what actually happened and what got measured is rarely subtle.</p>
+
+  <p>The fix isn't a single tool or a plugin. It's a first-party data architecture, and it's built in a specific order because each layer depends on the one before it. Here's how I sequence it.</p>
+
+  <h2>Step one: a first-party CNAME subdomain</h2>
+
+  <p>Everything starts with a subdomain of your own site, something like data.yoursite.com, pointed via CNAME at your analytics and tagging infrastructure. This is the foundational move. Without it, your tracking requests are still being fired from a third-party domain as far as the browser is concerned, and ITP and ETP will treat the cookies accordingly, aggressive expiry, partitioning, or outright blocking. With a first-party subdomain in place, the browser sees requests coming from your own domain and treats the resulting cookies the way it treats any other first-party cookie on your site. This single DNS change is what makes everything downstream of it actually work.</p>
+
+  <h2>Step two: server-side tagging behind the subdomain</h2>
+
+  <p>Once that subdomain exists, route your tag infrastructure through a server-side container running behind it rather than firing tags client-side from the browser. This does two things at once. It keeps requests first-party end to end, and it gives you control over what data leaves your server and when, which matters for both accuracy and privacy compliance. I've written about the mechanics of setting up server-side GTM in detail elsewhere, so I won't repeat the whole build here, but the short version is that your container becomes the single point where events are received, enriched, and forwarded to GA4, Google Ads, and any other destination you configure, instead of a dozen scattered browser-side pixels each doing their own thing.</p>
+
+  <h2>Step three: GA4 configured for first-party cookies</h2>
+
+  <p>With the subdomain and server container in place, GA4 needs to be told to actually use them. That means setting the cookie domain to your first-party subdomain rather than the default, and setting a sensible cookie lifetime. Google's default of two years sounds generous, but Safari's ITP will cap script-writable cookies at seven days regardless of what you configure, unless the cookie is set server-side through a first-party HTTP response, which is exactly what your server-side container now lets you do. Get this step wrong and you've built the plumbing but left the tap off.</p>
+
+  <h2>Step four: Consent Mode v2, implemented properly</h2>
+
+  <p>This is where I see the most self-inflicted damage. A lot of implementations I audit have Consent Mode installed but misconfigured, defaulting every signal to denied before the consent banner has even loaded, and never correctly updating those signals once a visitor actually responds. The result looks like compliance but behaves like a tracking outage. Every visitor who hasn't yet interacted with the banner gets counted as a full rejection, which artificially collapses your measured conversion volume regardless of what people actually chose. Done properly, Consent Mode v2 passes accurate ad_storage and analytics_storage signals based on real user choice, and Google's modelling fills in the gaps for genuinely denied consent rather than for banner-loading delay. This is the difference between consent mode protecting your data and consent mode quietly destroying it.</p>
+
+  <h2>Step five: Enhanced Conversions, for web and for leads</h2>
+
+  <p>With first-party infrastructure and accurate consent signals in place, Enhanced Conversions is what claws back the match rate that cookie blocking took from you. The idea is straightforward: hash first-party customer data you already collect, email address, phone number, at the point of conversion, and send that hashed data alongside the conversion event. Google matches it against signed-in Google accounts to attribute the conversion even when the cookie-based click ID never made it through. Enhanced Conversions for web covers on-site purchases and form fills. Enhanced Conversions for leads covers the offline step, when a lead submitted on your site becomes a qualified deal or a closed sale days or weeks later in your CRM, and you feed that outcome back to Google Ads using the same hashed identifiers. For anyone running lead generation through <a href="/services/ppc.html">paid search</a>, this second piece is usually the bigger win, because it's the step that finally lets the platform optimise toward revenue instead of raw form fills.</p>
+
+  <h2>Step six: CRM-matched data as the source of truth</h2>
+
+  <p>The most durable first-party asset you have isn't a cookie at all. It's your CRM. Every contact record, every deal stage, every closed-won outcome is data you collected directly, with consent, that no browser policy can touch. Matching that CRM data back to ad platforms through Enhanced Conversions for leads is one use of it. The other is feeding it into lifecycle marketing, remarketing audiences, email sequences, lookalike seeding, so the same first-party record that improves your Ads bidding also drives retention and repeat revenue. This is the piece that turns tracking infrastructure into an actual growth system rather than a reporting fix, and it's usually where <a href="/services/business-software.html">business systems</a> work and marketing tracking start to overlap.</p>
+
+  <h2>How to actually sequence this</h2>
+
+  <p>None of this needs to happen in one sprint, and trying to ship it all at once is usually a mistake because each layer needs to be verified before the next one is built on top of it. A realistic phasing looks like this: get the CNAME subdomain and server-side container live and verified in week one, migrate GA4 and confirm cookie behaviour in week two, fix Consent Mode signals and validate them against real consent choices in week three, then layer in Enhanced Conversions for web and leads once the underlying data is trustworthy, with CRM matching as the final, ongoing piece. Each stage is independently useful. You don't have to wait until the whole stack is finished to start seeing better numbers.</p>
+
+  <h2>Where this fits</h2>
+
+  <p>This is the core of what I do under <a href="/services/tracking.html">conversion tracking</a> work: building the first-party architecture that makes your reported numbers match what actually happened, regardless of what any single browser vendor decides to do next. If you want a sense of how much of this is already missing from your own setup, the fastest way to find out is to run the <a href="/tools/tracking-health-check.html">Tracking Health Check</a>. It takes a few minutes and gives you a live score against exactly the gaps described here.</p>
+
+
+  <hr>
+
+  <p style="font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.7">
+    Filed under: Tracking · First-party data · Privacy · 2026
+  </p>
+
+  <div style="margin-top:48px;padding:32px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="mono-eyebrow" style="margin-bottom:6px">Is your tracking lying?</div>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0;max-width:480px">Twelve signs your conversion tracking can't be trusted. Tick the ones you recognise and get a live trust score. Free, no signup.</p>
+    </div>
+    <a class="cta" href="/tools/tracking-health-check.html">Run the check <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/blog/" style="color:inherit">More field notes</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

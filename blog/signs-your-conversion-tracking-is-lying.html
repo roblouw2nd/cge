@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 12 Signs Your Conversion Tracking Is Lying to You</title>
+<meta name="description" content="A working checklist of the twelve most common conversion tracking failures, from double-firing tags to Smart Bidding trained on the wrong signal. Tick the ones you recognise.">
+<link rel="canonical" href="https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html">
+<meta property="og:title" content="The 12 Signs Your Conversion Tracking Is Lying to You">
+<meta property="og:description" content="Twelve failure modes that quietly break Google Ads and GA4 conversion data, and how to spot each one in your own account.">
+<meta property="og:image" content="https://chiefgrowthengineer.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="alternate icon" href="/assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html#article",
+      "headline": "The 12 Signs Your Conversion Tracking Is Lying to You",
+      "description": "A field checklist of the twelve most common ways conversion tracking silently breaks, including double counting, missing consent signal, stale tags and mismatched conversion values, with what each one looks like from inside the account.",
+      "author": { "@id": "https://chiefgrowthengineer.com/#rob" },
+      "publisher": { "@id": "https://chiefgrowthengineer.com/#business" },
+      "datePublished": "2026-08-15",
+      "dateModified": "2026-08-15",
+      "mainEntityOfPage": "https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do I know if my conversion tracking is broken?", "acceptedAnswer": { "@type": "Answer", "text": "Look for a handful of tells: conversion numbers that jump after a site redesign, conversions counted from pages nobody can actually reach, cost-per-lead that's suspiciously low compared to industry norms, or a growing gap between GA4 and Google Ads that nobody can explain. Any one of these is worth a proper audit." } },
+        { "@type": "Question", "name": "What's the most common conversion tracking mistake?", "acceptedAnswer": { "@type": "Answer", "text": "Counting a form submission or a click as a conversion without ever checking whether it represents a real, qualified lead. It's the single most common failure, because it doesn't look broken; the numbers still go up, it just quietly trains your bidding to buy more of the wrong thing." } },
+        { "@type": "Question", "name": "How often should I audit conversion tracking?", "acceptedAnswer": { "@type": "Answer", "text": "Quarterly at minimum, and immediately after any site migration, redesign, consent banner change or CMS update. Those four events are the most likely to silently break tags." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://chiefgrowthengineer.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Field Notes", "item": "https://chiefgrowthengineer.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "The 12 signs your conversion tracking is lying to you", "item": "https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9WM1Q42DN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R9WM1Q42DN');
+</script>
+</head>
+<body>
+
+<nav class="nav-shell">
+  <div class="nav-inner">
+    <a class="brand-lockup" href="/">
+      Chief<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16.32 3 L4 3 L4 21 L16.32 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg><span class="accent">Growth</span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.68 3 L20 3 L20 21 L7.68 21" fill="none" stroke="#d62828" stroke-width="2.8"/></svg>Engineer<svg width="14" height="14" viewBox="0 0 24 24" style="margin-left:2px"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="#d62828" stroke-width="2.5"/></svg>
+    </a>
+    <div class="nav-links">
+      <a href="/services/web-development.html">Practice</a>
+      <a href="/work.html">Work</a>
+      <a href="/tools/">Tools</a>
+      <a href="/blog/" class="active">Thinking</a>
+      <a href="/about.html">About</a>
+    </div>
+    <a class="cta" href="/contact.html">Book an intro <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</nav>
+
+<article class="article">
+  <div class="post-meta">Field note · №011 · 15 Aug 2026 · 8 min read</div>
+  <h1>The 12 signs your conversion tracking is lying to you.</h1>
+
+  <p>I wrote the <a href="/tools/tracking-health-check.html">Tracking Health Check</a> tool because I was having the same conversation with a new client every few weeks. Someone would tell me their tracking was "fine," and then we'd open the account together and find two or three of the twelve things below sitting there in plain sight. None of these are exotic. They're the ordinary, everyday ways conversion tracking quietly stops telling the truth, and every one of them changes what Smart Bidding thinks it's buying. Here they are, in the order I usually find them.</p>
+
+  <h2>1. The confirmation page counts a conversion, but you can reach it without converting</h2>
+  <p>This is the oldest mistake in the book and I still see it on accounts running six-figure monthly spend. The conversion tag lives on a "thank you" or confirmation URL, and that URL is bookmarkable, indexable, or just reachable by typing it in. Someone submits a form, hits back, then forward again, and gets counted twice. Someone refreshes the confirmation page after a slow page load and it fires again. A support agent testing the form triggers a "conversion" that never touched the CRM. None of this shows up as an error. It shows up as a conversion count that's slightly, permanently inflated, quietly overstating how well the campaign is actually performing.</p>
+
+  <h2>2. Multiple tags fire on the same event with no de-duplication</h2>
+  <p>A Google Ads tag, a GA4 event, a third-party pixel and a Zapier webhook can all be listening for the same form submission, each firing its own conversion independently. Add a second GTM container from an old agency, or a plugin that ships its own tracking snippet, and the same real-world action gets counted two or three times over. Nobody set out to double count. It accumulated, one integration at a time, and nobody went back to check for overlap. The fix is straightforward once you see it: audit every tag firing on the event and make sure only one of them reports the conversion.</p>
+
+  <h2>3. Every conversion carries the same flat value, or none at all</h2>
+  <p>If a $50 enquiry and a $50,000 signed deal both post as a $0 or flat-value conversion, Smart Bidding has no way to tell them apart. It optimises purely for volume, which means it will happily fill your pipeline with the cheapest, lowest-intent leads it can find, because from the algorithm's perspective they're worth exactly as much as your best customer. This is one of the most expensive tracking failures I encounter, because it doesn't look broken. Volume goes up, cost per lead goes down, and everyone celebrates while the actual revenue mix quietly gets worse.</p>
+
+  <blockquote>An algorithm can only optimise for the number you give it. If every conversion looks the same, it will find you more of whatever's cheapest to get.</blockquote>
+
+  <h2>4. GA4 and Google Ads have been drifting apart for months</h2>
+  <p>A small gap between GA4 conversions and Google Ads conversions is normal; the two platforms attribute and de-duplicate differently. A gap that's been widening for three, six, twelve months with nobody investigating is not normal, it's a symptom. Something changed: a consent banner update, a tag firing condition, a page template. Whatever caused it is still active today, and the longer it runs the harder it gets to isolate, because by the time someone finally looks, three other things have changed on top of it. I check this ratio on every account I take over, and a growing gap is almost always the first thread worth pulling.</p>
+
+  <h2>5. Conversion rate jumped right after a redesign, migration or new form vendor, with no explanation on file</h2>
+  <p>A site redesign, a CMS migration, or swapping form vendors are the three events most likely to silently break or silently inflate tracking, and they're also the events most likely to get zero tracking QA because everyone's focused on the launch itself. If conversion rate suddenly jumps 40% the week a new site went live and nobody wrote down why, don't assume the new design converted better. Assume the tracking changed until you've proven otherwise. I've seen "wins" that were actually a tag firing on page load instead of on submit, celebrated for months before anyone checked.</p>
+
+  <h2>6. Enhanced conversions or offline imports were switched on once and never connected to the CRM afterward</h2>
+  <p>Turning on enhanced conversions or an offline conversion import is a five-minute setup task. Making it actually reflect what happens after the lead lands in the CRM is not. I regularly find offline import jobs still uploading "lead created" as the only stage, months or years after the business started tracking qualified opportunities and closed revenue downstream. The import runs, the dashboard looks populated, and nobody has connected it to a single real outcome since the day it was switched on. If Smart Bidding is meant to optimise toward revenue, it needs that revenue signal actually flowing back, not just a green checkmark in setup.</p>
+
+  <h2>7. Consent Mode is misconfigured, or nobody's checked the modelled-to-observed ratio in months</h2>
+  <p>Consent Mode fills gaps in observed data with modelled estimates when a visitor declines cookies. That's fine in moderation. It's not fine when a misconfigured banner, an overly aggressive consent default, or a broken tag means modelled conversions dwarf observed ones, and the reported numbers are mostly Google's best guess rather than something that actually happened. This is easy to miss because the topline conversion count still looks healthy. The only way to catch it is to actually open the modelled-versus-observed breakdown in Google Ads, something almost nobody does unless they're specifically told to look.</p>
+
+  <h2>8. Call tracking counts every inbound call as a lead</h2>
+  <p>Call tracking numbers are great for attribution and terrible at qualification unless someone configures them properly. Out of the box, most setups count every call that connects for more than a few seconds as a conversion, which means an existing customer calling about an invoice, a wrong number, or someone asking for directions to your gate code all get logged as new leads. That's fine for a coffee shop that just wants call volume. It's a real problem for any business bidding on cost-per-lead, because it dilutes true lead quality and teaches the algorithm to chase call volume rather than qualified calls.</p>
+
+  <h2>9. Cross-domain tracking breaks at the handoff to a subdomain</h2>
+  <p>The moment a visitor moves from your main site to a booking system, checkout, or portal on a different subdomain or domain, the session can silently break if cross-domain tracking isn't configured correctly. The visitor converts. The conversion just never gets attributed back to the campaign that brought them, because the linking parameters that carry session identity across that handoff never made it through. Unlike most of the failures on this list, this one understates conversions rather than inflating them, which makes campaigns look like they're underperforming when the real problem is a broken join between two systems.</p>
+
+  <h2>10. UTM parameters get stripped by a redirect, gateway or app handoff</h2>
+  <p>A redirect chain, a payment gateway that rewrites the URL, or a handoff to a native app can all strip UTM parameters clean off before the visitor ever reaches a page that reads them. When that happens, every session that passes through that step gets reattributed to direct or referral traffic, and an entire channel's reported performance quietly collapses even though the actual traffic and conversions never stopped arriving. This one is nasty because it usually affects a specific step in the funnel rather than the whole site, so most of your tracking looks fine while one channel's numbers make no sense at all.</p>
+
+  <h2>11. Nobody can say, without checking, what "conversion" actually means for each action</h2>
+  <p>Ask most account owners what their primary conversion action counts as a conversion, precisely, and watch them go quiet or reach for a screen share. Over time, conversion actions accumulate: a form submit here, a phone click there, a PDF download someone added for a campaign eighteen months ago and forgot to remove. The definitions drift away from what the business actually cares about, and the account keeps optimising toward the old definition because nobody updated it. If you can't state, from memory, what each active conversion action represents, it's a near-certainty that at least one of them no longer matches reality.</p>
+
+  <h2>12. The tracking setup hasn't been touched or reviewed since it was first installed</h2>
+  <p>This is the root cause behind most of the eleven items above it. Tracking gets installed once, at launch, by whoever built the site or ran the first campaign, and then it's treated as done. Meanwhile the site gets redesigned, the CRM changes, new products launch, consent laws tighten, and the funnel itself evolves. Tracking that was accurate on day one degrades continuously after that, and there's no alarm that goes off when it does. If you can't remember the last time someone actually reviewed the setup rather than just glanced at whether numbers were still coming in, treat that as the strongest sign of all.</p>
+
+  <p>If you recognised even three or four of these, it's worth thirty minutes to find out how many actually apply to your account, not just guess. That's exactly what the <a href="/tools/tracking-health-check.html">Tracking Health Check</a> does: it scores your setup against these twelve failure modes in about three minutes and tells you which ones are live right now, so you're fixing the actual leaks instead of the ones you happened to remember.</p>
+
+
+  <hr>
+
+  <p style="font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);opacity:.7">
+    Filed under: Tracking · Conversion tracking · Audit · 2026
+  </p>
+
+  <div style="margin-top:48px;padding:32px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <div class="mono-eyebrow" style="margin-bottom:6px">Is your tracking lying?</div>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--soft-ink);margin:0;max-width:480px">Twelve signs your conversion tracking can't be trusted. Tick the ones you recognise and get a live trust score. Free, no signup.</p>
+    </div>
+    <a class="cta" href="/tools/tracking-health-check.html">Run the check <svg width="12" height="12" viewBox="0 0 24 24"><path d="M5 19 L19 5 M19 5 L19 14 M19 5 L10 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg></a>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bar" style="border-top:none;padding-top:0">
+      <div>© MMXXVI · CGE Group · <a href="/blog/" style="color:inherit">More field notes</a></div>
+      <div><a href="mailto:rob@chiefgrowthengineer.com" style="color:inherit">rob@chiefgrowthengineer.com</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

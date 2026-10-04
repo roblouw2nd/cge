@@ -360,6 +360,9 @@ h3.display { font-size: clamp(24px, 3vw, 44px); }
 .article li { margin-bottom: 8px; }
 .article code { font-family: var(--font-mono); font-size: .9em; background: var(--cream); padding: 2px 6px; }
 .article hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+.article table { width: 100%; border-collapse: collapse; margin: 0 0 28px; font-size: 15px; display: block; overflow-x: auto; }
+.article th, .article td { text-align: left; vertical-align: top; padding: 12px 14px; border-top: 1px solid var(--rule); color: var(--soft-ink); }
+.article th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500; color: var(--ink); border-top: none; border-bottom: 2px solid var(--ink); }
 
 .post-meta {
   font-family: var(--font-mono);

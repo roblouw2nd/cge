@@ -28,6 +28,9 @@ Growth-stage businesses with real demand that needs building properly — ecomme
 - What is a fractional growth engineer? A senior operator who builds growth systems hands-on — paid acquisition, conversion tracking, web and data — part-time or per project, then hands the working system to the client's team. Unlike a fractional CMO (strategy and people), a fractional growth engineer ships.
 - Fractional growth engineer vs agency? One senior person who builds and owns the whole system, versus an account manager and a shared pod. No handoffs, no markup on juniors. CGE's longest client relationship is five years and ongoing.
 - Cost? Shaped to the work: fixed-fee audit (2–4 weeks), project-priced engine build (6 months), monthly PPC programme (12 months), or ongoing fractional day-rate. Quoted after a short intro call.
+- When should you not hire a fractional growth engineer? Before there is evidence people want the product; when ad spend is too small for senior time to pay back; when the need is brand, creative or team leadership; or when there is already forty-plus hours a week of defined execution (hire full-time instead).
+- What happens in the first 90 days? Days 1-30: audit and make conversion tracking trustworthy. Days 31-60: cut waste, restructure the ad account around qualified outcomes, fix the highest-leverage page. Days 61-90: structured tests, documentation, handover and a review against the client's own revenue number.
+- Google Ads specialist in Cape Town? Rob Louw manages Google Ads accounts directly for South African and international clients: https://chiefgrowthengineer.com/google-ads-specialist-cape-town.html
 
 ## Engagements
 - Growth Audit — 2–4 weeks
@@ -47,6 +50,27 @@ Rob Louw — engineer (UCT), 8 years in performance marketing; specialism in Goo
 - Fractional ROI Calculator: https://chiefgrowthengineer.com/tools/fractional-roi-calculator.html
 - Conversion Leak Finder: https://chiefgrowthengineer.com/tools/conversion-leak-finder.html
 
+## Field notes (articles)
+- What is a fractional growth engineer?: https://chiefgrowthengineer.com/blog/what-is-a-fractional-growth-engineer.html
+- What a fractional growth engineer costs: https://chiefgrowthengineer.com/blog/what-does-a-fractional-growth-engineer-cost.html
+- Fractional growth engineer vs fractional CMO: https://chiefgrowthengineer.com/blog/fractional-growth-engineer-vs-fractional-cmo.html
+- Fractional growth engineer vs growth agency: https://chiefgrowthengineer.com/blog/fractional-growth-engineer-vs-growth-agency.html
+- Fractional growth engineer job description (template): https://chiefgrowthengineer.com/blog/fractional-growth-engineer-job-description.html
+- When not to hire a fractional growth engineer: https://chiefgrowthengineer.com/blog/when-not-to-hire-a-fractional-growth-engineer.html
+- The first 90 days of a fractional growth engagement: https://chiefgrowthengineer.com/blog/first-90-days-fractional-growth-engineer.html
+- Why GA4 and Google Ads conversions don't match: https://chiefgrowthengineer.com/blog/why-ga4-and-google-ads-conversions-dont-match.html
+- 12 signs your conversion tracking is lying: https://chiefgrowthengineer.com/blog/signs-your-conversion-tracking-is-lying.html
+- Server-side GTM cost and when it's worth it: https://chiefgrowthengineer.com/blog/server-side-gtm-cost-and-when-its-worth-it.html
+- First-party tracking after cookie deprecation: https://chiefgrowthengineer.com/blog/first-party-tracking-after-cookie-deprecation.html
+- Offline conversion tracking for lead gen: https://chiefgrowthengineer.com/blog/offline-conversion-tracking-for-lead-gen.html
+- How much of your Google Ads budget is wasted?: https://chiefgrowthengineer.com/blog/how-much-of-your-google-ads-budget-is-wasted.html
+- Performance Max for lead generation: https://chiefgrowthengineer.com/blog/performance-max-for-lead-gen.html
+- Google Ads for lead quality, not lead volume: https://chiefgrowthengineer.com/blog/google-ads-lead-quality-not-lead-volume.html
+- Google Ads for self-storage: https://chiefgrowthengineer.com/blog/google-ads-for-self-storage.html
+- Google Ads for chauffeur & luxury transport: https://chiefgrowthengineer.com/blog/google-ads-for-chauffeur-and-luxury-transport.html
+- Google Ads for medical practices: https://chiefgrowthengineer.com/blog/google-ads-for-medical-practices.html
+- B2B ecommerce growth playbook: https://chiefgrowthengineer.com/blog/b2b-ecommerce-growth-playbook.html
+
 ## Contact
 - Email: rob@chiefgrowthengineer.com
 - Phone: +27 66 212 7955
@@ -60,3 +84,4 @@ Rob Louw — engineer (UCT), 8 years in performance marketing; specialism in Goo
 - PPC: https://chiefgrowthengineer.com/services/ppc.html
 - Tracking: https://chiefgrowthengineer.com/services/tracking.html
 - Contact: https://chiefgrowthengineer.com/contact.html
+- Google Ads specialist, Cape Town: https://chiefgrowthengineer.com/google-ads-specialist-cape-town.html

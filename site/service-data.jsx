@@ -29,6 +29,11 @@ const SERVICE_DETAILS = {
       { q: 'Do you work with existing codebases?', a: 'Often. If the bones are solid (modern framework, sane architecture) I extend them. If they\'re not, we have a frank conversation about a rebuild.' },
       { q: 'What about ecommerce?', a: 'Yes — Shopify Hydrogen, Medusa, or custom Stripe Checkout. Get in touch with the product complexity and we\'ll pick the right tool.' },
     ],
+    reading: [
+      { kind: 'Field note', href: '/blog/google-ads-for-chauffeur-and-luxury-transport.html', title: 'The quote platform behind a fleet tripling', blurb: 'How an instant quote estimator changed both conversion rate and the signal going back to Google Ads.' },
+      { kind: 'Field note', href: '/blog/b2b-ecommerce-growth-playbook.html', title: 'B2B ecommerce: zero to seven figures', blurb: 'Five years building a B2B supplier\'s store from nothing, in the order it mattered.' },
+      { kind: 'Free tool', href: '/tools/conversion-leak-finder.html', title: 'Conversion Leak Finder', blurb: 'Estimate the monthly revenue your page is leaving on the table. No signup.' },
+    ],
   },
   'ppc': {
     eyebrow: '§ 02 — PPC & Paid Acquisition',
@@ -56,6 +61,14 @@ const SERVICE_DETAILS = {
       { q: 'What\'s the minimum monthly spend?', a: 'I\'m most useful from $30k/mo upward — below that, the operator overhead doesn\'t make sense. If you\'re smaller, I can point you to better-suited specialists.' },
       { q: 'Do you work with our existing agency?', a: 'Sometimes. Often the cleanest version is replacing them. But if you have a creative shop or platform-specialist you love, I orchestrate around them.' },
       { q: 'What happens after twelve months?', a: 'Most clients renew. A few graduate to running it in-house with my fractional support. The handover docs make either path workable.' },
+    ],
+    reading: [
+      { kind: 'Field note', href: '/blog/how-much-of-your-google-ads-budget-is-wasted.html', title: 'How much of your Google Ads budget is wasted?', blurb: 'The five places waste hides, and how to find your number in ten minutes.' },
+      { kind: 'Field note', href: '/blog/performance-max-for-lead-gen.html', title: 'Performance Max for lead gen', blurb: 'The setup that stops PMax buying junk leads.' },
+      { kind: 'Field note', href: '/blog/google-ads-lead-quality-not-lead-volume.html', title: 'Lead quality, not lead volume', blurb: 'The instrumentation that lets Google Ads optimise for qualified leads.' },
+      { kind: 'Field note', href: '/blog/google-ads-for-medical-practices.html', title: 'Google Ads for medical practices', blurb: 'Patient acquisition without sending patient data to ad platforms.' },
+      { kind: 'Page', href: '/google-ads-specialist-cape-town.html', title: 'Google Ads specialist, Cape Town', blurb: 'For South African businesses: one senior operator in your account.' },
+      { kind: 'Free tool', href: '/tools/ppc-waste-finder.html', title: 'PPC Waste Finder', blurb: 'Enter your spend, tick the leaks, get a live estimate of wasted budget.' },
     ],
   },
   'tracking': {
@@ -85,6 +98,14 @@ const SERVICE_DETAILS = {
       { q: 'What about privacy / GDPR?', a: 'The CMP layer is part of the implementation, not an afterthought. Consent-mode handled correctly so you stay compliant without losing the signal.' },
       { q: 'Can you fix tracking without ripping it out?', a: 'Sometimes — but in 80% of audits, the existing setup has accumulated enough drift that a clean rebuild is faster than patching. I\'ll tell you honestly.' },
     ],
+    reading: [
+      { kind: 'Field note', href: '/blog/signs-your-conversion-tracking-is-lying.html', title: '12 signs your conversion tracking is lying', blurb: 'A working checklist of the most common tracking failures.' },
+      { kind: 'Field note', href: '/blog/why-ga4-and-google-ads-conversions-dont-match.html', title: 'Why GA4 and Google Ads don\'t match', blurb: 'The six reasons the numbers differ, and which to trust for what.' },
+      { kind: 'Field note', href: '/blog/server-side-gtm-cost-and-when-its-worth-it.html', title: 'Server-side GTM: cost and when it\'s worth it', blurb: 'Real costs, and a straight test for when it pays for itself.' },
+      { kind: 'Field note', href: '/blog/first-party-tracking-after-cookie-deprecation.html', title: 'First-party tracking, practically', blurb: 'The setup that survives browser privacy changes.' },
+      { kind: 'Field note', href: '/blog/offline-conversion-tracking-for-lead-gen.html', title: 'Offline conversion tracking for lead gen', blurb: 'Closing the loop from ad click to CRM outcome.' },
+      { kind: 'Free tool', href: '/tools/tracking-health-check.html', title: 'Tracking Health Check', blurb: 'Tick the signs you recognise and get a Tracking Trust Score.' },
+    ],
   },
   'business-software': {
     eyebrow: '§ 04 — Business Software',
@@ -112,6 +133,11 @@ const SERVICE_DETAILS = {
       { q: 'Retool vs. bespoke — which?', a: 'Default to Retool. Move to bespoke when the tool is customer-facing, performance-critical, or going to outlive Retool\'s pricing curve.' },
       { q: 'Will we be locked into Retool?', a: 'No more than you\'re locked into any SaaS. Most Retool apps can be rewritten in a week of React work if you need to leave.' },
       { q: 'Can you replace our CRM?', a: 'I\'d rather not. CRMs are calcified for good reason. I build the tools that surround your CRM — better workflows on top, better dashboards underneath.' },
+    ],
+    reading: [
+      { kind: 'Field note', href: '/blog/b2b-ecommerce-growth-playbook.html', title: 'B2B ecommerce: zero to seven figures', blurb: 'The systems behind a five-year client relationship.' },
+      { kind: 'Field note', href: '/blog/first-90-days-fractional-growth-engineer.html', title: 'The first 90 days of an engagement', blurb: 'What gets diagnosed, built and handed over, in order.' },
+      { kind: 'Free tool', href: '/tools/growth-engine-audit.html', title: 'Growth Engine Audit', blurb: 'Score tracking, paid, website and process in three minutes.' },
     ],
   },
   'optimization': {
@@ -141,6 +167,11 @@ const SERVICE_DETAILS = {
       { q: 'What if our tests don\'t win?', a: 'Half of mine don\'t. That\'s why we ship in cycles. The winners pay for the losers, and the losers teach you about your users. Bad sign is when nothing moves — that means you need bigger swings.' },
       { q: 'Do you do redesigns?', a: 'Yes — pages with clear conversion goals get redesigned, not just A/B-tested. Full-page rewrites against fresh hypotheses, then validated.' },
     ],
+    reading: [
+      { kind: 'Field note', href: '/blog/google-ads-for-chauffeur-and-luxury-transport.html', title: 'The booking flow as a conversion lever', blurb: 'Why an instant quote estimator outperformed a contact form.' },
+      { kind: 'Field note', href: '/blog/first-90-days-fractional-growth-engineer.html', title: 'The first 90 days of an engagement', blurb: 'Why measurement gets fixed before anything is optimised.' },
+      { kind: 'Free tool', href: '/tools/conversion-leak-finder.html', title: 'Conversion Leak Finder', blurb: 'Put a monthly figure on what your page is losing. No signup.' },
+    ],
   },
   'analytics': {
     eyebrow: '§ 06 — Data & Analytics',
@@ -169,6 +200,11 @@ const SERVICE_DETAILS = {
       { q: 'Can you train our analyst?', a: 'Yes — I often pair with internal analyst hires. The quarterly cycle becomes a coaching loop as they learn to do it without me.' },
       { q: 'What about real-time?', a: 'You probably don\'t need real-time. Quarterly is right for strategy. Weekly is right for ops. Hourly is right for fraud detection. Pick the cadence to the question.' },
     ],
+    reading: [
+      { kind: 'Field note', href: '/blog/why-ga4-and-google-ads-conversions-dont-match.html', title: 'Why GA4 and Google Ads don\'t match', blurb: 'Two platforms answering different questions by design.' },
+      { kind: 'Field note', href: '/blog/google-ads-lead-quality-not-lead-volume.html', title: 'Lead quality, not lead volume', blurb: 'Measuring what happens after the form fill.' },
+      { kind: 'Free tool', href: '/tools/growth-engine-audit.html', title: 'Growth Engine Audit', blurb: 'Find your weakest growth pillar in three minutes.' },
+    ],
   },
   'automation': {
     eyebrow: '§ 07 — Marketing Automation',
@@ -196,6 +232,11 @@ const SERVICE_DETAILS = {
       { q: 'Will users hate the volume?', a: 'They won\'t if you write less. My default is to start with half the messages people expect — only add when there\'s a clear job to do. Email frequency is a UX problem, not a marketing one.' },
       { q: 'Do you write the copy?', a: 'I draft, you edit, we iterate. Voice is yours; structure and triggers are mine.' },
       { q: 'Can you build referral loops?', a: 'Yes — invite mechanics, reward dashboards, tracking links, the whole flow. Often paired with the Engine Build for tight integration into product.' },
+    ],
+    reading: [
+      { kind: 'Field note', href: '/blog/offline-conversion-tracking-for-lead-gen.html', title: 'Offline conversion tracking for lead gen', blurb: 'Feeding CRM outcomes back to the ad platforms automatically.' },
+      { kind: 'Field note', href: '/blog/the-best-growth-teams-ship-faster.html', title: 'The best growth teams ship faster', blurb: 'Three observations on what makes high-leverage teams different.' },
+      { kind: 'Free tool', href: '/tools/growth-engine-audit.html', title: 'Growth Engine Audit', blurb: 'Score your systems and process alongside paid and tracking.' },
     ],
   },
 };

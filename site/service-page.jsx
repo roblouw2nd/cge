@@ -297,6 +297,41 @@ function ServiceFAQ({ detail }) {
   );
 }
 
+function ServiceReading({ detail }) {
+  if (!detail.reading || !detail.reading.length) return null;
+  return (
+    <SectionWrap bg={T.paper}>
+      <div style={{ marginBottom: 30 }}>
+        <SectionLabel>Go deeper</SectionLabel>
+        <h2 style={{
+          fontFamily: T.display, fontWeight: 900, fontSize: 40, letterSpacing: '-.04em', lineHeight: .94,
+          textTransform: 'uppercase', margin: '24px 0 0',
+        }}>
+          Field notes &amp; free tools.
+        </h2>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+        {detail.reading.map(r => (
+          <a key={r.href} href={r.href} style={{
+            background: T.cream, borderTop: `3px solid ${T.accent}`, padding: 24, textDecoration: 'none', color: T.ink,
+            display: 'flex', flexDirection: 'column', gap: 12,
+          }}>
+            <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', color: T.accent }}>
+              {r.kind}
+            </span>
+            <div style={{ fontFamily: T.display, fontWeight: 900, fontSize: 19, letterSpacing: '-.02em', textTransform: 'uppercase', lineHeight: 1.1 }}>
+              {r.title}
+            </div>
+            <p style={{ fontFamily: T.body, fontSize: 13, lineHeight: 1.5, color: T.softInk, margin: 0 }}>
+              {r.blurb}
+            </p>
+          </a>
+        ))}
+      </div>
+    </SectionWrap>
+  );
+}
+
 function ServiceRelated({ activeSlug }) {
   const others = SERVICES.filter(s => s.slug !== activeSlug).slice(0, 3);
   return (
@@ -433,6 +468,7 @@ function ServicePage({ slug }) {
       <ServiceDeliverables detail={detail} />
       <ServiceTools detail={detail} />
       <ServiceFAQ detail={detail} />
+      <ServiceReading detail={detail} />
       <ServiceRelated activeSlug={slug} />
       <ServiceCTA detail={detail} />
       <ServiceFooter />
